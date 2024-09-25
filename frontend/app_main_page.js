@@ -1,14 +1,12 @@
-let commandQueue = []; // Очередь для команд, если WebSocket еще не открыт
+let commandQueue = [];
 
-// Создание WebSocket соединения с проверкой на переподключение
 function createWebSocket() {
     let socket = new WebSocket('wss://chess.k6z.ru:8181');
 
     socket.onopen = function () {
         console.log('Соединение установлено');
-        // Отправляем все команды из очереди, если они накопились
         while (commandQueue.length > 0) {
-            let command = commandQueue.shift(); // Извлекаем команду из очереди
+            let command = commandQueue.shift();
             socket.send(command);
         }
     };
@@ -20,7 +18,7 @@ function createWebSocket() {
     socket.onclose = function (event) {
         console.log('WebSocket закрыт. Повторная попытка подключения через 1 секунду...');
         setTimeout(() => {
-            socket = createWebSocket(); // Переоткрытие соединения
+            socket = createWebSocket();
         }, 1000);
     };
 
@@ -42,15 +40,14 @@ function createWebSocket() {
     return socket;
 }
 
-let socket = createWebSocket(); // Инициализация WebSocket
+let socket = createWebSocket();
 
-// Функция для отправки команд через WebSocket
 function sendCommand(command) {
     if (socket.readyState === WebSocket.OPEN) {
         socket.send(command);
     } else {
         console.log('WebSocket не открыт. Команда добавлена в очередь.');
-        commandQueue.push(command); // Добавляем команду в очередь, если WebSocket не открыт
+        commandQueue.push(command);
     }
 }
 
@@ -267,11 +264,10 @@ const logsField = document.getElementById('server_logs_field');
 sendCommandButton.addEventListener('click', () => {
     const command = commandInput.value;
     if (command) {
-        sendCommand(command); // Используем функцию отправки с проверкой
+        sendCommand(command);
         commandInput.value = '';
     }
 });
 
-// Инициализация шахматной доски
 const whiteFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
 createChessboardFromFEN(whiteFEN, 'w');
