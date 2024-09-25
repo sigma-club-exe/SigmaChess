@@ -196,14 +196,20 @@ function handleSquareClick(row, col, files, ranks, playerColor) {
     } else {
         let move = `${selectedSquare}${clickedSquare}`; 
         console.log('Move: ' + move);
-        socket.send(`${matchId}:${move}`);
+
+        if (socket.readyState === WebSocket.OPEN) {
+            socket.send(`${matchId}:${move}`);
+        } else {
+            console.error('WebSocket is not open. Current state:', socket.readyState);
+        }
 
         selectedSquare = null;
         highlightedSquare = null;
     }
 }
 
-const socket = new WebSocket('wss://chess.k6z.ru:8181');
+// Создание WebSocket соединения с проверкой на переподключение
+let socket = new WebSocket('wss://chess.k6z.ru:8181');
 
 const commandInput = document.getElementById('commandInput');
 const sendCommandButton = document.getElementById('sendCommand');
@@ -211,9 +217,11 @@ const logsField = document.getElementById('server_logs_field');
 
 sendCommandButton.addEventListener('click', () => {
     const command = commandInput.value;
-    if (command) {
+    if (command && socket.readyState === WebSocket.OPEN) {
         socket.send(command);
         commandInput.value = '';
+    } else {
+        console.error('WebSocket is not open for sending command.');
     }
 });
 
@@ -240,6 +248,13 @@ socket.onerror = function (error) {
     console.error('Ошибка WebSocket:', error);
 };
 
-const whiteFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
+socket.onclose = function (event) {
+    console.log('WebSocket closed. Reconnecting...');
+    setTimeout(() => {
+        socket = new WebSocket('wss://chess.k6z.ru:8181');
+    }, 1000); // Переоткрытие соединения через 1 секунду
+};
 
+// Инициализация шахматной доски
+const whiteFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
 createChessboardFromFEN(whiteFEN, 'w');
