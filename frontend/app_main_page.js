@@ -203,7 +203,7 @@ function handleSquareClick(row, col, files, ranks, playerColor) {
     }
 }
 
-const socket = new WebSocket('wss://217.171.146.166:8181');
+const socket = new WebSocket('wss://chess.k6z.ru:8181');
 
 const commandInput = document.getElementById('commandInput');
 const sendCommandButton = document.getElementById('sendCommand');
