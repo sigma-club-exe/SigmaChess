@@ -10,11 +10,13 @@ services:
       - "--entrypoints.websecure.address=:443"
       - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
       - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
-      - "--certificatesresolvers.myresolver.acme.email=fed0ss1337@gmail.com" 
+      - "--certificatesresolvers.myresolver.acme.email=fed0ss1337@gmail.com"
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+      - "--entrypoints.ws.address=:8181"
     ports:
       - "80:80"
       - "443:443"
+      - "8181:8181"
       - "8080:8080"
     volumes:
       - "./letsencrypt:/letsencrypt"
@@ -43,6 +45,21 @@ services:
       - "traefik.http.services.frontend.loadbalancer.server.port=3000"
       - "traefik.http.routers.frontend.entrypoints=websecure"
       - "traefik.http.routers.frontend.tls.certresolver=myresolver"
+    networks:
+      - chess_network
+
+  websocket:
+    build:
+      context: ./backend
+      dockerfile: DOCKERFILE
+    labels:
+      - "traefik.http.routers.websocket.rule=Host(`chess.k6z.ru`)"
+      - "traefik.http.routers.websocket.entrypoints=websecure"
+      - "traefik.http.routers.websocket.tls.certresolver=myresolver"
+      - "traefik.tcp.routers.websocket.rule=HostSNI(`chess.k6z.ru`)"
+      - "traefik.tcp.routers.websocket.entrypoints=ws"
+      - "traefik.tcp.routers.websocket.tls=true"
+      - "traefik.tcp.services.websocket.loadbalancer.server.port=8181"
     networks:
       - chess_network
 
