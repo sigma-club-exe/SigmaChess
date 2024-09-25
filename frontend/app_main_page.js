@@ -2,7 +2,7 @@ let commandQueue = []; // Очередь для команд, если WebSocket
 
 // Создание WebSocket соединения с проверкой на переподключение
 function createWebSocket() {
-    let socket = new WebSocket('ws://chess.k6z.ru:8181');
+    let socket = new WebSocket('wss://chess.k6z.ru:8181');
 
     socket.onopen = function () {
         console.log('Соединение установлено');
