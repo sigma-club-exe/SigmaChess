@@ -58,6 +58,7 @@ services:
       - "traefik.http.routers.websocket.entrypoints=ws"
       - "traefik.http.routers.websocket.tls.certresolver=myresolver"
       - "traefik.http.services.websocket.loadbalancer.server.port=8181"
+      - "traefik.tcp.routers.websocket.tls=true"
     networks:
       - chess_network
 
