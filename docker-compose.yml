@@ -8,7 +8,7 @@ services:
       - "--providers.docker=true"
       - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
-      - "--entrypoints.ws.address=:8181"  # WebSocket entrypoint
+      - "--entrypoints.ws.address=:8181"
       - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
       - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
       - "--certificatesresolvers.myresolver.acme.email=fed0ss1337@gmail.com"
@@ -16,8 +16,8 @@ services:
     ports:
       - "80:80"
       - "443:443"
-      - "8181:8181"  # Expose WebSocket port
-      - "8080:8080"  # Traefik dashboard
+      - "8181:8181"
+      - "8080:8080"
     volumes:
       - "./letsencrypt:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
@@ -54,10 +54,9 @@ services:
       dockerfile: DOCKERFILE
     labels:
       - "traefik.http.routers.websocket.rule=Host(`chess.k6z.ru`)"
-      - "traefik.tcp.routers.websocket.rule=HostSNI(`chess.k6z.ru`)"  # WebSocket rule
-      - "traefik.tcp.routers.websocket.entrypoints=ws"  # Route to WebSocket entrypoint
-      - "traefik.tcp.routers.websocket.tls=true"  # Enable TLS for WebSocket
-      - "traefik.tcp.services.websocket.loadbalancer.server.port=8181"  # Proxy WebSocket traffic
+      - "traefik.http.routers.websocket.entrypoints=ws"
+      - "traefik.http.routers.websocket.tls.certresolver=myresolver"
+      - "traefik.http.services.websocket.loadbalancer.server.port=8181"
     networks:
       - chess_network
 
