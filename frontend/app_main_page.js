@@ -1,3 +1,59 @@
+let commandQueue = []; // Очередь для команд, если WebSocket еще не открыт
+
+// Создание WebSocket соединения с проверкой на переподключение
+function createWebSocket() {
+    let socket = new WebSocket('wss://chess.k6z.ru:8181');
+
+    socket.onopen = function () {
+        console.log('Соединение установлено');
+        // Отправляем все команды из очереди, если они накопились
+        while (commandQueue.length > 0) {
+            let command = commandQueue.shift(); // Извлекаем команду из очереди
+            socket.send(command);
+        }
+    };
+
+    socket.onerror = function (error) {
+        console.error('Ошибка WebSocket:', error);
+    };
+
+    socket.onclose = function (event) {
+        console.log('WebSocket закрыт. Повторная попытка подключения через 1 секунду...');
+        setTimeout(() => {
+            socket = createWebSocket(); // Переоткрытие соединения
+        }, 1000);
+    };
+
+    socket.onmessage = function (event) {
+        const data = event.data;
+
+        if (data.includes("FEN:")) {
+            const parts = data.slice(4).split(":");
+            const newFEN = parts[0];
+            const playerColor = parts[1];
+            createChessboardFromFEN(newFEN, playerColor);
+            switchTurn(); 
+        } else if (data.includes("LOGS:")) {
+            const logs = data.slice(5);
+            logsField.innerHTML = logs.replace(/\n/g, '<br>');
+        }
+    };
+
+    return socket;
+}
+
+let socket = createWebSocket(); // Инициализация WebSocket
+
+// Функция для отправки команд через WebSocket
+function sendCommand(command) {
+    if (socket.readyState === WebSocket.OPEN) {
+        socket.send(command);
+    } else {
+        console.log('WebSocket не открыт. Команда добавлена в очередь.');
+        commandQueue.push(command); // Добавляем команду в очередь, если WebSocket не открыт
+    }
+}
+
 const surrenderModal = document.getElementById('surrenderConfirmModal');
 const drawOfferModal = document.getElementById('drawOfferModal');
 const surrenderBtn = document.getElementById('surrender-btn');
@@ -197,19 +253,12 @@ function handleSquareClick(row, col, files, ranks, playerColor) {
         let move = `${selectedSquare}${clickedSquare}`; 
         console.log('Move: ' + move);
 
-        if (socket.readyState === WebSocket.OPEN) {
-            socket.send(`${matchId}:${move}`);
-        } else {
-            console.error('WebSocket is not open. Current state:', socket.readyState);
-        }
+        sendCommand(`${matchId}:${move}`);
 
         selectedSquare = null;
         highlightedSquare = null;
     }
 }
-
-// Создание WebSocket соединения с проверкой на переподключение
-let socket = new WebSocket('wss://chess.k6z.ru:8181');
 
 const commandInput = document.getElementById('commandInput');
 const sendCommandButton = document.getElementById('sendCommand');
@@ -217,43 +266,11 @@ const logsField = document.getElementById('server_logs_field');
 
 sendCommandButton.addEventListener('click', () => {
     const command = commandInput.value;
-    if (command && socket.readyState === WebSocket.OPEN) {
-        socket.send(command);
+    if (command) {
+        sendCommand(command); // Используем функцию отправки с проверкой
         commandInput.value = '';
-    } else {
-        console.error('WebSocket is not open for sending command.');
     }
 });
-
-socket.onmessage = function (event) {
-    const data = event.data;
-
-    if (data.includes("FEN:")) {
-        const parts = data.slice(4).split(":");
-        const newFEN = parts[0];
-        const playerColor = parts[1];
-        createChessboardFromFEN(newFEN, playerColor);
-        switchTurn(); 
-    } else if (data.includes("LOGS:")) {
-        const logs = data.slice(5);
-        logsField.innerHTML = logs.replace(/\n/g, '<br>');
-    }
-};
-
-socket.onopen = function () {
-    console.log('Соединение установлено');
-};
-
-socket.onerror = function (error) {
-    console.error('Ошибка WebSocket:', error);
-};
-
-socket.onclose = function (event) {
-    console.log('WebSocket closed. Reconnecting...');
-    setTimeout(() => {
-        socket = new WebSocket('wss://chess.k6z.ru:8181');
-    }, 1000); // Переоткрытие соединения через 1 секунду
-};
 
 // Инициализация шахматной доски
 const whiteFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
