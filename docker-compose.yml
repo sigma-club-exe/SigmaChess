@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: DOCKERFILE
+    ports:
+      - "7100:80"
+      - "8181:8181"
+    networks:
+      - chess_network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: DOCKERFILE
+    ports:
+      - "80:3000" 
+    networks:
+      - chess_network
+
+networks:
+  chess_network:
+    driver: bridge

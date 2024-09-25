@@ -1,0 +1,42 @@
+﻿  a b c d e f g h
+8 r n b q k b n r 8
+7 p p p p p p p p 7
+6 - - - - - - - - 6
+5 - - - - - - - - 5
+4 - - - - - - - - 4
+3 - - - - - - - - 3
+2 P P P P P P P P 2
+1 R N B Q K B N R 1
+  a b c d e f g h
+
+
+Реализована игра по сети, в том числе несколько одновременных сессий!
+
+все рокировки работают!
+
+// todo: IsUnderAttack: new King() надо передавать KindDidMove от старого короля
+
+
+challenge 2234
+2234:e2e4
+2234:e7e5
+2234:g1f3
+221:b8c6
+221:f1b5
+221:h7h6
+resign 221
+
+
+dotnet watch --project ChessGame2
+
+challenge 1
+bot 55
+55:e2e4
+55:g1f3
+55:d2d3
+55:b1c3
+resign 24
+
+13:d2d3
+13:c1e3
+13:b1c3

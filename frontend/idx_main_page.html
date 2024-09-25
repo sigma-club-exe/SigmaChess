@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="main_page.css">
+    <script src="app_main_page.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Aclonica&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@vkontakte/vk-bridge@2.0.8/dist/browser.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="info-container" id="info-container">
+            <div class="user-info1" id="opponent-info">
+                <div class="user-card">
+                    <img src="reqs/ava2.jpg" alt="user" class="user-image">
+                    <div class="username">@hamster_criminal</div>
+                    <div class="time black-time">10:00</div> 
+                </div>
+            </div>
+            <div class="chessboard-container">
+                <div class="chessboard" id="chessboard"></div>
+
+                <div id="surrenderConfirmModal" class="modal hidden">
+                    <div class="modal-content">
+                        <p>Вы уверены, что хотите сдаться?</p>
+                        <button id="confirm-surrender" class="btn_yn">Сдаться</button>
+                        <button id="cancel-surrender" class="btn_yn">Продолжить</button>
+                    </div>
+                </div>
+
+                <div id="drawOfferModal" class="modal hidden">
+                    <div class="modal-content">
+                        <p>Ваш противник предложил ничью. Согласны?</p>
+                        <button id="accept-draw" class="btn_yn">Принять</button>
+                        <button id="decline-draw" class="btn_yn">Отклонить</button>
+                    </div>
+                </div>
+            </div>
+            <div class="user-info2" id="player-info">
+                <div class="user-card">
+                    <img src="reqs/ava1.jpg" alt="user" class="user-image">
+                    <div class="username">@sigma_kotik</div>
+                    <div class="time white-time">10:00</div> 
+                </div>
+            </div>
+        </div>
+
+        <div class="command-container">
+            <input type="text" id="commandInput" placeholder="Введите команду (например, e2e4)">
+            <button class="command-btn" id="sendCommand">Отправить</button>
+            <div>логи сервера</div>
+            <div class="server_logs" id="server_logs_field"></div>
+        </div>
+
+        <div class="btns">
+            <button class="action-btn" id="surrender-btn">
+                <img src="reqs/white-flag-svgrepo-com.svg" class="btn-image">
+            </button>
+            <button class="action-btn" id="draw-offer-btn">
+                <img src="reqs/handshake-svgrepo-com.svg" class="btn-image">
+            </button>
+        </div>
+    </div>
+</body>
+</html>

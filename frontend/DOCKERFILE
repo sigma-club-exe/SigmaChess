@@ -1,0 +1,8 @@
+FROM node:20-alpine
+WORKDIR /app
+COPY . .
+
+RUN npm install -g http-server
+
+CMD ["http-server", "/app", "-p", "3000", "-c-1", "--index", "idx_main_page.html"]
+

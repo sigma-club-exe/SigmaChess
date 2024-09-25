@@ -1,0 +1,233 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: Aclonica, sans-serif;
+    background-color: #efe6d5;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 360px;
+}
+
+.info-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.chessboard-container {
+    position: relative;
+    width: 360px;
+    height: 360px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.chessboard {
+    width: 360px;
+    height: 360px;
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    gap: 0;
+    border: 5px solid rgba(51, 94, 94, 0.8);
+}
+
+.square {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.square.light {
+    background-color: #efe6d5;
+}
+
+.square.dark {
+    background-color: rgba(60, 111, 111, 0.8); 
+}
+
+.square::before {
+    position: absolute;
+    font-size: 12px;
+    color: white;
+}
+
+.square.light::before {
+    color: rgb(0, 0, 0);
+}
+
+.user-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-info1 {
+    width: 340px;
+    height: 60px;
+    background: rgba(60, 111, 111, 0.8);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    margin-bottom: -10px;
+    margin-top: -3px;
+}
+
+.user-info2 {
+    width: 340px;
+    height: 60px;
+    background: rgba(60, 111, 111, 0.8);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    margin-bottom: 15px;
+    margin-top: -10px;
+}
+
+.user-card {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.user-image {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+}
+
+.username {
+    text-align: center;
+    color: #f0ede7;
+    font-size: 14px;
+    font-family: Krona One, sans-serif; 
+    -webkit-text-stroke: 0.2px #867d6b;; 
+}
+
+.time {
+    color: #f0ede7;
+    font-size: 20px;
+    margin-right: 10px;
+    -webkit-text-stroke: 0.2px #FFFFFF; 
+}
+
+.btns {
+    width: 340px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px;
+    margin: -15px 0 0px 0;
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-image {
+    width: 45px;
+    height: 45px;
+    background: rgba(60, 111, 111, 0.8);
+    border-radius: 20%;
+    padding: 3px;
+}
+
+.btn-image:hover {
+    border: 2px solid rgba(51, 94, 94, 0.8);
+}
+
+.rank-label {
+    position: absolute;
+    top: 2px;
+    left: 1px;
+    font-size: 12px;
+    color: rgb(17, 27, 25);
+}
+
+.file-label {
+    position: absolute;
+    bottom: -1px;
+    right: 0.5px;
+    font-size: 12px;
+    color: rgb(17, 27, 25);
+}
+
+.chess-piece {
+    width: 90%;
+    height: 90%;
+    pointer-events: none;
+}
+
+.command-container{
+    border: 5px solid rgba(60, 111, 111, 0.8);
+    /* display: none; */
+    .command-btn{
+        background-color: rgba(60, 111, 111, 0.8);
+    }
+}
+
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 100%;
+}
+
+.modal-content {
+    background-color: rgb(51, 94, 94);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
+p {
+    color: white;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.btn_yn {
+    padding: 10px;
+    background-color: #efe6d5;
+    border-radius: 15px;
+    border:none;
+    font-size: 15px;
+    color: rgb(33, 51, 47);
+    font-weight: 600;
+}

@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../build/ChessGame2.props" />
+</Project>
