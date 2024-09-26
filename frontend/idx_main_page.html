@@ -25,29 +25,25 @@
             // Инициализируем WebApp
             Telegram.WebApp.ready();
 
-            // Получаем initDataUnsafe и выводим его содержимое для отладки
+            // Получаем initDataUnsafe
             const initDataUnsafe = Telegram.WebApp.initDataUnsafe;
 
-            // Выводим объект initDataUnsafe полностью
+            // Выводим объект initDataUnsafe полностью для отладки
             displayStatus('initDataUnsafe:');
             displayStatus(JSON.stringify(initDataUnsafe, null, 2));  // Отображаем все данные в JSON формате
-            
-            // Теперь пытаемся найти параметр startapp или что-либо похожее
-            if (initDataUnsafe && initDataUnsafe.query_id) {
-                const gameId = initDataUnsafe.query_id;  // Это пример, нужно проверить какие данные присутствуют
 
-                if (gameId) {
-                    displayStatus(`Отправка команды challenge для game_id: ${gameId}`);
-                    try {
-                        sendCommand(`challenge ${gameId}`); // Вызываем вашу функцию отправки
-                    } catch (error) {
-                        displayStatus(`Ошибка при отправке команды: ${error.message}`);
-                    }
-                } else {
-                    displayStatus('Параметр startapp не найден в initDataUnsafe.');
+            // Пытаемся получить параметр start_param
+            const gameId = initDataUnsafe.start_param;
+
+            if (gameId) {
+                displayStatus(`Отправка команды challenge для game_id: ${gameId}`);
+                try {
+                    sendCommand(`challenge ${gameId}`); // Вызываем вашу функцию отправки
+                } catch (error) {
+                    displayStatus(`Ошибка при отправке команды: ${error.message}`);
                 }
             } else {
-                displayStatus('initDataUnsafe не содержит параметра query_id или похожего.');
+                displayStatus('Параметр start_param не найден.');
             }
         } else {
             displayStatus('Telegram WebApp API недоступен.');
