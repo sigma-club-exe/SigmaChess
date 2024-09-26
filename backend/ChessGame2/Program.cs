@@ -52,6 +52,22 @@ server.Start(ws =>
                 .Send($"LOGS: Партия {gameId} завершилась так как пользователь сдался :(");
             games.Remove(gameId);
         }
+        else if (message.Contains("draw"))
+        {
+            var gameId = message[5..];
+            var currentSession = games[gameId];
+            if (ws == currentSession.Player1.PlayerConnection)
+            {
+                currentSession.Player2.PlayerConnection.Send("LOGS:соперник предлагает вам ничью");
+                currentSession.Player2.PlayerConnection.Send("DRAW-OFFER");
+            }
+            
+            else
+            {
+                currentSession.Player1.PlayerConnection.Send("LOGS:соперник предлагает вам ничью");
+                currentSession.Player1.PlayerConnection.Send("DRAW-OFFER");
+            }
+        }
         else if (message.Contains(':')) // moves handler
         {
             var parts = message.Split(':');
