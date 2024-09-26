@@ -17,7 +17,7 @@
     <script>
         // Функция для отображения статуса на экране
         function displayStatus(message) {
-            document.getElementById('status').innerHTML = message;
+            document.getElementById('status').innerHTML += `<p>${message}</p>`;
         }
 
         // Проверяем, доступен ли объект Telegram WebApp
@@ -25,12 +25,16 @@
             // Инициализируем WebApp
             Telegram.WebApp.ready();
 
-            // Получаем initDataUnsafe, который содержит переданные параметры
+            // Получаем initDataUnsafe и выводим его содержимое для отладки
             const initDataUnsafe = Telegram.WebApp.initDataUnsafe;
+
+            // Выводим объект initDataUnsafe полностью
+            displayStatus('initDataUnsafe:');
+            displayStatus(JSON.stringify(initDataUnsafe, null, 2));  // Отображаем все данные в JSON формате
             
-            // Проверяем, есть ли параметр startapp в initDataUnsafe
+            // Теперь пытаемся найти параметр startapp или что-либо похожее
             if (initDataUnsafe && initDataUnsafe.query_id) {
-                const gameId = initDataUnsafe.query_id;  // замените это, если 'startapp' находится в другом поле
+                const gameId = initDataUnsafe.query_id;  // Это пример, нужно проверить какие данные присутствуют
 
                 if (gameId) {
                     displayStatus(`Отправка команды challenge для game_id: ${gameId}`);
@@ -43,7 +47,7 @@
                     displayStatus('Параметр startapp не найден в initDataUnsafe.');
                 }
             } else {
-                displayStatus('initDataUnsafe не содержит параметра query_id.');
+                displayStatus('initDataUnsafe не содержит параметра query_id или похожего.');
             }
         } else {
             displayStatus('Telegram WebApp API недоступен.');
