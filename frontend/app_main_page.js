@@ -10,6 +10,62 @@ if (user) {
     };
 }
 
+const surrenderModal = document.getElementById('surrenderConfirmModal');
+const drawOfferModal = document.getElementById('drawOfferModal');
+const drawAcceptOfferModal = document.getElementById('drawAcceptOfferModal');
+const surrenderBtn = document.getElementById('surrender-btn');
+const confirmSurrenderBtn = document.getElementById('confirm-surrender');
+const cancelSurrenderBtn = document.getElementById('cancel-surrender');
+const drawOfferBtn = document.getElementById('draw-offer-btn');
+const acceptDrawBtn = document.getElementById('accept-draw');
+const declineDrawBtn = document.getElementById('decline-draw');
+const acceptDrawBtn2 = document.getElementById('accept-draw2');
+const declineDrawBtn2 = document.getElementById('decline-draw2');
+
+surrenderBtn.addEventListener('click', function () {
+    console.log('Surrender button clicked');
+    surrenderModal.classList.remove('hidden');
+
+});
+
+drawOfferBtn.addEventListener('click', function () {
+    console.log('Draw offer button clicked');
+    drawOfferModal.classList.remove('hidden');
+});
+
+confirmSurrenderBtn.addEventListener('click', function() {
+    console.log('Surrender confirmed');
+    sendCommand(`resign ${matchId}`);
+    surrenderModal.classList.add('hidden');
+});
+
+cancelSurrenderBtn.addEventListener('click', function() {
+    console.log('Surrender canceled');
+    surrenderModal.classList.add('hidden');
+});
+
+acceptDrawBtn.addEventListener('click', function() {
+    console.log('Draw offered');
+    sendCommand(`draw ${matchId}`);
+    drawOfferModal.classList.add('hidden');
+});
+
+declineDrawBtn.addEventListener('click', function() {
+    console.log('Draw canceled');
+    drawOfferModal.classList.add('hidden');
+});
+
+acceptDrawBtn2.addEventListener('click', function() {
+    console.log('Draw accepted');
+    sendCommand(`draw ${matchId}`);
+    drawAcceptOfferModal.classList.add('hidden');
+});
+
+declineDrawBtn2.addEventListener('click', function() {
+    console.log('Draw killed');
+    drawAcceptOfferModal.classList.add('hidden');
+});
+
 let commandQueue = [];
 
 function createWebSocket() {
@@ -69,62 +125,6 @@ function sendCommand(command) {
         commandQueue.push(command);
     }
 }
-
-const surrenderModal = document.getElementById('surrenderConfirmModal');
-const drawOfferModal = document.getElementById('drawOfferModal');
-const drawAcceptOfferModal = document.getElementById('drawAcceptOfferModal');
-const surrenderBtn = document.getElementById('surrender-btn');
-const confirmSurrenderBtn = document.getElementById('confirm-surrender');
-const cancelSurrenderBtn = document.getElementById('cancel-surrender');
-const drawOfferBtn = document.getElementById('draw-offer-btn');
-const acceptDrawBtn = document.getElementById('accept-draw');
-const declineDrawBtn = document.getElementById('decline-draw');
-const acceptDrawBtn2 = document.getElementById('accept-draw2');
-const declineDrawBtn2 = document.getElementById('decline-draw2');
-
-surrenderBtn.addEventListener('click', function () {
-    console.log('Surrender button clicked');
-    surrenderModal.classList.remove('hidden');
-
-});
-
-drawOfferBtn.addEventListener('click', function () {
-    console.log('Draw offer button clicked');
-    drawOfferModal.classList.remove('hidden');
-});
-
-confirmSurrenderBtn.addEventListener('click', function() {
-    console.log('Surrender confirmed');
-    sendCommand(`resign ${matchId}`);
-    surrenderModal.classList.add('hidden');
-});
-
-cancelSurrenderBtn.addEventListener('click', function() {
-    console.log('Surrender canceled');
-    surrenderModal.classList.add('hidden');
-});
-
-acceptDrawBtn.addEventListener('click', function() {
-    console.log('Draw offered');
-    sendCommand(`draw ${matchId}`);
-    drawOfferModal.classList.add('hidden');
-});
-
-declineDrawBtn.addEventListener('click', function() {
-    console.log('Draw canceled');
-    drawOfferModal.classList.add('hidden');
-});
-
-acceptDrawBtn2.addEventListener('click', function() {
-    console.log('Draw accepted');
-    sendCommand(`draw ${matchId}`);
-    drawAcceptOfferModal.classList.add('hidden');
-});
-
-declineDrawBtn2.addEventListener('click', function() {
-    console.log('Draw killed');
-    drawAcceptOfferModal.classList.add('hidden');
-});
 
 const chessboard = document.getElementById('chessboard');
 const files = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
