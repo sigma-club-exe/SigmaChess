@@ -10,12 +10,12 @@ if (user) {
     };
 }
 
-const matchId = Telegram.WebApp.initDataUnsafe.start_param;
+// const matchId = Telegram.WebApp.initDataUnsafe.start_param;
 
-if (matchId) {
-    console.log(`Отправка команды challenge для game_id: ${matchId}`);
-    sendCommand(`challenge ${matchId}`);
-}
+// if (matchId) {
+//     console.log(`Отправка команды challenge для game_id: ${matchId}`);
+//     sendCommand(`challenge ${matchId}`);
+// }
 
 const surrenderModal = document.getElementById('surrenderConfirmModal');
 const drawOfferModal = document.getElementById('drawOfferModal');
@@ -108,11 +108,11 @@ function createWebSocket() {
         } else if (data.includes("LOGS:")) {
             const logs = data.slice(5);
             logsField.innerHTML = logs.replace(/\n/g, '<br>');
-        // } else if (data.includes("GAMEID:")) {
-        //     const gameId = data.slice(7);
-        //     gameIdField.innerHTML = gameId;
-        //     matchId = gameId;
-        //     console.log('Получен matchId от сервера:', matchId);
+        } else if (data.includes("GAMEID:")) {
+            const gameId = data.slice(7);
+            gameIdField.innerHTML = gameId;
+            // matchId = gameId;
+            // console.log('Получен matchId от сервера:', matchId);
         } else if (data.includes("DRAW-OFFER")) {
             drawAcceptOfferModal.classList.remove('hidden');
         }
