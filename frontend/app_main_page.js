@@ -52,7 +52,7 @@ function createWebSocket() {
             matchId = gameId;
             console.log('Получен matchId от сервера:', matchId);
         } else if (data.includes("DRAW-OFFER")) {
-            // открыть окно вам предложили ничью
+            drawAcceptOfferModal.classList.remove('hidden');
         }
     };
 
@@ -72,12 +72,15 @@ function sendCommand(command) {
 
 const surrenderModal = document.getElementById('surrenderConfirmModal');
 const drawOfferModal = document.getElementById('drawOfferModal');
+const drawAcceptOfferModal = document.getElementById('drawAcceptOfferModal');
 const surrenderBtn = document.getElementById('surrender-btn');
 const confirmSurrenderBtn = document.getElementById('confirm-surrender');
 const cancelSurrenderBtn = document.getElementById('cancel-surrender');
 const drawOfferBtn = document.getElementById('draw-offer-btn');
 const acceptDrawBtn = document.getElementById('accept-draw');
 const declineDrawBtn = document.getElementById('decline-draw');
+const acceptDrawBtn2 = document.getElementById('accept-draw2');
+const declineDrawBtn2 = document.getElementById('decline-draw2');
 
 surrenderBtn.addEventListener('click', function () {
     console.log('Surrender button clicked');
@@ -110,6 +113,17 @@ acceptDrawBtn.addEventListener('click', function() {
 declineDrawBtn.addEventListener('click', function() {
     console.log('Draw canceled');
     drawOfferModal.classList.add('hidden');
+});
+
+acceptDrawBtn2.addEventListener('click', function() {
+    console.log('Draw accepted');
+    sendCommand(`draw ${matchId}`);
+    drawAcceptOfferModal.classList.add('hidden');
+});
+
+declineDrawBtn2.addEventListener('click', function() {
+    console.log('Draw killed');
+    drawAcceptOfferModal.classList.add('hidden');
 });
 
 const chessboard = document.getElementById('chessboard');
