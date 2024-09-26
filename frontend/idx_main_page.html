@@ -12,6 +12,36 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
+    <div id="status"></div>
+
+    <script>
+        // Функция для отображения статуса на экране
+        function displayStatus(message) {
+            document.getElementById('status').innerHTML = message;
+        }
+
+        // Функция для получения параметра из URL
+        function getUrlParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // Извлекаем параметр startapp
+        const gameId = getUrlParameter('startapp');
+
+        if (gameId) {
+            // Если параметр существует, отправляем команду
+            displayStatus(`Отправка команды challenge для game_id: ${gameId}`);
+            try {
+                sendCommand(`challenge ${gameId}`); // Вызываем вашу функцию отправки
+            } catch (error) {
+                displayStatus(`Ошибка при отправке команды: ${error.message}`);
+            }
+        } else {
+            // Если параметра нет, выводим сообщение
+            displayStatus('Параметр startapp не найден в URL.');
+        }
+    </script>
     <div class="container">
         <div class="info-container" id="info-container">
             <div class="user-info1" id="opponent-info">
