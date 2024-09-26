@@ -10,6 +10,18 @@ if (user) {
     };
 }
 
+function getUrlParameter(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+}
+
+const gameId = getUrlParameter('startapp');
+
+if (gameId) {
+    console.log(`Отправка команды challenge для game_id: ${gameId}`);
+    sendCommand(`challenge ${gameId}`);
+}
+
 const surrenderModal = document.getElementById('surrenderConfirmModal');
 const drawOfferModal = document.getElementById('drawOfferModal');
 const drawAcceptOfferModal = document.getElementById('drawAcceptOfferModal');
@@ -57,7 +69,6 @@ declineDrawBtn.addEventListener('click', function() {
 
 acceptDrawBtn2.addEventListener('click', function() {
     console.log('Draw accepted');
-    sendCommand(`draw ${matchId}`);
     drawAcceptOfferModal.classList.add('hidden');
 });
 
