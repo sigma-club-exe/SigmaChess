@@ -262,6 +262,7 @@ function handleSquareClick(row, col, files, ranks, playerColor) {
     }
 }
 
+const gameIdField = document.getElementById('gameId_field');
 const commandInput = document.getElementById('commandInput');
 const sendCommandButton = document.getElementById('sendCommand');
 const logsField = document.getElementById('server_logs_field');
