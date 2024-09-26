@@ -10,16 +10,11 @@ if (user) {
     };
 }
 
-function getUrlParameter(name) {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get(name);
-}
+const matchId = Telegram.WebApp.initDataUnsafe.start_param;
 
-const gameId = getUrlParameter('startapp');
-
-if (gameId) {
-    console.log(`Отправка команды challenge для game_id: ${gameId}`);
-    sendCommand(`challenge ${gameId}`);
+if (matchId) {
+    console.log(`Отправка команды challenge для game_id: ${matchId}`);
+    sendCommand(`challenge ${matchId}`);
 }
 
 const surrenderModal = document.getElementById('surrenderConfirmModal');
@@ -113,11 +108,11 @@ function createWebSocket() {
         } else if (data.includes("LOGS:")) {
             const logs = data.slice(5);
             logsField.innerHTML = logs.replace(/\n/g, '<br>');
-        } else if (data.includes("GAMEID:")) {
-            const gameId = data.slice(7);
-            gameIdField.innerHTML = gameId;
-            matchId = gameId;
-            console.log('Получен matchId от сервера:', matchId);
+        // } else if (data.includes("GAMEID:")) {
+        //     const gameId = data.slice(7);
+        //     gameIdField.innerHTML = gameId;
+        //     matchId = gameId;
+        //     console.log('Получен matchId от сервера:', matchId);
         } else if (data.includes("DRAW-OFFER")) {
             drawAcceptOfferModal.classList.remove('hidden');
         }
@@ -143,7 +138,6 @@ const ranksWhite = [8, 7, 6, 5, 4, 3, 2, 1];
 const ranksBlack = [1, 2, 3, 4, 5, 6, 7, 8];
 let selectedSquare = null;
 let highlightedSquare = null; 
-let matchId = null;
 
 let whiteTime = 600; 
 let blackTime = 600; 
