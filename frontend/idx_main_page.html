@@ -20,26 +20,32 @@
             document.getElementById('status').innerHTML = message;
         }
 
-        // Функция для получения параметра из URL
-        function getUrlParameter(name) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(name);
-        }
+        // Проверяем, доступен ли объект Telegram WebApp
+        if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
+            // Получаем данные от Telegram
+            const initData = Telegram.WebApp.initData;
 
-        // Извлекаем параметр startapp
-        const gameId = getUrlParameter('startapp');
-
-        if (gameId) {
-            // Если параметр существует, отправляем команду
-            displayStatus(`Отправка команды challenge для game_id: ${gameId}`);
-            try {
-                sendCommand(`challenge ${gameId}`); // Вызываем вашу функцию отправки
-            } catch (error) {
-                displayStatus(`Ошибка при отправке команды: ${error.message}`);
+            // Извлекаем данные из initData (в initData могут передаваться параметры как JSON)
+            if (initData) {
+                // Пытаемся получить параметр startapp из initData
+                const urlParams = new URLSearchParams(initData);
+                const gameId = urlParams.get('startapp');
+                
+                if (gameId) {
+                    displayStatus(`Отправка команды challenge для game_id: ${gameId}`);
+                    try {
+                        sendCommand(`challenge ${gameId}`); // Вызываем вашу функцию отправки
+                    } catch (error) {
+                        displayStatus(`Ошибка при отправке команды: ${error.message}`);
+                    }
+                } else {
+                    displayStatus('Параметр startapp не найден в initData.');
+                }
+            } else {
+                displayStatus('initData от Telegram пустой.');
             }
         } else {
-            // Если параметра нет, выводим сообщение
-            displayStatus('Параметр startapp не найден в URL.');
+            displayStatus('Telegram WebApp API недоступен.');
         }
     </script>
     <div class="container">
