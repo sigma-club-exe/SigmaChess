@@ -81,19 +81,18 @@ const declineDrawBtn = document.getElementById('decline-draw');
 
 surrenderBtn.addEventListener('click', function () {
     console.log('Surrender button clicked');
-    sendCommand(`resign ${matchId}`);
     surrenderModal.classList.remove('hidden');
 
 });
 
 drawOfferBtn.addEventListener('click', function () {
     console.log('Draw offer button clicked');
-    sendCommand(`draw ${matchId}`);
     drawOfferModal.classList.remove('hidden');
 });
 
 confirmSurrenderBtn.addEventListener('click', function() {
     console.log('Surrender confirmed');
+    sendCommand(`resign ${matchId}`);
     surrenderModal.classList.add('hidden');
 });
 
@@ -103,12 +102,13 @@ cancelSurrenderBtn.addEventListener('click', function() {
 });
 
 acceptDrawBtn.addEventListener('click', function() {
-    console.log('Draw accepted');
+    console.log('Draw offered');
+    sendCommand(`draw ${matchId}`);
     drawOfferModal.classList.add('hidden');
 });
 
 declineDrawBtn.addEventListener('click', function() {
-    console.log('Draw declined');
+    console.log('Draw canceled');
     drawOfferModal.classList.add('hidden');
 });
 
