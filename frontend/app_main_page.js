@@ -34,6 +34,11 @@ function createWebSocket() {
         } else if (data.includes("LOGS:")) {
             const logs = data.slice(5);
             logsField.innerHTML = logs.replace(/\n/g, '<br>');
+        } else if (data.includes("GAMEID:")) {
+            const gameId = data.slice(7);
+            gameIdField.innerHTML = gameId;
+            matchId = gameId;
+            console.log('Получен matchId от сервера:', matchId);
         }
     };
 
@@ -96,7 +101,7 @@ const ranksWhite = [8, 7, 6, 5, 4, 3, 2, 1];
 const ranksBlack = [1, 2, 3, 4, 5, 6, 7, 8];
 let selectedSquare = null;
 let highlightedSquare = null; 
-let matchId = 1; 
+let matchId = null;
 
 let whiteTime = 600; 
 let blackTime = 600; 
