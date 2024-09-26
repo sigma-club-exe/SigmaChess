@@ -34,3 +34,15 @@ C:/Users/fyodo.DESKTOP-9A67S1J/RiderProjects/ChessGame2/ChessLOgic/obj/Debug/net
 /Users/maksim/Projects/chess/ChessGame/ChessLOgic/obj/Debug/net8.0/refint/ChessLOgic.dll
 /Users/maksim/Projects/chess/ChessGame/ChessLOgic/obj/Debug/net8.0/ChessLOgic.pdb
 /Users/maksim/Projects/chess/ChessGame/ChessLOgic/obj/Debug/net8.0/ref/ChessLOgic.dll
+C:\Users\fyodo.DESKTOP-9A67S1J\vscode_projects\SigmaChess\backend\ChessLOgic\bin\Debug\net8.0\ChessLOgic.deps.json
+C:\Users\fyodo.DESKTOP-9A67S1J\vscode_projects\SigmaChess\backend\ChessLOgic\bin\Debug\net8.0\ChessLOgic.dll
+C:\Users\fyodo.DESKTOP-9A67S1J\vscode_projects\SigmaChess\backend\ChessLOgic\bin\Debug\net8.0\ChessLOgic.pdb
+C:\Users\fyodo.DESKTOP-9A67S1J\vscode_projects\SigmaChess\backend\ChessLOgic\obj\Debug\net8.0\ChessLOgic.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\fyodo.DESKTOP-9A67S1J\vscode_projects\SigmaChess\backend\ChessLOgic\obj\Debug\net8.0\ChessLOgic.AssemblyInfoInputs.cache
+C:\Users\fyodo.DESKTOP-9A67S1J\vscode_projects\SigmaChess\backend\ChessLOgic\obj\Debug\net8.0\ChessLOgic.AssemblyInfo.cs
+C:\Users\fyodo.DESKTOP-9A67S1J\vscode_projects\SigmaChess\backend\ChessLOgic\obj\Debug\net8.0\ChessLOgic.csproj.CoreCompileInputs.cache
+C:\Users\fyodo.DESKTOP-9A67S1J\vscode_projects\SigmaChess\backend\ChessLOgic\obj\Debug\net8.0\ChessLOgic.sourcelink.json
+C:\Users\fyodo.DESKTOP-9A67S1J\vscode_projects\SigmaChess\backend\ChessLOgic\obj\Debug\net8.0\ChessLOgic.dll
+C:\Users\fyodo.DESKTOP-9A67S1J\vscode_projects\SigmaChess\backend\ChessLOgic\obj\Debug\net8.0\refint\ChessLOgic.dll
+C:\Users\fyodo.DESKTOP-9A67S1J\vscode_projects\SigmaChess\backend\ChessLOgic\obj\Debug\net8.0\ChessLOgic.pdb
+C:\Users\fyodo.DESKTOP-9A67S1J\vscode_projects\SigmaChess\backend\ChessLOgic\obj\Debug\net8.0\ref\ChessLOgic.dll

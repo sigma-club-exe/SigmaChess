@@ -37,6 +37,9 @@ server.Start(ws =>
                 ws.Send($"LOGS: Партия {gameId} началась!" +
                         '\n' + "Сейчас ход белых" +
                         '\n' + $"Вы играете {colorMessage} фигурами");
+
+                 ws.Send($"GAMEID:{gameId}");
+                wsConnectionsQueue[gameId].Send($"GAMEID:{gameId}");
             }
         }
         else if (message.Contains("resign"))
