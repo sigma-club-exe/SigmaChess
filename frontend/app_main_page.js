@@ -1,3 +1,15 @@
+const user = Telegram.WebApp.initDataUnsafe.user;
+
+if (user) {
+    const playerInfoUsername = document.querySelector('#player-info .username');
+    playerInfoUsername.textContent = '@' + user.username;
+    const playerInfoImage = document.querySelector('#player-info .user-image');
+    playerInfoImage.src = `https://t.me/i/userpic/320/${user.username}.jpg`;
+    playerInfoImage.onerror = function () {
+        playerInfoImage.src = 'reqs/ava1.jpg';
+    };
+}
+
 let commandQueue = [];
 
 function createWebSocket() {
