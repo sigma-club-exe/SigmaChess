@@ -22,15 +22,16 @@
 
         // Проверяем, доступен ли объект Telegram WebApp
         if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
-            // Получаем данные от Telegram
-            const initData = Telegram.WebApp.initData;
+            // Инициализируем WebApp
+            Telegram.WebApp.ready();
 
-            // Извлекаем данные из initData (в initData могут передаваться параметры как JSON)
-            if (initData) {
-                // Пытаемся получить параметр startapp из initData
-                const urlParams = new URLSearchParams(initData);
-                const gameId = urlParams.get('startapp');
-                
+            // Получаем initDataUnsafe, который содержит переданные параметры
+            const initDataUnsafe = Telegram.WebApp.initDataUnsafe;
+            
+            // Проверяем, есть ли параметр startapp в initDataUnsafe
+            if (initDataUnsafe && initDataUnsafe.query_id) {
+                const gameId = initDataUnsafe.query_id;  // замените это, если 'startapp' находится в другом поле
+
                 if (gameId) {
                     displayStatus(`Отправка команды challenge для game_id: ${gameId}`);
                     try {
@@ -39,10 +40,10 @@
                         displayStatus(`Ошибка при отправке команды: ${error.message}`);
                     }
                 } else {
-                    displayStatus('Параметр startapp не найден в initData.');
+                    displayStatus('Параметр startapp не найден в initDataUnsafe.');
                 }
             } else {
-                displayStatus('initData от Telegram пустой.');
+                displayStatus('initDataUnsafe не содержит параметра query_id.');
             }
         } else {
             displayStatus('Telegram WebApp API недоступен.');
