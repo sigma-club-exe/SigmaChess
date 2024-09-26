@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Aclonica&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/@vkontakte/vk-bridge@2.0.8/dist/browser.min.js"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
     <div class="container">
@@ -34,9 +34,17 @@
 
                 <div id="drawOfferModal" class="modal hidden">
                     <div class="modal-content">
-                        <p>Ваш противник предложил ничью. Согласны?</p>
+                        <p>Вы уверены, что хотите предложить ничью?</p>
+                        <button id="accept-draw" class="btn_yn">Предложить</button>
+                        <button id="decline-draw" class="btn_yn">Отменить</button>
+                    </div>
+                </div>
+
+                <div id="drawAcceptOfferModal" class="modal hidden">
+                    <div class="modal-content">
+                        <p>Вам предложили ничью. Хотите её принять?</p>
                         <button id="accept-draw" class="btn_yn">Принять</button>
-                        <button id="decline-draw" class="btn_yn">Отклонить</button>
+                        <button id="decline-draw" class="btn_yn">Отказаться</button>
                     </div>
                 </div>
             </div>

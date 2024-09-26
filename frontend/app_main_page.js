@@ -1,3 +1,15 @@
+const user = Telegram.WebApp.initDataUnsafe.user;
+
+if (user) {
+    const playerInfoUsername = document.querySelector('#player-info .username');
+    playerInfoUsername.textContent = '@' + user.username;
+    const playerInfoImage = document.querySelector('#player-info .user-image');
+    playerInfoImage.src = `https://t.me/i/userpic/320/${user.username}.jpg`;
+    playerInfoImage.onerror = function () {
+        playerInfoImage.src = 'reqs/ava1.jpg';
+    };
+}
+
 let commandQueue = [];
 
 function createWebSocket() {
@@ -39,6 +51,8 @@ function createWebSocket() {
             gameIdField.innerHTML = gameId;
             matchId = gameId;
             console.log('Получен matchId от сервера:', matchId);
+        } else if (data.includes("DRAW-OFFER")) {
+            // открыть окно вам предложили ничью
         }
     };
 
@@ -68,6 +82,7 @@ const declineDrawBtn = document.getElementById('decline-draw');
 surrenderBtn.addEventListener('click', function () {
     console.log('Surrender button clicked');
     surrenderModal.classList.remove('hidden');
+
 });
 
 drawOfferBtn.addEventListener('click', function () {
@@ -77,6 +92,7 @@ drawOfferBtn.addEventListener('click', function () {
 
 confirmSurrenderBtn.addEventListener('click', function() {
     console.log('Surrender confirmed');
+    sendCommand(`resign ${matchId}`);
     surrenderModal.classList.add('hidden');
 });
 
@@ -86,12 +102,13 @@ cancelSurrenderBtn.addEventListener('click', function() {
 });
 
 acceptDrawBtn.addEventListener('click', function() {
-    console.log('Draw accepted');
+    console.log('Draw offered');
+    sendCommand(`draw ${matchId}`);
     drawOfferModal.classList.add('hidden');
 });
 
 declineDrawBtn.addEventListener('click', function() {
-    console.log('Draw declined');
+    console.log('Draw canceled');
     drawOfferModal.classList.add('hidden');
 });
 
@@ -140,30 +157,7 @@ function updateTimerDisplay(player, time) {
     document.querySelector(`.${player}-time`).textContent = timeString;
 }
 
-function updatePlayerLayout(playerColor) {
-    const infoContainer = document.getElementById('info-container');
-    const playerInfo = document.getElementById('player-info');
-    const opponentInfo = document.getElementById('opponent-info');
-    playerInfo.classList.remove('user-info1', 'user-info2');
-    opponentInfo.classList.remove('user-info1', 'user-info2');
-
-    if (playerColor === 'w') {
-        infoContainer.appendChild(opponentInfo);
-        infoContainer.appendChild(document.querySelector('.chessboard-container'));
-        infoContainer.appendChild(playerInfo);
-        opponentInfo.classList.add('user-info1');
-        playerInfo.classList.add('user-info2');
-    } else {
-        infoContainer.appendChild(playerInfo);
-        infoContainer.appendChild(document.querySelector('.chessboard-container'));
-        infoContainer.appendChild(opponentInfo);
-        playerInfo.classList.add('user-info1');
-        opponentInfo.classList.add('user-info2');
-    }
-}
-
 function createChessboardFromFEN(fen, playerColor) {
-    updatePlayerLayout(playerColor);  
 
     chessboard.innerHTML = ''; 
     const ranks = playerColor === 'w' ? ranksWhite : ranksBlack;
