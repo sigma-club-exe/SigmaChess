@@ -10,12 +10,12 @@ if (user) {
     };
 }
 
-// const matchId = Telegram.WebApp.initDataUnsafe.start_param;
+const matchId = Telegram.WebApp.initDataUnsafe.start_param;
 
-// if (matchId) {
-//     console.log(`Отправка команды challenge для game_id: ${matchId}`);
-//     sendCommand(`challenge ${matchId}`);
-// }
+if (matchId) {
+    console.log(`Отправка команды challenge для game_id: ${matchId}`);
+    sendCommand(`challenge ${matchId}`);
+}
 
 const surrenderModal = document.getElementById('surrenderConfirmModal');
 const drawOfferModal = document.getElementById('drawOfferModal');
