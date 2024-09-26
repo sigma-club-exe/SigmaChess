@@ -1,9 +1,9 @@
 const user = Telegram.WebApp.initDataUnsafe.user;
 
 if (user) {
-    const playerInfoUsername = document.querySelector('#player-info .username');
+    const playerInfoUsername = document.querySelector('#user-info1 .username');
     playerInfoUsername.textContent = '@' + user.username;
-    const playerInfoImage = document.querySelector('#player-info .user-image');
+    const playerInfoImage = document.querySelector('#user-info1 .user-image');
     playerInfoImage.src = `https://t.me/i/userpic/320/${user.username}.jpg`;
     playerInfoImage.onerror = function () {
         playerInfoImage.src = 'reqs/ava1.jpg';
@@ -51,6 +51,8 @@ function createWebSocket() {
             gameIdField.innerHTML = gameId;
             matchId = gameId;
             console.log('Получен matchId от сервера:', matchId);
+        } else if (data.includes("DRAW-OFFER")) {
+            // открыть окно вам предложили ничью
         }
     };
 
@@ -79,11 +81,14 @@ const declineDrawBtn = document.getElementById('decline-draw');
 
 surrenderBtn.addEventListener('click', function () {
     console.log('Surrender button clicked');
+    sendCommand(`resign ${matchId}`);
     surrenderModal.classList.remove('hidden');
+
 });
 
 drawOfferBtn.addEventListener('click', function () {
     console.log('Draw offer button clicked');
+    sendCommand(`draw ${matchId}`);
     drawOfferModal.classList.remove('hidden');
 });
 
@@ -152,30 +157,7 @@ function updateTimerDisplay(player, time) {
     document.querySelector(`.${player}-time`).textContent = timeString;
 }
 
-function updatePlayerLayout(playerColor) {
-    const infoContainer = document.getElementById('info-container');
-    const playerInfo = document.getElementById('player-info');
-    const opponentInfo = document.getElementById('opponent-info');
-    playerInfo.classList.remove('user-info1', 'user-info2');
-    opponentInfo.classList.remove('user-info1', 'user-info2');
-
-    if (playerColor === 'w') {
-        infoContainer.appendChild(opponentInfo);
-        infoContainer.appendChild(document.querySelector('.chessboard-container'));
-        infoContainer.appendChild(playerInfo);
-        opponentInfo.classList.add('user-info1');
-        playerInfo.classList.add('user-info2');
-    } else {
-        infoContainer.appendChild(playerInfo);
-        infoContainer.appendChild(document.querySelector('.chessboard-container'));
-        infoContainer.appendChild(opponentInfo);
-        playerInfo.classList.add('user-info1');
-        opponentInfo.classList.add('user-info2');
-    }
-}
-
 function createChessboardFromFEN(fen, playerColor) {
-    updatePlayerLayout(playerColor);  
 
     chessboard.innerHTML = ''; 
     const ranks = playerColor === 'w' ? ranksWhite : ranksBlack;
