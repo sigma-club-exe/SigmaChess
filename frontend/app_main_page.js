@@ -10,11 +10,22 @@ if (user) {
     };
 }
 
+// Функция для отображения статуса на экране
+function displayStatus(message) {
+    const statusElement = document.getElementById('status');
+    statusElement.innerHTML += `<p>${message}</p>`; // Добавляем сообщение в HTML
+}
+
+// Выводим весь объект initDataUnsafe на экран для отладки
+displayStatus('initDataUnsafe: ' + JSON.stringify(Telegram.WebApp.initDataUnsafe));
+
 const matchId = Telegram.WebApp.initDataUnsafe.start_param;
 
 if (matchId) {
-    console.log(`Отправка команды challenge для game_id: ${matchId}`);
+    displayStatus(`Отправка команды challenge для game_id: ${matchId}`);
     sendCommand(`challenge ${matchId}`);
+} else {
+    displayStatus('Параметр start_param отсутствует или пуст.');
 }
 
 const surrenderModal = document.getElementById('surrenderConfirmModal');
