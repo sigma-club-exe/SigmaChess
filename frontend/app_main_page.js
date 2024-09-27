@@ -18,14 +18,14 @@ function displayStatus(message) {
 displayStatus(JSON.stringify(Telegram.WebApp.initDataUnsafe));
 
 const matchId = Telegram.WebApp.initDataUnsafe.start_param;
-displayStatus('Извлеченный matchId:', matchId);  // Отладка
+displayStatus(`Извлеченный matchId: ${matchId}`);  // Отладка
 
 if (matchId) {
     displayStatus(`Отправка команды challenge для game_id: ${matchId}`);
     try {
         sendCommand(`challenge ${matchId}`);
     } catch (error) {
-        displayStatus('Ошибка при отправке команды:');
+        displayStatus(`Ошибка при отправке команды: ${error}`);
     }
 }
 
@@ -136,7 +136,7 @@ function createWebSocket() {
 let socket = createWebSocket();
 
 function sendCommand(command) {
-    displayStatus('Попытка отправить команду:', command);
+    displayStatus(`Попытка отправить команду: ${command}`);
     if (socket.readyState === WebSocket.OPEN) {
         socket.send(command);
         displayStatus('Команда отправлена:', command);
