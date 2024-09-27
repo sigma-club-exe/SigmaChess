@@ -90,6 +90,8 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - chess_network
+    ports:
+      - "5252:5252"
 
 volumes:
   postgres_data:
