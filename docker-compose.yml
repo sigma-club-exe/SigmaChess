@@ -76,6 +76,8 @@ services:
       - chess_network
     depends_on:
       - chess_postgres
+    ports:
+      - 5252:5252
 
   # Добавляем сервис для базы данных PostgreSQL
   chess_postgres:
@@ -90,8 +92,6 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - chess_network
-    ports:
-      - "5252:5252"
 
 volumes:
   postgres_data:
