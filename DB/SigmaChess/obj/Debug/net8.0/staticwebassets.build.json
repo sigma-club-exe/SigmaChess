@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "m4tMDROCNCJYjSKwPlJPER1+UEv4P/3bIQJ0fMeuCk4=",
+  "Source": "SigmaChess",
+  "BasePath": "_content/SigmaChess",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
