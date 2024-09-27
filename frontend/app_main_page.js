@@ -10,11 +10,24 @@ if (user) {
     };
 }
 
+function displayStatus(message) {
+    const statusElement = document.getElementById('status');
+    statusElement.innerHTML += `<p>${message}</p>`; // Добавляем сообщение в HTML
+}
+
+displayStatus(JSON.stringify(Telegram.WebApp.initDataUnsafe));
+
 const matchId = Telegram.WebApp.initDataUnsafe.start_param;
+displayStatus('Извлеченный matchId:', matchId);  // Отладка
 
 if (matchId) {
-    sendCommand(`challenge ${matchId}`);
-} 
+    displayStatus(`Отправка команды challenge для game_id: ${matchId}`);
+    try {
+        sendCommand(`challenge ${matchId}`);
+    } catch (error) {
+        displayStatus('Ошибка при отправке команды:');
+    }
+}
 
 const surrenderModal = document.getElementById('surrenderConfirmModal');
 const drawOfferModal = document.getElementById('drawOfferModal');
@@ -111,7 +124,7 @@ function createWebSocket() {
             const gameId = data.slice(7);
             gameIdField.innerHTML = gameId;
             matchId = gameId;
-            console.log('Получен matchId от сервера:', matchId);
+            displayStatus('Получен matchId от сервера:', matchId);
         } else if (data.includes("DRAW-OFFER")) {
             drawAcceptOfferModal.classList.remove('hidden');
         }
@@ -123,10 +136,12 @@ function createWebSocket() {
 let socket = createWebSocket();
 
 function sendCommand(command) {
+    displayStatus('Попытка отправить команду:', command);
     if (socket.readyState === WebSocket.OPEN) {
         socket.send(command);
+        displayStatus('Команда отправлена:', command);
     } else {
-        console.log('WebSocket не открыт. Команда добавлена в очередь.');
+        displayStatus('WebSocket не открыт. Команда добавлена в очередь.');
         commandQueue.push(command);
     }
 }
