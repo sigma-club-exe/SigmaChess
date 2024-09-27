@@ -10,7 +10,6 @@ if (user) {
     };
 }
 
-
 const surrenderModal = document.getElementById('surrenderConfirmModal');
 const drawOfferModal = document.getElementById('drawOfferModal');
 const drawAcceptOfferModal = document.getElementById('drawAcceptOfferModal');
@@ -24,45 +23,45 @@ const acceptDrawBtn2 = document.getElementById('accept-draw2');
 const declineDrawBtn2 = document.getElementById('decline-draw2');
 
 surrenderBtn.addEventListener('click', function () {
-    displayStatus('Surrender button clicked');
+    // displayStatus('Surrender button clicked');
     surrenderModal.classList.remove('hidden');
 
 });
 
 drawOfferBtn.addEventListener('click', function () {
-    displayStatus('Draw offer button clicked');
+    // displayStatus('Draw offer button clicked');
     drawOfferModal.classList.remove('hidden');
 });
 
 confirmSurrenderBtn.addEventListener('click', function() {
-    displayStatus('Surrender confirmed');
+    // displayStatus('Surrender confirmed');
     sendCommand(`resign ${matchId}`);
     surrenderModal.classList.add('hidden');
 });
 
 cancelSurrenderBtn.addEventListener('click', function() {
-    displayStatus('Surrender canceled');
+    // displayStatus('Surrender canceled');
     surrenderModal.classList.add('hidden');
 });
 
 acceptDrawBtn.addEventListener('click', function() {
-    displayStatus('Draw offered');
+    // displayStatus('Draw offered');
     sendCommand(`draw ${matchId}`);
     drawOfferModal.classList.add('hidden');
 });
 
 declineDrawBtn.addEventListener('click', function() {
-    displayStatus('Draw canceled');
+    // displayStatus('Draw canceled');
     drawOfferModal.classList.add('hidden');
 });
 
 acceptDrawBtn2.addEventListener('click', function() {
-    displayStatus('Draw accepted');
+    // displayStatus('Draw accepted');
     drawAcceptOfferModal.classList.add('hidden');
 });
 
 declineDrawBtn2.addEventListener('click', function() {
-    displayStatus('Draw killed');
+    // displayStatus('Draw killed');
     drawAcceptOfferModal.classList.add('hidden');
 });
 
@@ -72,7 +71,7 @@ function createWebSocket() {
     let socket = new WebSocket('wss://chess.k6z.ru:8181');
 
     socket.onopen = function () {
-        displayStatus('Соединение установлено');
+        // displayStatus('Соединение установлено');
         while (commandQueue.length > 0) {
             let command = commandQueue.shift();
             socket.send(command);
@@ -80,11 +79,11 @@ function createWebSocket() {
     };
 
     socket.onerror = function (error) {
-        displayStatus(`Ошибка WebSocket: ${matchId}`);
+        // displayStatus(`Ошибка WebSocket: ${matchId}`);
     };
 
     socket.onclose = function (event) {
-        displayStatus('WebSocket закрыт. Повторная попытка подключения через 1 секунду...');
+        // displayStatus('WebSocket закрыт. Повторная попытка подключения через 1 секунду...');
         setTimeout(() => {
             socket = createWebSocket();
         }, 1000);
@@ -102,11 +101,11 @@ function createWebSocket() {
         } else if (data.includes("LOGS:")) {
             const logs = data.slice(5);
             logsField.innerHTML = logs.replace(/\n/g, '<br>');
-        } else if (data.includes("GAMEID:")) {
-            const gameId = data.slice(7);
-            gameIdField.innerHTML = gameId;
-            matchId = gameId;
-            displayStatus('Получен matchId от сервера:', matchId);
+        // } else if (data.includes("GAMEID:")) {
+        //     const gameId = data.slice(7);
+        //     gameIdField.innerHTML = gameId;
+        //     matchId = gameId;
+        //     // displayStatus('Получен matchId от сервера:', matchId);
         } else if (data.includes("DRAW-OFFER")) {
             drawAcceptOfferModal.classList.remove('hidden');
         }
@@ -118,12 +117,12 @@ function createWebSocket() {
 let socket = createWebSocket();
 
 function sendCommand(command) {
-    displayStatus(`Попытка отправить команду: ${command}`);
+    // displayStatus(`Попытка отправить команду: ${command}`);
     if (socket.readyState === WebSocket.OPEN) {
         socket.send(command);
-        displayStatus(`Команда отправлена: ${command}`);
+        // displayStatus(`Команда отправлена: ${command}`);
     } else {
-        displayStatus('WebSocket не открыт. Команда добавлена в очередь.');
+        // displayStatus('WebSocket не открыт. Команда добавлена в очередь.');
         commandQueue.push(command);
     }
 }
@@ -271,35 +270,35 @@ function handleSquareClick(row, col, files, ranks, playerColor) {
     }
 }
 
-const gameIdField = document.getElementById('gameId_field');
-const commandInput = document.getElementById('commandInput');
-const sendCommandButton = document.getElementById('sendCommand');
-const logsField = document.getElementById('server_logs_field');
+// const gameIdField = document.getElementById('gameId_field');
+// const commandInput = document.getElementById('commandInput');
+// const sendCommandButton = document.getElementById('sendCommand');
+// const logsField = document.getElementById('server_logs_field');
 
-sendCommandButton.addEventListener('click', () => {
-    const command = commandInput.value;
-    if (command) {
-        sendCommand(command);
-        commandInput.value = '';
-    }
-});
+// sendCommandButton.addEventListener('click', () => {
+//     const command = commandInput.value;
+//     if (command) {
+//         sendCommand(command);
+//         commandInput.value = '';
+//     }
+// });
 
-function displayStatus(message) {
-    const statusElement = document.getElementById('status');
-    statusElement.innerHTML += `<p>${message}</p>`; // Добавляем сообщение в HTML
-}
+// function displayStatus(message) {
+//     const statusElement = document.getElementById('status');
+//     statusElement.innerHTML += `<p>${message}</p>`; // Добавляем сообщение в HTML
+// }
 
-displayStatus(JSON.stringify(Telegram.WebApp.initDataUnsafe));
+// displayStatus(JSON.stringify(Telegram.WebApp.initDataUnsafe));
 
 const matchId = Telegram.WebApp.initDataUnsafe.start_param;
-displayStatus(`Извлеченный matchId: ${matchId}`);  // Отладка
+// displayStatus(`Извлеченный matchId: ${matchId}`);  // Отладка
 
 if (matchId) {
-    displayStatus(`Отправка команды challenge для game_id: ${matchId}`);
+    // displayStatus(`Отправка команды challenge для game_id: ${matchId}`);
     try {
         sendCommand(`challenge ${matchId}`);
     } catch (error) {
-        displayStatus(`Ошибка при отправке команды: ${error}`);
+        // displayStatus(`Ошибка при отправке команды: ${error}`);
     }
 }
 
