@@ -28,7 +28,16 @@ server.Start(ws =>
             {
                 games[gameId] = new GameSession(new WsChessClient(wsConnectionsQueue[gameId]), new WsChessClient(ws),
                     new Game(), false);
-                string colorMessage = games[gameId].Player1.Color == 'w' ? "белыми" : "черными";
+                bool color = games[gameId].Player1.Color == 'w';
+                string colorMessage = color ? "белыми" : "черными";
+                var currentSession = games[gameId];
+                if(color){
+                    currentSession.Player2.PlayerConnection.Send($"FEN:{currentSession.GetBoardStateBlack()}");
+                }
+                else{
+                    currentSession.Player1.PlayerConnection.Send($"FEN:{currentSession.GetBoardStateBlack()}");
+                }
+
                 wsConnectionsQueue[gameId].Send($"LOGS: Партия {gameId} началась!" +
                                                 '\n' + "Сейчас ход белых" + '\n' +
                                                 $"Вы играете {colorMessage} фигурами");
