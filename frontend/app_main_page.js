@@ -6,7 +6,7 @@ if (user) {
     const playerInfoImage = document.querySelector('#player-info .user-image');
     playerInfoImage.src = `https://t.me/i/userpic/320/${user.username}.jpg`;
     playerInfoImage.onerror = function () {
-        playerInfoImage.src = 'reqs/ava1.jpg';
+        playerInfoImage.src = 'reqs/ava.jpg';
     };
 }
 
