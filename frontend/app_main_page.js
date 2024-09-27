@@ -123,8 +123,8 @@ function createWebSocket() {
         } else if (data.includes("GAMEID:")) {
             const gameId = data.slice(7);
             gameIdField.innerHTML = gameId;
-            // matchId = gameId;
-            // console.log('Получен matchId от сервера:', matchId);
+            matchId = gameId;
+            console.log('Получен matchId от сервера:', matchId);
         } else if (data.includes("DRAW-OFFER")) {
             drawAcceptOfferModal.classList.remove('hidden');
         }
