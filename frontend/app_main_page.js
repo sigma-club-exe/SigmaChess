@@ -10,24 +10,6 @@ if (user) {
     };
 }
 
-function displayStatus(message) {
-    const statusElement = document.getElementById('status');
-    statusElement.innerHTML += `<p>${message}</p>`; // Добавляем сообщение в HTML
-}
-
-displayStatus(JSON.stringify(Telegram.WebApp.initDataUnsafe));
-
-const matchId = Telegram.WebApp.initDataUnsafe.start_param;
-displayStatus(`Извлеченный matchId: ${matchId}`);  // Отладка
-
-if (matchId) {
-    displayStatus(`Отправка команды challenge для game_id: ${matchId}`);
-    try {
-        sendCommand(`challenge ${matchId}`);
-    } catch (error) {
-        displayStatus(`Ошибка при отправке команды: ${error}`);
-    }
-}
 
 const surrenderModal = document.getElementById('surrenderConfirmModal');
 const drawOfferModal = document.getElementById('drawOfferModal');
@@ -301,6 +283,25 @@ sendCommandButton.addEventListener('click', () => {
         commandInput.value = '';
     }
 });
+
+function displayStatus(message) {
+    const statusElement = document.getElementById('status');
+    statusElement.innerHTML += `<p>${message}</p>`; // Добавляем сообщение в HTML
+}
+
+displayStatus(JSON.stringify(Telegram.WebApp.initDataUnsafe));
+
+const matchId = Telegram.WebApp.initDataUnsafe.start_param;
+displayStatus(`Извлеченный matchId: ${matchId}`);  // Отладка
+
+if (matchId) {
+    displayStatus(`Отправка команды challenge для game_id: ${matchId}`);
+    try {
+        sendCommand(`challenge ${matchId}`);
+    } catch (error) {
+        displayStatus(`Ошибка при отправке команды: ${error}`);
+    }
+}
 
 const whiteFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
 createChessboardFromFEN(whiteFEN, 'w');
