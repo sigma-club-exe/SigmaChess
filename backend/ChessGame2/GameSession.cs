@@ -109,12 +109,12 @@ public class GameSession
         }
     }
 
-    public string GetBoardStateWhite()
+    private string GetBoardStateWhite()
     {
         return BoardState.GetBoardAsFEN();
     }
     
-    public string GetBoardStateBlack()
+    private string GetBoardStateBlack()
     {
         return BoardState.GetBoardAsFENforBlack();
     }
