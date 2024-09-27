@@ -65,7 +65,7 @@ services:
   # Добавляем сервис для ASP.NET Web API
   chess_db_app:
     build:
-      context: ./DB/SigmaChess
+      context: ./DB
       dockerfile: Dockerfile  # Убедитесь, что файл Dockerfile находится в ./DB/SigmaChess
     labels:
       - "traefik.http.routers.chessdb.rule=Host(`chess.k6z.ru`) && PathPrefix(`/dbapi`)"
