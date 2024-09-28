@@ -6,7 +6,7 @@ if (user) {
     const playerInfoImage = document.querySelector('#player-info .user-image');
     playerInfoImage.src = `https://t.me/i/userpic/320/${user.username}.jpg`;
     playerInfoImage.onerror = function () {
-        playerInfoImage.src = 'reqs/ava1.jpg';
+        playerInfoImage.src = 'reqs/ava.jpg';
     };
 }
 
@@ -23,46 +23,45 @@ const acceptDrawBtn2 = document.getElementById('accept-draw2');
 const declineDrawBtn2 = document.getElementById('decline-draw2');
 
 surrenderBtn.addEventListener('click', function () {
-    console.log('Surrender button clicked');
+    // displayStatus('Surrender button clicked');
     surrenderModal.classList.remove('hidden');
 
 });
 
 drawOfferBtn.addEventListener('click', function () {
-    console.log('Draw offer button clicked');
+    // displayStatus('Draw offer button clicked');
     drawOfferModal.classList.remove('hidden');
 });
 
 confirmSurrenderBtn.addEventListener('click', function() {
-    console.log('Surrender confirmed');
+    // displayStatus('Surrender confirmed');
     sendCommand(`resign ${matchId}`);
     surrenderModal.classList.add('hidden');
 });
 
 cancelSurrenderBtn.addEventListener('click', function() {
-    console.log('Surrender canceled');
+    // displayStatus('Surrender canceled');
     surrenderModal.classList.add('hidden');
 });
 
 acceptDrawBtn.addEventListener('click', function() {
-    console.log('Draw offered');
+    // displayStatus('Draw offered');
     sendCommand(`draw ${matchId}`);
     drawOfferModal.classList.add('hidden');
 });
 
 declineDrawBtn.addEventListener('click', function() {
-    console.log('Draw canceled');
+    // displayStatus('Draw canceled');
     drawOfferModal.classList.add('hidden');
 });
 
 acceptDrawBtn2.addEventListener('click', function() {
-    console.log('Draw accepted');
-    sendCommand(`draw ${matchId}`);
+    // displayStatus('Draw accepted');
     drawAcceptOfferModal.classList.add('hidden');
 });
 
 declineDrawBtn2.addEventListener('click', function() {
-    console.log('Draw killed');
+    // displayStatus('Draw killed');
     drawAcceptOfferModal.classList.add('hidden');
 });
 
@@ -72,7 +71,7 @@ function createWebSocket() {
     let socket = new WebSocket('wss://chess.k6z.ru:8181');
 
     socket.onopen = function () {
-        console.log('Соединение установлено');
+        // displayStatus('Соединение установлено');
         while (commandQueue.length > 0) {
             let command = commandQueue.shift();
             socket.send(command);
@@ -80,11 +79,11 @@ function createWebSocket() {
     };
 
     socket.onerror = function (error) {
-        console.error('Ошибка WebSocket:', error);
+        // displayStatus(`Ошибка WebSocket: ${matchId}`);
     };
 
     socket.onclose = function (event) {
-        console.log('WebSocket закрыт. Повторная попытка подключения через 1 секунду...');
+        // displayStatus('WebSocket закрыт. Повторная попытка подключения через 1 секунду...');
         setTimeout(() => {
             socket = createWebSocket();
         }, 1000);
@@ -102,11 +101,11 @@ function createWebSocket() {
         } else if (data.includes("LOGS:")) {
             const logs = data.slice(5);
             logsField.innerHTML = logs.replace(/\n/g, '<br>');
-        } else if (data.includes("GAMEID:")) {
-            const gameId = data.slice(7);
-            gameIdField.innerHTML = gameId;
-            matchId = gameId;
-            console.log('Получен matchId от сервера:', matchId);
+        // } else if (data.includes("GAMEID:")) {
+        //     const gameId = data.slice(7);
+        //     gameIdField.innerHTML = gameId;
+        //     matchId = gameId;
+        //     // displayStatus('Получен matchId от сервера:', matchId);
         } else if (data.includes("DRAW-OFFER")) {
             drawAcceptOfferModal.classList.remove('hidden');
         }
@@ -118,10 +117,12 @@ function createWebSocket() {
 let socket = createWebSocket();
 
 function sendCommand(command) {
+    // displayStatus(`Попытка отправить команду: ${command}`);
     if (socket.readyState === WebSocket.OPEN) {
         socket.send(command);
+        // displayStatus(`Команда отправлена: ${command}`);
     } else {
-        console.log('WebSocket не открыт. Команда добавлена в очередь.');
+        // displayStatus('WebSocket не открыт. Команда добавлена в очередь.');
         commandQueue.push(command);
     }
 }
@@ -132,7 +133,6 @@ const ranksWhite = [8, 7, 6, 5, 4, 3, 2, 1];
 const ranksBlack = [1, 2, 3, 4, 5, 6, 7, 8];
 let selectedSquare = null;
 let highlightedSquare = null; 
-let matchId = null;
 
 let whiteTime = 600; 
 let blackTime = 600; 
@@ -270,18 +270,37 @@ function handleSquareClick(row, col, files, ranks, playerColor) {
     }
 }
 
-const gameIdField = document.getElementById('gameId_field');
-const commandInput = document.getElementById('commandInput');
-const sendCommandButton = document.getElementById('sendCommand');
-const logsField = document.getElementById('server_logs_field');
+// const gameIdField = document.getElementById('gameId_field');
+// const commandInput = document.getElementById('commandInput');
+// const sendCommandButton = document.getElementById('sendCommand');
+// const logsField = document.getElementById('server_logs_field');
 
-sendCommandButton.addEventListener('click', () => {
-    const command = commandInput.value;
-    if (command) {
-        sendCommand(command);
-        commandInput.value = '';
+// sendCommandButton.addEventListener('click', () => {
+//     const command = commandInput.value;
+//     if (command) {
+//         sendCommand(command);
+//         commandInput.value = '';
+//     }
+// });
+
+// function displayStatus(message) {
+//     const statusElement = document.getElementById('status');
+//     statusElement.innerHTML += `<p>${message}</p>`; // Добавляем сообщение в HTML
+// }
+
+// displayStatus(JSON.stringify(Telegram.WebApp.initDataUnsafe));
+
+const matchId = Telegram.WebApp.initDataUnsafe.start_param;
+// displayStatus(`Извлеченный matchId: ${matchId}`);  // Отладка
+
+if (matchId) {
+    // displayStatus(`Отправка команды challenge для game_id: ${matchId}`);
+    try {
+        sendCommand(`challenge ${matchId}`);
+    } catch (error) {
+        // displayStatus(`Ошибка при отправке команды: ${error}`);
     }
-});
+}
 
 const whiteFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
 createChessboardFromFEN(whiteFEN, 'w');
