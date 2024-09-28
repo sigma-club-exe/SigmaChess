@@ -85,13 +85,11 @@ services:
       POSTGRES_PASSWORD: ted
       POSTGRES_DB: SigmaChess
     ports:
-      - "5432:5432"
+      - "5252:5252"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - chess_network
-    ports:
-      - "5252:5252"
 
 volumes:
   postgres_data:
