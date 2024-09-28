@@ -45,11 +45,32 @@ server.Start(ws =>
         else if (message.Contains("resign"))
         {
             var gameId = message[7..];
+            var currentGame = games[gameId];
             wsConnectionsQueue.Remove(gameId);
-            games[gameId].Player1.PlayerConnection
+            currentGame.Player1.PlayerConnection
                 .Send($"LOGS: Партия {gameId} завершилась так как пользователь сдался :(");
-            games[gameId].Player2.PlayerConnection
+            currentGame.Player2.PlayerConnection
                 .Send($"LOGS: Партия {gameId} завершилась так как пользователь сдался :(");
+            games.Remove(gameId);
+
+            if (ws == currentGame.Player1.PlayerConnection)
+            {
+                currentGame.Player1.PlayerConnection.Send("RESIGN:L");
+                currentGame.Player2.PlayerConnection.Send("RESIGN:W");
+            }
+            else
+            {
+                currentGame.Player2.PlayerConnection.Send("RESIGN:L");
+                currentGame.Player1.PlayerConnection.Send("RESIGN:W");
+            }
+            
+        }
+        else if (message.Contains("draw-accepted"))
+        {
+            var gameId = message[14..];
+            var currentGame = games[gameId];
+            currentGame.Player1.PlayerConnection.Send("DRAW-ACCEPTED");
+            currentGame.Player2.PlayerConnection.Send("DRAW-ACCEPTED");
             games.Remove(gameId);
         }
         else if (message.Contains("draw"))
@@ -66,6 +87,19 @@ server.Start(ws =>
             {
                 currentSession.Player1.PlayerConnection.Send("LOGS:соперник предлагает вам ничью");
                 currentSession.Player1.PlayerConnection.Send("DRAW-OFFER");
+            }
+        }
+        else if (message.Contains("connected"))
+        {
+            var parts = message[10..];
+            parts.Split(' ');
+            var gameId = parts[0];
+            var username = parts[1];
+            var currentGame = games[gameId];
+            currentGame.Player1.PlayerConnection.Send($"CONNECTED:{gameId}:{username}");
+            if (currentGame.Player2 != null)
+            {
+                currentGame.Player2.PlayerConnection.Send($"CONNECTED:{gameId}:{username}");
             }
         }
         else if (message.Contains(':')) // moves handler
