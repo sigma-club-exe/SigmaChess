@@ -33,10 +33,10 @@ server.Start(ws =>
                 string colorMessage = color ? "белыми" : "черными";
                 var currentSession = games[gameId];
                 if(color){
-                    currentSession.Player2.PlayerConnection.Send($"FEN:{currentSession.GetBoardStateBlack()}");
+                    currentSession.Player2.PlayerConnection.Send($"FEN:{currentSession.GetBoardStateBlack}");
                 }
                 else{
-                    currentSession.Player1.PlayerConnection.Send($"FEN:{currentSession.GetBoardStateBlack()}");
+                    currentSession.Player1.PlayerConnection.Send($"FEN:{currentSession.GetBoardStateBlack}");
                 }
 
                 wsConnectionsQueue[gameId].Send($"LOGS: Партия {gameId} началась!" +
