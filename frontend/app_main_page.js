@@ -279,6 +279,8 @@ function handleSquareClick(row, col, files, ranks, playerColor) {
 //     }
 // });
 
+const user = Telegram.WebApp.initDataUnsafe.user;
+
 function displayStatus(message) {
     const statusElement = document.getElementById('status');
     statusElement.innerHTML += `<p>${message}</p>`;
@@ -293,12 +295,12 @@ if (matchId) {
     displayStatus(`Отправка команды challenge для game_id: ${matchId}`);
     try {
         sendCommand(`challenge ${matchId}`);
+        sendCommand(`connected ${matchId} ${user.username}`);
     } catch (error) {
         displayStatus(`Ошибка при отправке команды: ${error}`);
     }
 }
 
-const user = Telegram.WebApp.initDataUnsafe.user;
 
 if (user) {
     const playerInfoUsername = document.querySelector('#player-info .username');
@@ -308,11 +310,11 @@ if (user) {
     playerInfoImage.onerror = function () {
         playerInfoImage.src = 'reqs/ava.jpg';
     };
-    try {
-        sendCommand(`connected ${matchId} ${user.username}`);
-    } catch (error) {
-        displayStatus(`Ошибка2 при отправке команды: ${error}`);
-    }
+    // try {
+    //     sendCommand(`connected ${matchId} ${user.username}`);
+    // } catch (error) {
+    //     displayStatus(`Ошибка2 при отправке команды: ${error}`);
+    // }
     const notificationMessage = document.querySelector('#notification .modal-content2 p');
     notificationMessage.textContent = `${playerInfoUsername.textContent} присоединился`;
     displayStatus(`присоединился ${playerInfoUsername.textContent}`);
