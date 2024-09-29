@@ -92,9 +92,9 @@ server.Start(ws =>
         else if (message.Contains("connected"))
         {
             var parts = message[10..];
-            parts.Split(' ');
-            var gameId = parts[0].ToString();
-            var username = parts[1];
+            var splitParts = parts.Split(' ');
+            var gameId = splitParts[0];
+            var username = splitParts[1];
             var currentGame = games[gameId];
             currentGame.Player1.PlayerConnection.Send($"CONNECTED:{gameId}:{username}");
             if (currentGame.Player2 != null)
