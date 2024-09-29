@@ -1,15 +1,3 @@
-const user = Telegram.WebApp.initDataUnsafe.user;
-
-if (user) {
-    const playerInfoUsername = document.querySelector('#player-info .username');
-    playerInfoUsername.textContent = '@' + user.username;
-    const playerInfoImage = document.querySelector('#player-info .user-image');
-    playerInfoImage.src = `https://t.me/i/userpic/320/${user.username}.jpg`;
-    playerInfoImage.onerror = function () {
-        playerInfoImage.src = 'reqs/ava.jpg';
-    };
-}
-
 const surrenderModal = document.getElementById('surrenderConfirmModal');
 const drawOfferModal = document.getElementById('drawOfferModal');
 const drawAcceptOfferModal = document.getElementById('drawAcceptOfferModal');
@@ -21,11 +9,12 @@ const acceptDrawBtn = document.getElementById('accept-draw');
 const declineDrawBtn = document.getElementById('decline-draw');
 const acceptDrawBtn2 = document.getElementById('accept-draw2');
 const declineDrawBtn2 = document.getElementById('decline-draw2');
+const notificationModal = document.getElementById('notification');
+
 
 surrenderBtn.addEventListener('click', function () {
     // displayStatus('Surrender button clicked');
     surrenderModal.classList.remove('hidden');
-
 });
 
 drawOfferBtn.addEventListener('click', function () {
@@ -101,11 +90,6 @@ function createWebSocket() {
         } else if (data.includes("LOGS:")) {
             const logs = data.slice(5);
             logsField.innerHTML = logs.replace(/\n/g, '<br>');
-        // } else if (data.includes("GAMEID:")) {
-        //     const gameId = data.slice(7);
-        //     gameIdField.innerHTML = gameId;
-        //     matchId = gameId;
-        //     // displayStatus('Получен matchId от сервера:', matchId);
         } else if (data.includes("DRAW-OFFER")) {
             drawAcceptOfferModal.classList.remove('hidden');
         }
@@ -300,6 +284,34 @@ if (matchId) {
     } catch (error) {
         // displayStatus(`Ошибка при отправке команды: ${error}`);
     }
+}
+
+const user = Telegram.WebApp.initDataUnsafe.user;
+
+if (user) {
+    const playerInfoUsername = document.querySelector('#player-info .username');
+    playerInfoUsername.textContent = '@' + user.username;
+    const playerInfoImage = document.querySelector('#player-info .user-image');
+    playerInfoImage.src = `https://t.me/i/userpic/320/${user.username}.jpg`;
+    playerInfoImage.onerror = function () {
+        playerInfoImage.src = 'reqs/ava.jpg';
+    };
+    
+    const notificationMessage = document.querySelector('#notification .modal-content2 p');
+    notificationMessage.textContent = `${playerInfoUsername.textContent} присоединился`;
+
+    notificationModal.classList.remove('hidden');
+    notificationModal.classList.add('fade-in');
+
+    setTimeout(() => {
+        notificationModal.classList.add('fade-out');
+        setTimeout(() => {
+            notificationModal.classList.add('hidden');
+            notificationModal.classList.remove('fade-in', 'fade-out');
+        }, 1000);
+    }, 2000);
+
+    sendCommand(`connected ${matchId} ${user.username}`);
 }
 
 const whiteFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
