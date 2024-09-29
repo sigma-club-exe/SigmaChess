@@ -92,6 +92,16 @@ function createWebSocket() {
             logsField.innerHTML = logs.replace(/\n/g, '<br>');
         } else if (data.includes("DRAW-OFFER")) {
             drawAcceptOfferModal.classList.remove('hidden');
+        } else if (data.includes("CONNECTED:")) {
+            const usernick = data.slice(10);
+            const notificationMessage = document.querySelector('#notification .modal-content2 p');
+            notificationMessage.textContent = `${usernick} присоединился`;
+        
+            notificationModal.classList.remove('hidden');
+        
+            setTimeout(function() {
+                notificationModal.classList.add('hidden');
+            }, 2000);
         }
     };
 
@@ -281,6 +291,7 @@ if (matchId) {
     // displayStatus(`Отправка команды challenge для game_id: ${matchId}`);
     try {
         sendCommand(`challenge ${matchId}`);
+        sendCommand(`connected ${matchId} ${user.username}`);
     } catch (error) {
         // displayStatus(`Ошибка при отправке команды: ${error}`);
     }
@@ -305,8 +316,6 @@ if (user) {
     setTimeout(function() {
         notificationModal.classList.add('hidden');
     }, 2000);
-
-    sendCommand(`connected ${matchId} ${user.username}`);
 }
 
 const whiteFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
