@@ -63,6 +63,19 @@ function createWebSocket() {
 
     socket.onopen = function () {
         displayStatus('Соединение установлено');
+        
+        // Отправляем команду challenge после открытия WebSocket
+        if (matchId) {
+            sendCommand(`challenge ${matchId}`);
+        }
+
+        // Отправляем команду connected после открытия WebSocket
+        const user = Telegram.WebApp.initDataUnsafe.user;
+        if (user) {
+            sendCommand(`connected ${matchId} ${user.username}`);
+        }
+
+        // Отправляем команды из очереди
         while (commandQueue.length > 0) {
             let command = commandQueue.shift();
             socket.send(command);
@@ -120,7 +133,7 @@ function sendCommand(command) {
     } else {
         displayStatus('WebSocket не открыт. Команда добавлена в очередь.');
         commandQueue.push(command);
-    }
+    }    
 }
 
 const chessboard = document.getElementById('chessboard');
