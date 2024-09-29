@@ -95,8 +95,13 @@ server.Start(ws =>
             var splitParts = parts.Split(' ');
             var gameId = splitParts[0];
             var username = splitParts[1];
-            var currentGame = games[gameId];
-            currentGame.Player1.PlayerConnection.Send($"CONNECTED:{gameId}:{username}");
+            wsConnectionsQueue[gameId].Send($"CONNECTED:{username}");
+            if (games.ContainsKey(gameId))
+            {
+                var currentGame = games[gameId];
+                currentGame.Player1.PlayerConnection.Send($"CONNECTED:{username}");
+                currentGame.Player2.PlayerConnection.Send($"CONNECTED:{username}");
+            }
         }
         else if (message.Contains(':')) // moves handler
         {

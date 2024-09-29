@@ -1,36 +1,38 @@
 {
   "format": 1,
   "restore": {
-    "D:\\vscode.projects\\SigmaChess\\backend\\ChessGame2.Tests\\ChessGame2.Tests.csproj": {}
+    "C:\\Users\\fyodo.DESKTOP-9A67S1J\\RiderProjects\\SigmaChess\\backend\\ChessGame2.Tests\\ChessGame2.Tests.csproj": {}
   },
   "projects": {
-    "D:\\vscode.projects\\SigmaChess\\backend\\ChessGame2.Tests\\ChessGame2.Tests.csproj": {
+    "C:\\Users\\fyodo.DESKTOP-9A67S1J\\RiderProjects\\SigmaChess\\backend\\ChessGame2.Tests\\ChessGame2.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\vscode.projects\\SigmaChess\\backend\\ChessGame2.Tests\\ChessGame2.Tests.csproj",
+        "projectUniqueName": "C:\\Users\\fyodo.DESKTOP-9A67S1J\\RiderProjects\\SigmaChess\\backend\\ChessGame2.Tests\\ChessGame2.Tests.csproj",
         "projectName": "ChessGame2.Tests",
-        "projectPath": "D:\\vscode.projects\\SigmaChess\\backend\\ChessGame2.Tests\\ChessGame2.Tests.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "D:\\vscode.projects\\SigmaChess\\backend\\ChessGame2.Tests\\obj\\",
+        "projectPath": "C:\\Users\\fyodo.DESKTOP-9A67S1J\\RiderProjects\\SigmaChess\\backend\\ChessGame2.Tests\\ChessGame2.Tests.csproj",
+        "packagesPath": "C:\\Users\\fyodo.DESKTOP-9A67S1J\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\fyodo.DESKTOP-9A67S1J\\RiderProjects\\SigmaChess\\backend\\ChessGame2.Tests\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\fyodo.DESKTOP-9A67S1J\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\vscode.projects\\SigmaChess\\backend\\ChessGame2\\ChessGame2.csproj": {
-                "projectPath": "D:\\vscode.projects\\SigmaChess\\backend\\ChessGame2\\ChessGame2.csproj"
+              "C:\\Users\\fyodo.DESKTOP-9A67S1J\\RiderProjects\\SigmaChess\\backend\\ChessGame2\\ChessGame2.csproj": {
+                "projectPath": "C:\\Users\\fyodo.DESKTOP-9A67S1J\\RiderProjects\\SigmaChess\\backend\\ChessGame2\\ChessGame2.csproj"
               },
-              "D:\\vscode.projects\\SigmaChess\\backend\\ChessLOgic\\ChessLOgic.csproj": {
-                "projectPath": "D:\\vscode.projects\\SigmaChess\\backend\\ChessLOgic\\ChessLOgic.csproj"
+              "C:\\Users\\fyodo.DESKTOP-9A67S1J\\RiderProjects\\SigmaChess\\backend\\ChessLOgic\\ChessLOgic.csproj": {
+                "projectPath": "C:\\Users\\fyodo.DESKTOP-9A67S1J\\RiderProjects\\SigmaChess\\backend\\ChessLOgic\\ChessLOgic.csproj"
               }
             }
           }
@@ -91,34 +93,36 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.206/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\vscode.projects\\SigmaChess\\backend\\ChessGame2\\ChessGame2.csproj": {
+    "C:\\Users\\fyodo.DESKTOP-9A67S1J\\RiderProjects\\SigmaChess\\backend\\ChessGame2\\ChessGame2.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\vscode.projects\\SigmaChess\\backend\\ChessGame2\\ChessGame2.csproj",
+        "projectUniqueName": "C:\\Users\\fyodo.DESKTOP-9A67S1J\\RiderProjects\\SigmaChess\\backend\\ChessGame2\\ChessGame2.csproj",
         "projectName": "ChessGame2",
-        "projectPath": "D:\\vscode.projects\\SigmaChess\\backend\\ChessGame2\\ChessGame2.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "D:\\vscode.projects\\SigmaChess\\backend\\ChessGame2\\obj\\",
+        "projectPath": "C:\\Users\\fyodo.DESKTOP-9A67S1J\\RiderProjects\\SigmaChess\\backend\\ChessGame2\\ChessGame2.csproj",
+        "packagesPath": "C:\\Users\\fyodo.DESKTOP-9A67S1J\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\fyodo.DESKTOP-9A67S1J\\RiderProjects\\SigmaChess\\backend\\ChessGame2\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\fyodo.DESKTOP-9A67S1J\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\vscode.projects\\SigmaChess\\backend\\ChessLOgic\\ChessLOgic.csproj": {
-                "projectPath": "D:\\vscode.projects\\SigmaChess\\backend\\ChessLOgic\\ChessLOgic.csproj"
+              "C:\\Users\\fyodo.DESKTOP-9A67S1J\\RiderProjects\\SigmaChess\\backend\\ChessLOgic\\ChessLOgic.csproj": {
+                "projectPath": "C:\\Users\\fyodo.DESKTOP-9A67S1J\\RiderProjects\\SigmaChess\\backend\\ChessLOgic\\ChessLOgic.csproj"
               }
             }
           }
@@ -170,26 +174,28 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.206/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\vscode.projects\\SigmaChess\\backend\\ChessLOgic\\ChessLOgic.csproj": {
+    "C:\\Users\\fyodo.DESKTOP-9A67S1J\\RiderProjects\\SigmaChess\\backend\\ChessLOgic\\ChessLOgic.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\vscode.projects\\SigmaChess\\backend\\ChessLOgic\\ChessLOgic.csproj",
+        "projectUniqueName": "C:\\Users\\fyodo.DESKTOP-9A67S1J\\RiderProjects\\SigmaChess\\backend\\ChessLOgic\\ChessLOgic.csproj",
         "projectName": "ChessLOgic",
-        "projectPath": "D:\\vscode.projects\\SigmaChess\\backend\\ChessLOgic\\ChessLOgic.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "D:\\vscode.projects\\SigmaChess\\backend\\ChessLOgic\\obj\\",
+        "projectPath": "C:\\Users\\fyodo.DESKTOP-9A67S1J\\RiderProjects\\SigmaChess\\backend\\ChessLOgic\\ChessLOgic.csproj",
+        "packagesPath": "C:\\Users\\fyodo.DESKTOP-9A67S1J\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\fyodo.DESKTOP-9A67S1J\\RiderProjects\\SigmaChess\\backend\\ChessLOgic\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\fyodo.DESKTOP-9A67S1J\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -228,7 +234,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.206/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
