@@ -10,6 +10,8 @@ const declineDrawBtn = document.getElementById('decline-draw');
 const acceptDrawBtn2 = document.getElementById('accept-draw2');
 const declineDrawBtn2 = document.getElementById('decline-draw2');
 const notificationModal = document.getElementById('notification');
+const notificationModal2 = document.getElementById('notification2');
+
 
 
 surrenderBtn.addEventListener('click', function () {
@@ -94,13 +96,13 @@ function createWebSocket() {
             drawAcceptOfferModal.classList.remove('hidden');
         } else if (data.includes("CONNECTED:")) {
             const usernick = data.slice(10);
-            const notificationMessage = document.querySelector('#notification .modal-content2 p');
+            const notificationMessage = document.querySelector('#notification .modal-content3 p');
             notificationMessage.textContent = `${usernick} присоединился`;
         
-            notificationModal.classList.remove('hidden');
+            notificationModal2.classList.remove('hidden');
         
             setTimeout(function() {
-                notificationModal.classList.add('hidden');
+                notificationModal2.classList.add('hidden');
             }, 2000);
         }
     };
