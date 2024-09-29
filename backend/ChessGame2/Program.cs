@@ -93,7 +93,7 @@ server.Start(ws =>
         {
             var parts = message[10..];
             parts.Split(' ');
-            var gameId = parts[0];
+            var gameId = parts[0].ToString();
             var username = parts[1];
             var currentGame = games[gameId];
             currentGame.Player1.PlayerConnection.Send($"CONNECTED:{gameId}:{username}");
