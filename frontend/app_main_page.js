@@ -94,16 +94,16 @@ function createWebSocket() {
             logsField.innerHTML = logs.replace(/\n/g, '<br>');
         } else if (data.includes("DRAW-OFFER")) {
             drawAcceptOfferModal.classList.remove('hidden');
-        } else if (data.includes("CONNECTED:")) {
-            const usernick = data.slice(10);
-            const notificationMessage2 = document.querySelector('#notification .modal-content3 p');
-            notificationMessage2.textContent = `${usernick} присоединился`;
+        // } else if (data.includes("CONNECTED:")) {
+        //     const usernick = data.slice(10);
+        //     const notificationMessage2 = document.querySelector('#notification .modal-content3 p');
+        //     notificationMessage2.textContent = `${usernick} присоединился`;
         
-            notificationModal2.classList.remove('hidden');
+        //     notificationModal2.classList.remove('hidden');
         
-            setTimeout(function() {
-                notificationModal2.classList.add('hidden');
-            }, 2000);
+        //     setTimeout(function() {
+        //         notificationModal2.classList.add('hidden');
+        //     }, 2000);
         }
     };
 
