@@ -301,15 +301,7 @@ if (user) {
     notificationMessage.textContent = `${playerInfoUsername.textContent} присоединился`;
 
     notificationModal.classList.remove('hidden');
-    notificationModal.classList.add('fade-in');
 
-    setTimeout(() => {
-        notificationModal.classList.add('fade-out');
-        setTimeout(() => {
-            notificationModal.classList.add('hidden');
-            notificationModal.classList.remove('fade-in', 'fade-out');
-        }, 1000);
-    }, 2000);
 
     sendCommand(`connected ${matchId} ${user.username}`);
 }
