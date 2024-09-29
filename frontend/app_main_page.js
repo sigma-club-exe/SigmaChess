@@ -291,7 +291,6 @@ if (matchId) {
     // displayStatus(`Отправка команды challenge для game_id: ${matchId}`);
     try {
         sendCommand(`challenge ${matchId}`);
-        sendCommand(`connected ${matchId} ${user.username}`);
     } catch (error) {
         // displayStatus(`Ошибка при отправке команды: ${error}`);
     }
@@ -307,7 +306,7 @@ if (user) {
     playerInfoImage.onerror = function () {
         playerInfoImage.src = 'reqs/ava.jpg';
     };
-    
+    sendCommand(`connected ${matchId} ${user.username}`);
     const notificationMessage = document.querySelector('#notification .modal-content2 p');
     notificationMessage.textContent = `${playerInfoUsername.textContent} присоединился`;
 
