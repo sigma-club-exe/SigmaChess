@@ -97,10 +97,6 @@ server.Start(ws =>
             var username = splitParts[1];
             var currentGame = games[gameId];
             currentGame.Player1.PlayerConnection.Send($"CONNECTED:{gameId}:{username}");
-            if (currentGame.Player2 != null)
-            {
-                currentGame.Player2.PlayerConnection.Send($"CONNECTED:{gameId}:{username}");
-            }
         }
         else if (message.Contains(':')) // moves handler
         {

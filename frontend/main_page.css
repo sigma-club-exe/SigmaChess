@@ -226,7 +226,7 @@ body {
     align-items: center;
     position: absolute;
     z-index:100;
-    margin-bottom: 325px;
+    margin-bottom: 350px;
 }
 
 .modal-content2 {
@@ -250,7 +250,7 @@ body {
     position: absolute;
     z-index:100;
     margin-bottom: 325px;
-    margin-top: -10px;
+    margin-top: 115px;
 }
 
 .modal-content3 {

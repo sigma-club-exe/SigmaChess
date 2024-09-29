@@ -96,8 +96,8 @@ function createWebSocket() {
             drawAcceptOfferModal.classList.remove('hidden');
         } else if (data.includes("CONNECTED:")) {
             const usernick = data.slice(10);
-            const notificationMessage = document.querySelector('#notification .modal-content3 p');
-            notificationMessage.textContent = `${usernick} присоединился`;
+            const notificationMessage2 = document.querySelector('#notification .modal-content3 p');
+            notificationMessage2.textContent = `${usernick} присоединился`;
         
             notificationModal2.classList.remove('hidden');
         
