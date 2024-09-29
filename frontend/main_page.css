@@ -215,6 +215,7 @@ body {
 .modal-content2 p {
     color: #f8efde;
     padding: 4px;
+    font-family: Krona One, sans-serif; 
 }
 
 .modal2 {
@@ -229,8 +230,8 @@ body {
 }
 
 .modal-content2 {
-    background-color: rgb(51, 94, 94);
-    border-radius: 10px;
+    background-color: rgba(51, 94, 94, 0.678);
+    border-radius: 30px;
     text-align: center;
 }
 
@@ -242,6 +243,7 @@ p {
     color: white;
     font-weight: 600;
     font-size: 18px;
+    font-family: Krona One, sans-serif; 
 }
 
 .btn_yn {

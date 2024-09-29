@@ -302,6 +302,9 @@ if (user) {
 
     notificationModal.classList.remove('hidden');
 
+    setTimeout(function() {
+        notificationModal.classList.add('hidden');
+    }, 2000);
 
     sendCommand(`connected ${matchId} ${user.username}`);
 }
