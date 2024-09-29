@@ -62,7 +62,7 @@ function createWebSocket() {
     let socket = new WebSocket('wss://chess.k6z.ru:8181');
 
     socket.onopen = function () {
-        // displayStatus('Соединение установлено');
+        displayStatus('Соединение установлено');
         while (commandQueue.length > 0) {
             let command = commandQueue.shift();
             socket.send(command);
@@ -70,11 +70,11 @@ function createWebSocket() {
     };
 
     socket.onerror = function (error) {
-        // displayStatus(`Ошибка WebSocket: ${matchId}`);
+        displayStatus(`Ошибка WebSocket: ${matchId}`);
     };
 
     socket.onclose = function (event) {
-        // displayStatus('WebSocket закрыт. Повторная попытка подключения через 1 секунду...');
+        displayStatus('WebSocket закрыт. Повторная попытка подключения через 1 секунду...');
         setTimeout(() => {
             socket = createWebSocket();
         }, 1000);
@@ -113,12 +113,12 @@ function createWebSocket() {
 let socket = createWebSocket();
 
 function sendCommand(command) {
-    // displayStatus(`Попытка отправить команду: ${command}`);
+    displayStatus(`Попытка отправить команду: ${command}`);
     if (socket.readyState === WebSocket.OPEN) {
         socket.send(command);
-        // displayStatus(`Команда отправлена: ${command}`);
+        displayStatus(`Команда отправлена: ${command}`);
     } else {
-        // displayStatus('WebSocket не открыт. Команда добавлена в очередь.');
+        displayStatus('WebSocket не открыт. Команда добавлена в очередь.');
         commandQueue.push(command);
     }
 }
@@ -279,22 +279,22 @@ function handleSquareClick(row, col, files, ranks, playerColor) {
 //     }
 // });
 
-// function displayStatus(message) {
-//     const statusElement = document.getElementById('status');
-//     statusElement.innerHTML += `<p>${message}</p>`; // Добавляем сообщение в HTML
-// }
+function displayStatus(message) {
+    const statusElement = document.getElementById('status');
+    statusElement.innerHTML += `<p>${message}</p>`;
+}
 
-// displayStatus(JSON.stringify(Telegram.WebApp.initDataUnsafe));
+displayStatus(JSON.stringify(Telegram.WebApp.initDataUnsafe));
 
 const matchId = Telegram.WebApp.initDataUnsafe.start_param;
-// displayStatus(`Извлеченный matchId: ${matchId}`);  // Отладка
+displayStatus(`Извлеченный matchId: ${matchId}`);  
 
 if (matchId) {
-    // displayStatus(`Отправка команды challenge для game_id: ${matchId}`);
+    displayStatus(`Отправка команды challenge для game_id: ${matchId}`);
     try {
         sendCommand(`challenge ${matchId}`);
     } catch (error) {
-        // displayStatus(`Ошибка при отправке команды: ${error}`);
+        displayStatus(`Ошибка при отправке команды: ${error}`);
     }
 }
 
@@ -308,10 +308,14 @@ if (user) {
     playerInfoImage.onerror = function () {
         playerInfoImage.src = 'reqs/ava.jpg';
     };
-    sendCommand(`connected ${matchId} ${user.username}`);
+    try {
+        sendCommand(`connected ${matchId} ${user.username}`);
+    } catch (error) {
+        displayStatus(`Ошибка2 при отправке команды: ${error}`);
+    }
     const notificationMessage = document.querySelector('#notification .modal-content2 p');
     notificationMessage.textContent = `${playerInfoUsername.textContent} присоединился`;
-
+    displayStatus(`присоединился ${playerInfoUsername.textContent}`);
     notificationModal.classList.remove('hidden');
 
     setTimeout(function() {
