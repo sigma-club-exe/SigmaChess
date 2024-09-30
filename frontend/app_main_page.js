@@ -64,18 +64,6 @@ function createWebSocket() {
     socket.onopen = function () {
         displayStatus('Соединение установлено');
         
-        // Отправляем команду challenge после открытия WebSocket
-        if (matchId) {
-            sendCommand(`challenge ${matchId}`);
-        }
-
-        // Отправляем команду connected после открытия WebSocket
-        const user = Telegram.WebApp.initDataUnsafe.user;
-        if (user) {
-            sendCommand(`connected ${matchId} ${user.username}`);
-        }
-
-        // Отправляем команды из очереди
         while (commandQueue.length > 0) {
             let command = commandQueue.shift();
             socket.send(command);
@@ -83,13 +71,13 @@ function createWebSocket() {
     };
 
     socket.onerror = function (error) {
-        displayStatus(`Ошибка WebSocket: ${matchId} ошибка ${error}`);
+        displayStatus(`Ошибка WebSocket: ${matchId} ошибка ${error.message || error}`);
     };
 
     socket.onclose = function (event) {
-        displayStatus('WebSocket закрыт. Повторная попытка подключения через 1 секунду...');
+        displayStatus(`WebSocket закрыт (код: ${event.code}, причина: ${event.reason || 'не указана'}). Повторная попытка через 1 секунду...`);
         setTimeout(() => {
-            socket = createWebSocket();
+            socket = createWebSocket(); 
         }, 1000);
     };
 
