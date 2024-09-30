@@ -28,17 +28,7 @@ server.Start(ws =>
             {
                 games[gameId] = new GameSession(new WsChessClient(wsConnectionsQueue[gameId]), new WsChessClient(ws),
                     new Game(), false);
-
-                bool color = games[gameId].Player1.Color == 'w';
-                string colorMessage = color ? "белыми" : "черными";
-                var currentSession = games[gameId];
-                if(color){
-                    currentSession.Player2.PlayerConnection.Send($"FEN:{currentSession.GetBoardStateBlack}");
-                }
-                else{
-                    currentSession.Player1.PlayerConnection.Send($"FEN:{currentSession.GetBoardStateBlack}");
-                }
-
+                string colorMessage = games[gameId].Player1.Color == 'w' ? "белыми" : "черными";
                 wsConnectionsQueue[gameId].Send($"LOGS: Партия {gameId} началась!" +
                                                 '\n' + "Сейчас ход белых" + '\n' +
                                                 $"Вы играете {colorMessage} фигурами");
@@ -47,22 +37,39 @@ server.Start(ws =>
                 ws.Send($"LOGS: Партия {gameId} началась!" +
                         '\n' + "Сейчас ход белых" +
                         '\n' + $"Вы играете {colorMessage} фигурами");
-
-                 ws.Send($"GAMEID:{gameId}");
-                wsConnectionsQueue[gameId].Send($"GAMEID:{gameId}");
             }
         }
         else if (message.Contains("resign"))
         {
             var gameId = message[7..];
+            var currentGame = games[gameId];
             wsConnectionsQueue.Remove(gameId);
-            games[gameId].Player1.PlayerConnection
+            currentGame.Player1.PlayerConnection
                 .Send($"LOGS: Партия {gameId} завершилась так как пользователь сдался :(");
-            games[gameId].Player2.PlayerConnection
+            currentGame.Player2.PlayerConnection
                 .Send($"LOGS: Партия {gameId} завершилась так как пользователь сдался :(");
             games.Remove(gameId);
+
+            if (ws == currentGame.Player1.PlayerConnection)
+            {
+                currentGame.Player1.PlayerConnection.Send("RESIGN:L");
+                currentGame.Player2.PlayerConnection.Send("RESIGN:W");
+            }
+            else
+            {
+                currentGame.Player2.PlayerConnection.Send("RESIGN:L");
+                currentGame.Player1.PlayerConnection.Send("RESIGN:W");
+            }
+            
         }
-        
+        else if (message.Contains("draw-accepted"))
+        {
+            var gameId = message[14..];
+            var currentGame = games[gameId];
+            currentGame.Player1.PlayerConnection.Send("DRAW-ACCEPTED");
+            currentGame.Player2.PlayerConnection.Send("DRAW-ACCEPTED"); 
+            games.Remove(gameId);
+        }
         else if (message.Contains("draw"))
         {
             var gameId = message[5..];
@@ -72,15 +79,27 @@ server.Start(ws =>
                 currentSession.Player2.PlayerConnection.Send("LOGS:соперник предлагает вам ничью");
                 currentSession.Player2.PlayerConnection.Send("DRAW-OFFER");
             }
-
+            
             else
             {
                 currentSession.Player1.PlayerConnection.Send("LOGS:соперник предлагает вам ничью");
                 currentSession.Player1.PlayerConnection.Send("DRAW-OFFER");
             }
         }
+        else if (message.Contains("connected"))
+        {
+            var parts = message[10..];
+            var splitParts = parts.Split(' ');
+            var gameId = splitParts[0];
+            var username = splitParts[1];
+            var currentGame = games[gameId];
+            await wsConnectionsQueue[gameId].Send($"CONNECTED:{username}");
+            if (ws != wsConnectionsQueue[gameId])
+            {
+                await ws.Send($"CONNECTED:{username}");
 
-        else if (message.Contains(':')) // moves handler     
+        }
+        else if (message.Contains(':')) // moves handler
         {
             var parts = message.Split(':');
             var gameId = parts[0];
