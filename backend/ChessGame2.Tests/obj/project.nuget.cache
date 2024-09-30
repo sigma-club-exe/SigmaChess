@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "OCgIXuPSe5nWK5T+JS9yM3Z9wZ6Q4BwlXwFrdOb1cXUpqSa6nKjzmoSqCuFdifLRDvN55sGSI5m20OK5nxT6cQ==",
+  "dgSpecHash": "qdrQhe7IoUg=",
   "success": true,
-  "projectFilePath": "C:\\Users\\fyodo.DESKTOP-9A67S1J\\vscode_projects\\SigmaChess\\backend\\ChessGame2.Tests\\ChessGame2.Tests.csproj",
+  "projectFilePath": "C:\\Users\\fyodo.DESKTOP-9A67S1J\\RiderProjects\\SigmaChess\\backend\\ChessGame2.Tests\\ChessGame2.Tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\fyodo.DESKTOP-9A67S1J\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
     "C:\\Users\\fyodo.DESKTOP-9A67S1J\\.nuget\\packages\\coverlet.collector\\6.0.0\\coverlet.collector.6.0.0.nupkg.sha512",
