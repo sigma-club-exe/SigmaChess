@@ -308,14 +308,14 @@ if (user) {
     playerInfoImage.onerror = function () {
         playerInfoImage.src = 'reqs/ava.jpg';
     };
-    // setTimeout(() => {
-    //     try {
-    //         displayStatus(`отправкa connected`);
-    //         sendCommand(`connected ${matchId} ${user.username}`);
-    //     } catch (error) {
-    //         displayStatus(`Ошибка при отправке команды: ${error}`);
-    //     }
-    // }, 2000);
+    setTimeout(() => {
+        try {
+            displayStatus(`отправкa connected`);
+            sendCommand(`connected ${matchId} ${user.username}`);
+        } catch (error) {
+            displayStatus(`Ошибка при отправке команды: ${error}`);
+        }
+    }, 2000);
 }
 
 const whiteFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
