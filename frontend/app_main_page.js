@@ -11,10 +11,10 @@ const acceptDrawBtn2 = document.getElementById('accept-draw2');
 const declineDrawBtn2 = document.getElementById('decline-draw2');
 const waitingModal = document.getElementById('waitingForPlayerModal');
 
-function displayStatus(message) {
-    const statusElement = document.getElementById('status');
-    statusElement.innerHTML += `<p>${message}</p>`; 
-}
+// function displayStatus(message) {
+//     const statusElement = document.getElementById('status');
+//     statusElement.innerHTML += `<p>${message}</p>`; 
+// }
 
 surrenderBtn.addEventListener('click', function () {
     // displayStatus('Surrender button clicked');
@@ -65,7 +65,7 @@ function createWebSocket() {
     let socket = new WebSocket('wss://chess.k6z.ru:8181');
 
     socket.onopen = function () {
-        displayStatus('Соединение установлено');
+        // displayStatus('Соединение установлено');
         while (commandQueue.length > 0) {
             let command = commandQueue.shift();
             socket.send(command);
@@ -73,11 +73,11 @@ function createWebSocket() {
     };
 
     socket.onerror = function (error) {
-        displayStatus(`Ошибка WebSocket: ${matchId}`);
+        // displayStatus(`Ошибка WebSocket: ${matchId}`);
     };
 
     socket.onclose = function (event) {
-        displayStatus('WebSocket закрыт. Повторная попытка подключения через 1 секунду...');
+        // displayStatus('WebSocket закрыт. Повторная попытка подключения через 1 секунду...');
         setTimeout(() => {
             socket = createWebSocket();
         }, 1000);
@@ -100,7 +100,7 @@ function createWebSocket() {
         } else if (data.includes("GAMESTARTED")) {
             waitingModal.classList.add('hidden');
             const nick = data.slice(12);
-            displayStatus(`получил ник ${nick}`);
+            // displayStatus(`получил ник ${nick}`);
             const playerInfoUsername = document.querySelector('#opponent-info .username');
             playerInfoUsername.textContent = '@' + nick;
             const playerInfoImage = document.querySelector('#opponent-info .user-image');
@@ -117,12 +117,12 @@ function createWebSocket() {
 let socket = createWebSocket();
 
 function sendCommand(command) {
-    displayStatus(`Попытка отправить команду: ${command}`);
+    // displayStatus(`Попытка отправить команду: ${command}`);
     if (socket.readyState === WebSocket.OPEN) {
         socket.send(command);
-        displayStatus(`Команда отправлена: ${command}`);
+        // displayStatus(`Команда отправлена: ${command}`);
     } else {
-        displayStatus('WebSocket не открыт. Команда добавлена в очередь.');
+        // displayStatus('WebSocket не открыт. Команда добавлена в очередь.');
         commandQueue.push(command);
     }
 }
@@ -296,11 +296,11 @@ playerInfoImage.src = `https://t.me/i/userpic/320/${user.username}.jpg`;
 playerInfoImage.onerror = function () {
     playerInfoImage.src = 'reqs/ava.jpg';
 };
-displayStatus(`Отправка команды challenge для game_id: ${matchId}`);
+// displayStatus(`Отправка команды challenge для game_id: ${matchId}`);
 try {
     sendCommand(`challenge ${matchId} ${user.username}`);
 } catch (error) {
-    displayStatus(`Ошибка при отправке команды: ${error}`);
+    // displayStatus(`Ошибка при отправке команды: ${error}`);
 }
 
 const whiteFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
