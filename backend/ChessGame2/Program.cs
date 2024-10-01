@@ -24,22 +24,21 @@ server.Start(ws =>
             {
                 wsConnectionsQueue[gameId] = ws; // player1 init game
             }
-            else // player2 accepts invitation by providing same ID
+        else // player2 accepts invitation by providing same ID
             {
                 games[gameId] = new GameSession(new WsChessClient(wsConnectionsQueue[gameId]), new WsChessClient(ws),
                     new Game(), false);
-                string colorMessage = games[gameId].Player1.Color == 'w' ? "белыми" : "черными";
-                wsConnectionsQueue[gameId].Send($"LOGS: Партия {gameId} началась!" +
-                                                '\n' + "Сейчас ход белых" + '\n' +
-                                                $"Вы играете {colorMessage} фигурами");
+                var currentSession = games[gameId];
+                currentSession.Player1.PlayerConnection.Send("GAMESTARTED");
+                currentSession.Player2.PlayerConnection.Send("GAMESTARTED");
 
-                colorMessage = games[gameId].Player2.Color == 'w' ? "белыми" : "черными";
-                ws.Send($"LOGS: Партия {gameId} началась!" +
-                        '\n' + "Сейчас ход белых" +
-                        '\n' + $"Вы играете {colorMessage} фигурами");
-
-                 ws.Send($"GAMEID:{gameId}");
-                wsConnectionsQueue[gameId].Send($"GAMEID:{gameId}");
+                if (currentSession.Player1.Color == 'w'){
+                    currentSession.Player1.PlayerConnection.Send($"FEN:{currentSession.GetBoardStateWhite()}");
+                    currentSession.Player2.PlayerConnection.Send($"FEN:{currentSession.GetBoardStateBlack()}");
+                }else {
+                     currentSession.Player2.PlayerConnection.Send($"FEN:{currentSession.GetBoardStateWhite()}");
+                    currentSession.Player1.PlayerConnection.Send($"FEN:{currentSession.GetBoardStateBlack()}");
+                }
             }
         }
         else if (message.Contains("resign"))
