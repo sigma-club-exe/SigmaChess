@@ -94,7 +94,7 @@ function createWebSocket() {
         } else if (data.includes("DRAW-OFFER")) {
             drawAcceptOfferModal.classList.remove('hidden');
         } else if (data.includes("GAMESTARTED")) {
-            waitingModal.classList.add('delback');
+            waitingModal.classList.add('hidden');
         }
     };
 
