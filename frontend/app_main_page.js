@@ -289,6 +289,15 @@ function handleSquareClick(row, col, files, ranks, playerColor) {
 const matchId = Telegram.WebApp.initDataUnsafe.start_param;
 // displayStatus(`Извлеченный matchId: ${matchId}`);  
 
+if (matchId) {
+    displayStatus(`Отправка команды challenge для game_id: ${matchId}`);
+    try {
+        sendCommand(`challenge ${matchId}`);
+    } catch (error) {
+        displayStatus(`Ошибка при отправке команды: ${error}`);
+    }
+}
+
 const user = Telegram.WebApp.initDataUnsafe.user;
 
 if (user) {
@@ -299,21 +308,14 @@ if (user) {
     playerInfoImage.onerror = function () {
         playerInfoImage.src = 'reqs/ava.jpg';
     };
-    try {
-        displayStatus(`отправкa connected`);
-        sendCommand(`connected ${matchId} ${user.username}`);
-    } catch (error) {
-        displayStatus(`Ошибка при отправке команды: ${error}`);
-    }
-}
-
-if (matchId) {
-    displayStatus(`Отправка команды challenge для game_id: ${matchId}`);
-    try {
-        sendCommand(`challenge ${matchId}`);
-    } catch (error) {
-        displayStatus(`Ошибка при отправке команды: ${error}`);
-    }
+    setTimeout(() => {
+        try {
+            displayStatus(`отправкa connected`);
+            sendCommand(`connected ${matchId} ${user.username}`);
+        } catch (error) {
+            displayStatus(`Ошибка при отправке команды: ${error}`);
+        }
+    }, 1000);
 }
 
 const whiteFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
