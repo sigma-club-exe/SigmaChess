@@ -99,8 +99,7 @@ function createWebSocket() {
             drawAcceptOfferModal.classList.remove('hidden');
         } else if (data.includes("GAMESTARTED")) {
             waitingModal.classList.add('hidden');
-        } else if (data.includes("USERNAME")) {
-            const nick = data.slice(9);
+            const nick = data.slice(12);
             displayStatus(`получил ник ${nick}`);
             const playerInfoUsername = document.querySelector('#opponent-info .username');
             playerInfoUsername.textContent = '@' + nick;
