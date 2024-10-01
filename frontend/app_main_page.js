@@ -289,15 +289,6 @@ function handleSquareClick(row, col, files, ranks, playerColor) {
 const matchId = Telegram.WebApp.initDataUnsafe.start_param;
 // displayStatus(`Извлеченный matchId: ${matchId}`);  
 
-if (matchId) {
-    displayStatus(`Отправка команды challenge для game_id: ${matchId}`);
-    try {
-        sendCommand(`challenge ${matchId}`);
-    } catch (error) {
-        displayStatus(`Ошибка при отправке команды: ${error}`);
-    }
-}
-
 const user = Telegram.WebApp.initDataUnsafe.user;
 
 if (user) {
@@ -311,6 +302,15 @@ if (user) {
     try {
         displayStatus(`отправкa connected`);
         sendCommand(`connected ${matchId} ${user.username}`);
+    } catch (error) {
+        displayStatus(`Ошибка при отправке команды: ${error}`);
+    }
+}
+
+if (matchId) {
+    displayStatus(`Отправка команды challenge для game_id: ${matchId}`);
+    try {
+        sendCommand(`challenge ${matchId}`);
     } catch (error) {
         displayStatus(`Ошибка при отправке команды: ${error}`);
     }
