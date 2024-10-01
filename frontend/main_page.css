@@ -232,7 +232,7 @@ p {
     font-weight: 600;
 }
 
-.modal.full-screen {
+.modalfull-screen{
     position: fixed;
     top: 0;
     left: 0;
@@ -245,7 +245,7 @@ p {
     z-index: 1000; 
 }
 
-.modal-content p {
+.modal-content2 p {
     color: rgba(51, 94, 94, 0.8); 
     font-size: 24px;
     font-weight: bold;
