@@ -315,7 +315,7 @@ if (user) {
         } catch (error) {
             displayStatus(`Ошибка при отправке команды: ${error}`);
         }
-    }, 1000);
+    }, 2000);
 }
 
 const whiteFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
