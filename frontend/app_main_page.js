@@ -11,6 +11,10 @@ const acceptDrawBtn2 = document.getElementById('accept-draw2');
 const declineDrawBtn2 = document.getElementById('decline-draw2');
 const waitingModal = document.getElementById('waitingForPlayerModal');
 
+function displayStatus(message) {
+    const statusElement = document.getElementById('status');
+    statusElement.innerHTML += `<p>${message}</p>`; 
+}
 
 surrenderBtn.addEventListener('click', function () {
     // displayStatus('Surrender button clicked');
@@ -97,6 +101,7 @@ function createWebSocket() {
             waitingModal.classList.add('hidden');
         } else if (data.includes("USERNAME")) {
             const nick = data.slice(9);
+            displayStatus(`получил ник ${nick}`);
             const playerInfoUsername = document.querySelector('#opponent-info .username');
             playerInfoUsername.textContent = '@' + nick;
             const playerInfoImage = document.querySelector('#opponent-info .user-image');
@@ -278,11 +283,6 @@ function handleSquareClick(row, col, files, ranks, playerColor) {
 //         commandInput.value = '';
 //     }
 // });
-
-// function displayStatus(message) {
-//     const statusElement = document.getElementById('status');
-//     statusElement.innerHTML += `<p>${message}</p>`; 
-// }
 
 // displayStatus(JSON.stringify(Telegram.WebApp.initDataUnsafe));
 
