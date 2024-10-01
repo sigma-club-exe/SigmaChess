@@ -9,6 +9,8 @@ const acceptDrawBtn = document.getElementById('accept-draw');
 const declineDrawBtn = document.getElementById('decline-draw');
 const acceptDrawBtn2 = document.getElementById('accept-draw2');
 const declineDrawBtn2 = document.getElementById('decline-draw2');
+const waitingModal = document.getElementById('waitingForPlayerModal');
+
 
 surrenderBtn.addEventListener('click', function () {
     // displayStatus('Surrender button clicked');
@@ -52,22 +54,6 @@ declineDrawBtn2.addEventListener('click', function() {
     // displayStatus('Draw killed');
     drawAcceptOfferModal.classList.add('hidden');
 });
-
-function showWaitingModal() {
-    const waitingModal = document.getElementById('waitingForPlayerModal');
-    waitingModal.classList.remove('hidden');
-}
-
-// Скрываем модальное окно при подключении второго игрока
-function hideWaitingModal() {
-    const waitingModal = document.getElementById('waitingForPlayerModal');
-    waitingModal.classList.add('hidden');
-}
-
-// Проверка если это первый игрок и нет второго
-if (isFirstPlayer) {  // Условие для первого игрока
-    showWaitingModal();
-}
 
 let commandQueue = [];
 
@@ -113,7 +99,7 @@ function createWebSocket() {
         } else if (data.includes("DRAW-OFFER")) {
             drawAcceptOfferModal.classList.remove('hidden');
         } else if (data.includes("GAMESTARTED")) {
-            hideWaitingModal();
+            waitingModal.classList.add('hidden');
         }
     };
 
