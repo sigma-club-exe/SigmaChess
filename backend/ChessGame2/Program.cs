@@ -89,18 +89,6 @@ server.Start(ws =>
                 currentSession.Player1.PlayerConnection.Send("DRAW-OFFER");
             }
         }
-        else if (message.Contains("connected"))
-        {
-            var parts = message[10..];
-            var splitParts = parts.Split(' ');
-            var gameId = splitParts[0];
-            var username = splitParts[1];
-            wsConnectionsQueue[gameId].Send($"CONNECTED:{username}");
-            if (ws != wsConnectionsQueue[gameId])
-            {
-                ws.Send($"CONNECTED:{username}");
-            }
-        }
         else if (message.Contains(':')) // moves handler
         {
             var parts = message.Split(':');

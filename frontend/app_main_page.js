@@ -1,3 +1,15 @@
+const user = Telegram.WebApp.initDataUnsafe.user;
+
+if (user) {
+    const playerInfoUsername = document.querySelector('#player-info .username');
+    playerInfoUsername.textContent = '@' + user.username;
+    const playerInfoImage = document.querySelector('#player-info .user-image');
+    playerInfoImage.src = `https://t.me/i/userpic/320/${user.username}.jpg`;
+    playerInfoImage.onerror = function () {
+        playerInfoImage.src = 'reqs/ava.jpg';
+    };
+}
+
 const surrenderModal = document.getElementById('surrenderConfirmModal');
 const drawOfferModal = document.getElementById('drawOfferModal');
 const drawAcceptOfferModal = document.getElementById('drawAcceptOfferModal');
@@ -9,14 +21,11 @@ const acceptDrawBtn = document.getElementById('accept-draw');
 const declineDrawBtn = document.getElementById('decline-draw');
 const acceptDrawBtn2 = document.getElementById('accept-draw2');
 const declineDrawBtn2 = document.getElementById('decline-draw2');
-const notificationModal = document.getElementById('notification');
-const notificationModal2 = document.getElementById('notification2');
-
-
 
 surrenderBtn.addEventListener('click', function () {
     // displayStatus('Surrender button clicked');
     surrenderModal.classList.remove('hidden');
+
 });
 
 drawOfferBtn.addEventListener('click', function () {
@@ -62,8 +71,7 @@ function createWebSocket() {
     let socket = new WebSocket('wss://chess.k6z.ru:8181');
 
     socket.onopen = function () {
-        displayStatus('Соединение установлено');
-        
+        // displayStatus('Соединение установлено');
         while (commandQueue.length > 0) {
             let command = commandQueue.shift();
             socket.send(command);
@@ -71,13 +79,13 @@ function createWebSocket() {
     };
 
     socket.onerror = function (error) {
-        displayStatus(`Ошибка WebSocket: ${matchId} ошибка ${error.message || error}`);
+        // displayStatus(`Ошибка WebSocket: ${matchId}`);
     };
 
     socket.onclose = function (event) {
-        displayStatus(`WebSocket закрыт (код: ${event.code}, причина: ${event.reason || 'не указана'}). Повторная попытка через 1 секунду...`);
+        // displayStatus('WebSocket закрыт. Повторная попытка подключения через 1 секунду...');
         setTimeout(() => {
-            socket = createWebSocket(); 
+            socket = createWebSocket();
         }, 1000);
     };
 
@@ -93,18 +101,13 @@ function createWebSocket() {
         } else if (data.includes("LOGS:")) {
             const logs = data.slice(5);
             logsField.innerHTML = logs.replace(/\n/g, '<br>');
+        // } else if (data.includes("GAMEID:")) {
+        //     const gameId = data.slice(7);
+        //     gameIdField.innerHTML = gameId;
+        //     matchId = gameId;
+        //     // displayStatus('Получен matchId от сервера:', matchId);
         } else if (data.includes("DRAW-OFFER")) {
             drawAcceptOfferModal.classList.remove('hidden');
-        } else if (data.includes("CONNECTED:")) {
-            const usernick = data.slice(10);
-            const notificationMessage2 = document.querySelector('#notification .modal-content3 p');
-            notificationMessage2.textContent = `${usernick} присоединился`;
-        
-            notificationModal2.classList.remove('hidden');
-        
-            setTimeout(function() {
-                notificationModal2.classList.add('hidden');
-            }, 2000);
         }
     };
 
@@ -114,14 +117,14 @@ function createWebSocket() {
 let socket = createWebSocket();
 
 function sendCommand(command) {
-    displayStatus(`Попытка отправить команду: ${command}`);
+    // displayStatus(`Попытка отправить команду: ${command}`);
     if (socket.readyState === WebSocket.OPEN) {
         socket.send(command);
-        displayStatus(`Команда отправлена: ${command}`);
+        // displayStatus(`Команда отправлена: ${command}`);
     } else {
-        displayStatus('WebSocket не открыт. Команда добавлена в очередь.');
+        // displayStatus('WebSocket не открыт. Команда добавлена в очередь.');
         commandQueue.push(command);
-    }    
+    }
 }
 
 const chessboard = document.getElementById('chessboard');
@@ -280,48 +283,23 @@ function handleSquareClick(row, col, files, ranks, playerColor) {
 //     }
 // });
 
-function displayStatus(message) {
-    const statusElement = document.getElementById('status');
-    statusElement.innerHTML += `<p>${message}</p>`;
-}
+// function displayStatus(message) {
+//     const statusElement = document.getElementById('status');
+//     statusElement.innerHTML += `<p>${message}</p>`; // Добавляем сообщение в HTML
+// }
 
-displayStatus(JSON.stringify(Telegram.WebApp.initDataUnsafe));
+// displayStatus(JSON.stringify(Telegram.WebApp.initDataUnsafe));
 
 const matchId = Telegram.WebApp.initDataUnsafe.start_param;
-displayStatus(`Извлеченный matchId: ${matchId}`);  
+// displayStatus(`Извлеченный matchId: ${matchId}`);  // Отладка
 
 if (matchId) {
-    displayStatus(`Отправка команды challenge для game_id: ${matchId}`);
+    // displayStatus(`Отправка команды challenge для game_id: ${matchId}`);
     try {
         sendCommand(`challenge ${matchId}`);
     } catch (error) {
-        displayStatus(`Ошибка при отправке команды: ${error}`);
+        // displayStatus(`Ошибка при отправке команды: ${error}`);
     }
-}
-
-const user = Telegram.WebApp.initDataUnsafe.user;
-
-if (user) {
-    const playerInfoUsername = document.querySelector('#player-info .username');
-    playerInfoUsername.textContent = '@' + user.username;
-    const playerInfoImage = document.querySelector('#player-info .user-image');
-    playerInfoImage.src = `https://t.me/i/userpic/320/${user.username}.jpg`;
-    playerInfoImage.onerror = function () {
-        playerInfoImage.src = 'reqs/ava.jpg';
-    };
-    try {
-        sendCommand(`connected ${matchId} ${user.username}`);
-    } catch (error) {
-        displayStatus(`Ошибка2 при отправке команды: ${error}`);
-    }
-    const notificationMessage = document.querySelector('#notification .modal-content2 p');
-    notificationMessage.textContent = `${playerInfoUsername.textContent} присоединился`;
-    displayStatus(`присоединился ${playerInfoUsername.textContent}`);
-    notificationModal.classList.remove('hidden');
-
-    setTimeout(function() {
-        notificationModal.classList.add('hidden');
-    }, 2000);
 }
 
 const whiteFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
