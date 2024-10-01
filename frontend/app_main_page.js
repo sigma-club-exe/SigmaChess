@@ -95,6 +95,15 @@ function createWebSocket() {
             drawAcceptOfferModal.classList.remove('hidden');
         } else if (data.includes("GAMESTARTED")) {
             waitingModal.classList.add('hidden');
+        } else if (data.includes("USERNAME")) {
+            const nick = data.slice(9);
+            const playerInfoUsername = document.querySelector('#opponent-info .username');
+            playerInfoUsername.textContent = '@' + nick;
+            const playerInfoImage = document.querySelector('#opponent-info .user-image');
+            playerInfoImage.src = `https://t.me/i/userpic/320/${nick}.jpg`;
+            playerInfoImage.onerror = function () {
+                playerInfoImage.src = 'reqs/ava.jpg';
+            };
         }
     };
 
@@ -299,6 +308,11 @@ if (user) {
     playerInfoImage.onerror = function () {
         playerInfoImage.src = 'reqs/ava.jpg';
     };
+    try {
+        sendCommand(`connected ${matchId} ${user.username}`);
+    } catch (error) {
+        // displayStatus(`Ошибка при отправке команды: ${error}`);
+    }
 }
 
 const whiteFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";

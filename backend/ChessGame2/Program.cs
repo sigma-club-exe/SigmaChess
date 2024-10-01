@@ -11,6 +11,8 @@ var wsConnectionsQueue = new Dictionary<string, IWebSocketConnection>();
 
 var games = new Dictionary<string, GameSession>();
 
+var usernames = new Dictionary<IWebSocketConnection, string>();
+
 server.Start(ws =>
 {
     ws.OnOpen = () => { wsConnections.Add(ws); };
@@ -24,7 +26,7 @@ server.Start(ws =>
             {
                 wsConnectionsQueue[gameId] = ws; // player1 init game
             }
-        else // player2 accepts invitation by providing same ID
+            else // player2 accepts invitation by providing same ID
             {
                 games[gameId] = new GameSession(new WsChessClient(wsConnectionsQueue[gameId]), new WsChessClient(ws),
                     new Game(), false);
@@ -32,46 +34,33 @@ server.Start(ws =>
                 currentSession.Player1.PlayerConnection.Send("GAMESTARTED");
                 currentSession.Player2.PlayerConnection.Send("GAMESTARTED");
 
+                var player1Nick = usernames[currentSession.Player1.PlayerConnection];
+                var player2Nick = usernames[currentSession.Player2.PlayerConnection];
+
+                currentSession.Player1.PlayerConnection.Send($"USERNAME:{player2Nick}");
+                currentSession.Player2.PlayerConnection.Send($"USERNAME:{player1Nick}");
+                
+
                 // if (currentSession.Player1.Color == 'w'){
                 //     currentSession.Player1.PlayerConnection.Send($"FEN:{currentSession.GetBoardStateWhite()}");
                 //     currentSession.Player2.PlayerConnection.Send($"FEN:{currentSession.GetBoardStateBlack()}");
                 // }else {
                 //      currentSession.Player2.PlayerConnection.Send($"FEN:{currentSession.GetBoardStateWhite()}");
                 //     currentSession.Player1.PlayerConnection.Send($"FEN:{currentSession.GetBoardStateBlack()}");
-                // }
+                // }   
             }
         }
         else if (message.Contains("resign"))
         {
             var gameId = message[7..];
-            var currentGame = games[gameId];
             wsConnectionsQueue.Remove(gameId);
-            currentGame.Player1.PlayerConnection
+            games[gameId].Player1.PlayerConnection
                 .Send($"LOGS: Партия {gameId} завершилась так как пользователь сдался :(");
-            currentGame.Player2.PlayerConnection
+            games[gameId].Player2.PlayerConnection
                 .Send($"LOGS: Партия {gameId} завершилась так как пользователь сдался :(");
             games.Remove(gameId);
-
-            if (ws == currentGame.Player1.PlayerConnection)
-            {
-                currentGame.Player1.PlayerConnection.Send("RESIGN:L");
-                currentGame.Player2.PlayerConnection.Send("RESIGN:W");
-            }
-            else
-            {
-                currentGame.Player2.PlayerConnection.Send("RESIGN:L");
-                currentGame.Player1.PlayerConnection.Send("RESIGN:W");
-            }
-            
         }
-        else if (message.Contains("draw-accepted"))
-        {
-            var gameId = message[14..];
-            var currentGame = games[gameId];
-            currentGame.Player1.PlayerConnection.Send("DRAW-ACCEPTED");
-            currentGame.Player2.PlayerConnection.Send("DRAW-ACCEPTED");
-            games.Remove(gameId);
-        }
+        
         else if (message.Contains("draw"))
         {
             var gameId = message[5..];
@@ -81,14 +70,20 @@ server.Start(ws =>
                 currentSession.Player2.PlayerConnection.Send("LOGS:соперник предлагает вам ничью");
                 currentSession.Player2.PlayerConnection.Send("DRAW-OFFER");
             }
-            
+
             else
             {
                 currentSession.Player1.PlayerConnection.Send("LOGS:соперник предлагает вам ничью");
                 currentSession.Player1.PlayerConnection.Send("DRAW-OFFER");
             }
         }
-        else if (message.Contains(':')) // moves handler
+
+        else if (message.Contains("connected")){
+            var parts = message.Split(' ');
+            usernames[ws] = parts[2];
+        }
+
+        else if (message.Contains(':')) // moves handler     
         {
             var parts = message.Split(':');
             var gameId = parts[0];
