@@ -1,15 +1,3 @@
-const user = Telegram.WebApp.initDataUnsafe.user;
-
-if (user) {
-    const playerInfoUsername = document.querySelector('#player-info .username');
-    playerInfoUsername.textContent = '@' + user.username;
-    const playerInfoImage = document.querySelector('#player-info .user-image');
-    playerInfoImage.src = `https://t.me/i/userpic/320/${user.username}.jpg`;
-    playerInfoImage.onerror = function () {
-        playerInfoImage.src = 'reqs/ava.jpg';
-    };
-}
-
 const surrenderModal = document.getElementById('surrenderConfirmModal');
 const drawOfferModal = document.getElementById('drawOfferModal');
 const drawAcceptOfferModal = document.getElementById('drawAcceptOfferModal');
@@ -65,6 +53,22 @@ declineDrawBtn2.addEventListener('click', function() {
     drawAcceptOfferModal.classList.add('hidden');
 });
 
+function showWaitingModal() {
+    const waitingModal = document.getElementById('waitingForPlayerModal');
+    waitingModal.classList.remove('hidden');
+}
+
+// Скрываем модальное окно при подключении второго игрока
+function hideWaitingModal() {
+    const waitingModal = document.getElementById('waitingForPlayerModal');
+    waitingModal.classList.add('hidden');
+}
+
+// Проверка если это первый игрок и нет второго
+if (isFirstPlayer) {  // Условие для первого игрока
+    showWaitingModal();
+}
+
 let commandQueue = [];
 
 function createWebSocket() {
@@ -108,6 +112,8 @@ function createWebSocket() {
         //     // displayStatus('Получен matchId от сервера:', matchId);
         } else if (data.includes("DRAW-OFFER")) {
             drawAcceptOfferModal.classList.remove('hidden');
+        } else if (data.includes("GAMESTARTED")) {
+            hideWaitingModal();
         }
     };
 
@@ -285,13 +291,13 @@ function handleSquareClick(row, col, files, ranks, playerColor) {
 
 // function displayStatus(message) {
 //     const statusElement = document.getElementById('status');
-//     statusElement.innerHTML += `<p>${message}</p>`; // Добавляем сообщение в HTML
+//     statusElement.innerHTML += `<p>${message}</p>`; 
 // }
 
 // displayStatus(JSON.stringify(Telegram.WebApp.initDataUnsafe));
 
 const matchId = Telegram.WebApp.initDataUnsafe.start_param;
-// displayStatus(`Извлеченный matchId: ${matchId}`);  // Отладка
+// displayStatus(`Извлеченный matchId: ${matchId}`);  
 
 if (matchId) {
     // displayStatus(`Отправка команды challenge для game_id: ${matchId}`);
@@ -300,6 +306,18 @@ if (matchId) {
     } catch (error) {
         // displayStatus(`Ошибка при отправке команды: ${error}`);
     }
+}
+
+const user = Telegram.WebApp.initDataUnsafe.user;
+
+if (user) {
+    const playerInfoUsername = document.querySelector('#player-info .username');
+    playerInfoUsername.textContent = '@' + user.username;
+    const playerInfoImage = document.querySelector('#player-info .user-image');
+    playerInfoImage.src = `https://t.me/i/userpic/320/${user.username}.jpg`;
+    playerInfoImage.onerror = function () {
+        playerInfoImage.src = 'reqs/ava.jpg';
+    };
 }
 
 const whiteFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
