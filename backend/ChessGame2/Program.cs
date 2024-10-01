@@ -32,13 +32,13 @@ server.Start(ws =>
                 currentSession.Player1.PlayerConnection.Send("GAMESTARTED");
                 currentSession.Player2.PlayerConnection.Send("GAMESTARTED");
 
-                if (currentSession.Player1.Color == 'w'){
-                    currentSession.Player1.PlayerConnection.Send($"FEN:{currentSession.GetBoardStateWhite()}");
-                    currentSession.Player2.PlayerConnection.Send($"FEN:{currentSession.GetBoardStateBlack()}");
-                }else {
-                     currentSession.Player2.PlayerConnection.Send($"FEN:{currentSession.GetBoardStateWhite()}");
-                    currentSession.Player1.PlayerConnection.Send($"FEN:{currentSession.GetBoardStateBlack()}");
-                }
+                // if (currentSession.Player1.Color == 'w'){
+                //     currentSession.Player1.PlayerConnection.Send($"FEN:{currentSession.GetBoardStateWhite()}");
+                //     currentSession.Player2.PlayerConnection.Send($"FEN:{currentSession.GetBoardStateBlack()}");
+                // }else {
+                //      currentSession.Player2.PlayerConnection.Send($"FEN:{currentSession.GetBoardStateWhite()}");
+                //     currentSession.Player1.PlayerConnection.Send($"FEN:{currentSession.GetBoardStateBlack()}");
+                // }
             }
         }
         else if (message.Contains("resign"))
