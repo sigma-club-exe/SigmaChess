@@ -94,8 +94,7 @@ function createWebSocket() {
         } else if (data.includes("DRAW-OFFER")) {
             drawAcceptOfferModal.classList.remove('hidden');
         } else if (data.includes("GAMESTARTED")) {
-            displayStatus('сосал');
-            waitingModal.classList.add('hidden');
+            waitingModal.classList.add('delback');
         }
     };
 
@@ -271,10 +270,10 @@ function handleSquareClick(row, col, files, ranks, playerColor) {
 //     }
 // });
 
-function displayStatus(message) {
-    const statusElement = document.getElementById('status');
-    statusElement.innerHTML += `<p>${message}</p>`; 
-}
+// function displayStatus(message) {
+//     const statusElement = document.getElementById('status');
+//     statusElement.innerHTML += `<p>${message}</p>`; 
+// }
 
 // displayStatus(JSON.stringify(Telegram.WebApp.initDataUnsafe));
 
