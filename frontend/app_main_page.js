@@ -91,14 +91,10 @@ function createWebSocket() {
         } else if (data.includes("LOGS:")) {
             const logs = data.slice(5);
             logsField.innerHTML = logs.replace(/\n/g, '<br>');
-        // } else if (data.includes("GAMEID:")) {
-        //     const gameId = data.slice(7);
-        //     gameIdField.innerHTML = gameId;
-        //     matchId = gameId;
-        //     // displayStatus('Получен matchId от сервера:', matchId);
         } else if (data.includes("DRAW-OFFER")) {
             drawAcceptOfferModal.classList.remove('hidden');
         } else if (data.includes("GAMESTARTED")) {
+            displayStatus('сосал');
             waitingModal.classList.add('hidden');
         }
     };
@@ -275,10 +271,10 @@ function handleSquareClick(row, col, files, ranks, playerColor) {
 //     }
 // });
 
-// function displayStatus(message) {
-//     const statusElement = document.getElementById('status');
-//     statusElement.innerHTML += `<p>${message}</p>`; 
-// }
+function displayStatus(message) {
+    const statusElement = document.getElementById('status');
+    statusElement.innerHTML += `<p>${message}</p>`; 
+}
 
 // displayStatus(JSON.stringify(Telegram.WebApp.initDataUnsafe));
 
