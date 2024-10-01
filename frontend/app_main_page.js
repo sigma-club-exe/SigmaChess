@@ -287,35 +287,21 @@ function handleSquareClick(row, col, files, ranks, playerColor) {
 // displayStatus(JSON.stringify(Telegram.WebApp.initDataUnsafe));
 
 const matchId = Telegram.WebApp.initDataUnsafe.start_param;
-// displayStatus(`Извлеченный matchId: ${matchId}`);  
-
-if (matchId) {
-    displayStatus(`Отправка команды challenge для game_id: ${matchId}`);
-    try {
-        sendCommand(`challenge ${matchId}`);
-    } catch (error) {
-        displayStatus(`Ошибка при отправке команды: ${error}`);
-    }
-}
-
 const user = Telegram.WebApp.initDataUnsafe.user;
+// displayStatus(`Извлеченный matchId and user: ${matchId} ${user}`);  
 
-if (user) {
-    const playerInfoUsername = document.querySelector('#player-info .username');
-    playerInfoUsername.textContent = '@' + user.username;
-    const playerInfoImage = document.querySelector('#player-info .user-image');
-    playerInfoImage.src = `https://t.me/i/userpic/320/${user.username}.jpg`;
-    playerInfoImage.onerror = function () {
-        playerInfoImage.src = 'reqs/ava.jpg';
-    };
-    setTimeout(() => {
-        try {
-            displayStatus(`отправкa connected`);
-            sendCommand(`connected ${matchId} ${user.username}`);
-        } catch (error) {
-            displayStatus(`Ошибка при отправке команды: ${error}`);
-        }
-    }, 2000);
+const playerInfoUsername = document.querySelector('#player-info .username');
+playerInfoUsername.textContent = '@' + user.username;
+const playerInfoImage = document.querySelector('#player-info .user-image');
+playerInfoImage.src = `https://t.me/i/userpic/320/${user.username}.jpg`;
+playerInfoImage.onerror = function () {
+    playerInfoImage.src = 'reqs/ava.jpg';
+};
+displayStatus(`Отправка команды challenge для game_id: ${matchId}`);
+try {
+    sendCommand(`challenge ${matchId} ${user.username}`);
+} catch (error) {
+    displayStatus(`Ошибка при отправке команды: ${error}`);
 }
 
 const whiteFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";

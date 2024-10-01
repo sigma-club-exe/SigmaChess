@@ -11,6 +11,8 @@ var wsConnectionsQueue = new Dictionary<string, IWebSocketConnection>();
 
 var games = new Dictionary<string, GameSession>();
 
+var usernames = new Dictionary<IWebSocketConnection, string>();
+
 server.Start(ws =>
 {
     ws.OnOpen = () => { wsConnections.Add(ws); };
@@ -19,18 +21,26 @@ server.Start(ws =>
     {
         if (message.Contains("challenge"))
         {
-            var gameId = message[10..];
+            var parts = message.Split(" ");
+            var gameId = parts[1];
+            var username = parts[2];
+            usernames[ws] = username;
+
             if (!wsConnectionsQueue.ContainsKey(gameId)) // no session with such ID yet
             {
                 wsConnectionsQueue[gameId] = ws; // player1 init game
             }
-        else // player2 accepts invitation by providing same ID
+            else // player2 accepts invitation by providing same ID
             {
                 games[gameId] = new GameSession(new WsChessClient(wsConnectionsQueue[gameId]), new WsChessClient(ws),
                     new Game(), false);
                 var currentSession = games[gameId];
-                currentSession.Player1.PlayerConnection.Send("GAMESTARTED");
-                currentSession.Player2.PlayerConnection.Send("GAMESTARTED");
+
+                var player1Nick = usernames[currentSession.Player1.PlayerConnection];
+                var player2Nick = usernames[currentSession.Player2.PlayerConnection];
+
+                currentSession.Player1.PlayerConnection.Send($"GAMESTARTED:{player2Nick}");
+                currentSession.Player2.PlayerConnection.Send($"GAMESTARTED:{player1Nick}");
 
                 // if (currentSession.Player1.Color == 'w'){
                 //     currentSession.Player1.PlayerConnection.Send($"FEN:{currentSession.GetBoardStateWhite()}");
