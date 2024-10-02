@@ -212,62 +212,17 @@ body {
     text-align: center;
 }
 
-.modal-content2 p {
-    color: #f8efde;
-    padding: 4px;
-    font-family: Krona One, sans-serif; 
-}
-
-.modal2 {
-    width: 340px;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    z-index:100;
-    margin-bottom: 350px;
-}
-
-.modal-content2 {
-    background-color: rgba(51, 94, 94, 0.678);
-    border-radius: 30px;
-    text-align: center;
-}
-
-.modal-content3 p {
-    color: #f8efde;
-    padding: 4px;
-    font-family: Krona One, sans-serif; 
-}
-
-.modal3 {
-    width: 340px;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    z-index:100;
-    margin-bottom: 325px;
-    margin-top: 115px;
-}
-
-.modal-content3 {
-    background-color: rgba(51, 94, 94, 0.678);
-    border-radius: 30px;
-    text-align: center;
-}
-
 .hidden {
-    display: none;
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
 }
 
 p {
     color: white;
     font-weight: 600;
     font-size: 18px;
-    font-family: Krona One, sans-serif; 
 }
 
 .btn_yn {
@@ -278,4 +233,24 @@ p {
     font-size: 15px;
     color: rgb(33, 51, 47);
     font-weight: 600;
+}
+
+.modalfull-screen{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #efe6d5; 
+    z-index: 1000; 
+}
+
+.modal-content2 p {
+    color: rgba(51, 94, 94, 0.8); 
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
 }

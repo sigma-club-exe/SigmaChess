@@ -11,6 +11,8 @@ var wsConnectionsQueue = new Dictionary<string, IWebSocketConnection>();
 
 var games = new Dictionary<string, GameSession>();
 
+var usernames = new Dictionary<IWebSocketConnection, string>();
+
 server.Start(ws =>
 {
     ws.OnOpen = () => { wsConnections.Add(ws); };
@@ -19,7 +21,11 @@ server.Start(ws =>
     {
         if (message.Contains("challenge"))
         {
-            var gameId = message[10..];
+            var parts = message.Split(" ");
+            var gameId = parts[1];
+            var username = parts[2];
+            usernames[ws] = username;
+
             if (!wsConnectionsQueue.ContainsKey(gameId)) // no session with such ID yet
             {
                 wsConnectionsQueue[gameId] = ws; // player1 init game
@@ -28,18 +34,21 @@ server.Start(ws =>
             {
                 games[gameId] = new GameSession(new WsChessClient(wsConnectionsQueue[gameId]), new WsChessClient(ws),
                     new Game(), false);
-                string colorMessage = games[gameId].Player1.Color == 'w' ? "белыми" : "черными";
-                wsConnectionsQueue[gameId].Send($"LOGS: Партия {gameId} началась!" +
-                                                '\n' + "Сейчас ход белых" + '\n' +
-                                                $"Вы играете {colorMessage} фигурами");
+                var currentSession = games[gameId];
 
-                colorMessage = games[gameId].Player2.Color == 'w' ? "белыми" : "черными";
-                ws.Send($"LOGS: Партия {gameId} началась!" +
-                        '\n' + "Сейчас ход белых" +
-                        '\n' + $"Вы играете {colorMessage} фигурами");
+                var player1Nick = usernames[currentSession.Player1.PlayerConnection];
+                var player2Nick = usernames[currentSession.Player2.PlayerConnection];
 
-                 ws.Send($"GAMEID:{gameId}");
-                wsConnectionsQueue[gameId].Send($"GAMEID:{gameId}");
+                currentSession.Player1.PlayerConnection.Send($"GAMESTARTED:{player2Nick}");
+                currentSession.Player2.PlayerConnection.Send($"GAMESTARTED:{player1Nick}");
+
+                // if (currentSession.Player1.Color == 'w'){
+                //     currentSession.Player1.PlayerConnection.Send($"FEN:{currentSession.GetBoardStateWhite()}");
+                //     currentSession.Player2.PlayerConnection.Send($"FEN:{currentSession.GetBoardStateBlack()}");
+                // }else {
+                //      currentSession.Player2.PlayerConnection.Send($"FEN:{currentSession.GetBoardStateWhite()}");
+                //     currentSession.Player1.PlayerConnection.Send($"FEN:{currentSession.GetBoardStateBlack()}");
+                // }
             }
         }
         else if (message.Contains("resign"))
@@ -87,20 +96,6 @@ server.Start(ws =>
             {
                 currentSession.Player1.PlayerConnection.Send("LOGS:соперник предлагает вам ничью");
                 currentSession.Player1.PlayerConnection.Send("DRAW-OFFER");
-            }
-        }
-        else if (message.Contains("connected"))
-        {
-            var parts = message[10..];
-            var splitParts = parts.Split(' ');
-            var gameId = splitParts[0];
-            var username = splitParts[1];
-            wsConnectionsQueue[gameId].Send($"CONNECTED:{username}");
-            if (games.ContainsKey(gameId))
-            {
-                var currentGame = games[gameId];
-                currentGame.Player1.PlayerConnection.Send($"CONNECTED:{username}");
-                currentGame.Player2.PlayerConnection.Send($"CONNECTED:{username}");
             }
         }
         else if (message.Contains(':')) // moves handler
