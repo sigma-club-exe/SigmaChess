@@ -94,6 +94,7 @@ function createWebSocket() {
             const parts = data.slice(4).split(":");
             const newFEN = parts[0];
             const playerColor = parts[1];
+            const capturedPieces = parts[2];
             createChessboardFromFEN(newFEN, playerColor);
             switchTurn(); 
         } else if (data.includes("LOGS:")) {
@@ -328,5 +329,5 @@ try {
     // displayStatus(`Ошибка при отправке команды: ${error}`);
 }
 
-const whiteFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
+const whiteFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"; 
 createChessboardFromFEN(whiteFEN, 'w');

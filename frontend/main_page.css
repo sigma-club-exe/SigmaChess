@@ -59,7 +59,7 @@ body {
 }
 
 .square.dark {
-    background-color: rgba(60, 111, 111, 0.8); 
+    background-color: rgba(55, 102, 102, 0.904); 
 }
 
 .square::before {
@@ -81,8 +81,8 @@ body {
 .user-info1 {
     width: 340px;
     height: 60px;
-    background: rgba(60, 111, 111, 0.8);
-    border-radius: 20px;
+    background: rgba(55, 102, 102, 0.904);
+    border-radius: 100px;
     display: flex;
     align-items: center;
     padding: 4px;
@@ -93,8 +93,8 @@ body {
 .user-info2 {
     width: 340px;
     height: 60px;
-    background: rgba(60, 111, 111, 0.8);
-    border-radius: 20px;
+    background: rgba(55, 102, 102, 0.904);
+    border-radius: 100px;
     display: flex;
     align-items: center;
     padding: 4px;
@@ -119,16 +119,24 @@ body {
     text-align: center;
     color: #f0ede7;
     font-size: 14px;
-    font-family: Krona One, sans-serif; 
+    font-family: Alconica, sans-serif; 
     -webkit-text-stroke: 0.2px #867d6b;; 
 }
 
 .time {
-    color: #f0ede7;
+    color: #efe6d5;
     font-size: 20px;
-    margin-right: 10px;
-    -webkit-text-stroke: 0.2px #FFFFFF; 
-}
+    margin-right: -1px;
+    -webkit-text-stroke: 0.2px #ffffff;
+    background-color: rgb(44, 80, 80); 
+    padding: 5px;
+    border-radius: 100px;
+    display: inline-block; 
+    line-height: 40px; 
+    height: 40px; 
+    text-align: center; 
+    vertical-align: middle; 
+  }
 
 .btns {
     width: 340px;
@@ -154,7 +162,7 @@ body {
 .btn-image {
     width: 45px;
     height: 45px;
-    background: rgba(60, 111, 111, 0.8);
+    background: rgba(55, 102, 102, 0.904);
     border-radius: 20%;
     padding: 3px;
 }
@@ -186,10 +194,10 @@ body {
 }
 
 .command-container{
-    border: 5px solid rgba(60, 111, 111, 0.8);
+    border: 5px solid rgba(55, 102, 102, 0.904);
     /* display: none; */
     .command-btn{
-        background-color: rgba(60, 111, 111, 0.8);
+        background-color: rgba(55, 102, 102, 0.904);
     }
 }
 
