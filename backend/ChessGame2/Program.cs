@@ -52,6 +52,8 @@ server.Start(ws =>
 
                 currentSession.Player1.PlayerConnection.Send($"GAMESTARTED:{player2Nick}:{player1Fen}:{currentSession.Player1.Color}");
                 currentSession.Player2.PlayerConnection.Send($"GAMESTARTED:{player1Nick}:{player2Fen}:{currentSession.Player2.Color}");
+                usernames.Remove(currentSession.Player1.PlayerConnection);
+                usernames.Remove(currentSession.Player2.PlayerConnection);
             }
         }
         else if (message.Contains("resign"))
