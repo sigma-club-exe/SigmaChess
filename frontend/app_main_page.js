@@ -100,9 +100,9 @@ function createWebSocket() {
         } else if (data.includes("RESIGN")) {
             parts = data.split(':');
             const result = parts[1];
-            if(result === "W"){
+            if (result === "W"){
                 /// табличка победы
-            }else{
+            } else {
                 /// табличка проигрыша
             }
         } else if (data.includes("DRAW-ACCEPTED")) {
