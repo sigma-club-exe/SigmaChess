@@ -13,19 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-<<<<<<< HEAD
-      "projectUniqueName": "C:\\Users\\fyodo.DESKTOP-9A67S1J\\vscode_projects\\SigmaChess\\backend\\ChessLOgic\\ChessLOgic.csproj",
-      "projectName": "ChessLOgic",
-      "projectPath": "C:\\Users\\fyodo.DESKTOP-9A67S1J\\vscode_projects\\SigmaChess\\backend\\ChessLOgic\\ChessLOgic.csproj",
-      "packagesPath": "C:\\Users\\fyodo.DESKTOP-9A67S1J\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\fyodo.DESKTOP-9A67S1J\\vscode_projects\\SigmaChess\\backend\\ChessLOgic\\obj\\",
-=======
       "projectUniqueName": "D:\\vscode.projects\\SigmaChess\\backend\\ChessLOgic\\ChessLOgic.csproj",
       "projectName": "ChessLOgic",
       "projectPath": "D:\\vscode.projects\\SigmaChess\\backend\\ChessLOgic\\ChessLOgic.csproj",
       "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
       "outputPath": "D:\\vscode.projects\\SigmaChess\\backend\\ChessLOgic\\obj\\",
->>>>>>> 45f236ab846c17744c7442f370035cae130b51f3
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
