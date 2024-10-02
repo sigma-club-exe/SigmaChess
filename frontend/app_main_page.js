@@ -13,7 +13,6 @@ const waitingModal = document.getElementById('waitingForPlayerModal');
 const drawModal = document.getElementById('drawModal');
 const winResignModal = document.getElementById('winResignModal');
 const loseResignModal = document.getElementById('loseResignModal');
-const overlay = document.getElementById('overlay');
 
 // function displayStatus(message) {
 //     const statusElement = document.getElementById('status');
@@ -107,14 +106,17 @@ function createWebSocket() {
             const result = parts[1];
             if (result === "W"){
                 winResignModal.classList.remove('hidden');
-                overlay.classList.add('active');
+                document.getElementById('surrender-btn').classList.add('disabled');
+                document.getElementById('draw-offer-btn').classList.add('disabled');
             } else {
                 loseResignModal.classList.remove('hidden');
-                overlay.classList.add('active');
+                document.getElementById('surrender-btn').classList.add('disabled');
+                document.getElementById('draw-offer-btn').classList.add('disabled');
             }
         } else if (data.includes("DRAW-ACCEPTED")) {
             drawModal.classList.remove('hidden');
-            overlay.classList.add('active');
+            document.getElementById('surrender-btn').classList.add('disabled');
+            document.getElementById('draw-offer-btn').classList.add('disabled');
         } else if (data.includes("GAMESTARTED")) {
             var parts = data.split(':');
             waitingModal.classList.add('hidden');
