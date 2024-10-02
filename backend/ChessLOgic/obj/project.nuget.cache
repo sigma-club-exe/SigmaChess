@@ -1,14 +1,8 @@
 {
   "version": 2,
-<<<<<<< HEAD
-  "dgSpecHash": "7joGyUC7HTZTeI+0wlhSbqNgp3IuoxKYBaAAEREgS8vU++HXaiJG7TGdYKBkW2ml6XjalSVDp7WzBnDZuSQUCQ==",
+  "dgSpecHash": "UqWbdHh96As=",
   "success": true,
-  "projectFilePath": "C:\\Users\\fyodo.DESKTOP-9A67S1J\\vscode_projects\\SigmaChess\\backend\\ChessLOgic\\ChessLOgic.csproj",
-=======
-  "dgSpecHash": "5g0d7Pje7Pw=",
-  "success": true,
-  "projectFilePath": "D:\\vscode.projects\\SigmaChess\\backend\\ChessLOgic\\ChessLOgic.csproj",
->>>>>>> 45f236ab846c17744c7442f370035cae130b51f3
+  "projectFilePath": "C:\\Users\\fyodo.DESKTOP-9A67S1J\\RiderProjects\\SigmaChess\\backend\\ChessLOgic\\ChessLOgic.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

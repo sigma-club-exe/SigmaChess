@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using ChessLogic.Figures;
+using Microsoft.VisualBasic;
 
 namespace ChessLogic;
 
@@ -68,8 +69,80 @@ public class Game
     public bool White_O_O_O { get; set; }
     public bool Black_O_O { get; set; }
     public bool Black_O_O_O { get; set; }
-    
+
     public char Checkmate { get; set; }
+
+    public string GetCapturedPieces(char color)
+    {
+        // Массив для подсчета недостающих фигур (0: Pawn, 1: Knight, 2: Bishop, 3: Rook, 4: Queen)
+        short[] capturedPieces = new short[5]; // Начальные значения все нули
+
+        // Проход по всей доске и подсчет присутствующих фигур
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                var curSquare = Board[i][j];
+                if (curSquare != null && curSquare.Color != color) // Считаем только вражеские фигуры
+                {
+                    switch (curSquare.Type)
+                    {
+                        case FigureType.Pawn:
+                            capturedPieces[0]++; // Пешки
+                            break;
+                        case FigureType.Knight:
+                            capturedPieces[1]++; // Кони
+                            break;
+                        case FigureType.Bishop:
+                            capturedPieces[2]++; // Слоны
+                            break;
+                        case FigureType.Rook:
+                            capturedPieces[3]++; // Ладьи
+                            break;
+                        case FigureType.Queen:
+                            capturedPieces[4]++; // Ферзь
+                            break;
+                    }
+                }
+            }
+        }
+
+        // Для хранения строки с съеденными фигурами
+        StringBuilder capturedPiecesAsString = new StringBuilder();
+
+        // Теперь добавляем отсутствующие фигуры в строку захваченных
+        for (int j = 0; j < 8 - capturedPieces[0]; j++)
+        {
+            capturedPiecesAsString.Append('p'); // Пешки
+        }
+
+        for (int j = 0; j < 2 - capturedPieces[1]; j++)
+        {
+            capturedPiecesAsString.Append('k'); // Кони
+        }
+
+        for (int j = 0; j < 2 - capturedPieces[2]; j++)
+        {
+            capturedPiecesAsString.Append('b'); // Слоны
+        }
+
+        for (int j = 0; j < 2 - capturedPieces[3]; j++)
+        {
+            capturedPiecesAsString.Append('r'); // Ладьи
+        }
+
+        if (capturedPieces[4] < 1)
+        {
+            capturedPiecesAsString.Append('q'); // Ферзь
+        }
+
+        if (color == 'b')
+        {
+            return capturedPiecesAsString.ToString().ToUpper();
+        }
+
+        return capturedPiecesAsString.ToString();
+    }
 
     public bool DoMove(string move)
     {
@@ -95,8 +168,8 @@ public class Game
                 {
                     Checkmate = figure.Color == 'w' ? 'b' : 'w';
                 }
-                
-                
+
+
                 if (tempfigure.Type == FigureType.King)
                 {
                     if (tempfigure.Color == 'w')
@@ -109,13 +182,13 @@ public class Game
                         Black_O_O = false;
                         Black_O_O_O = false;
                     }
-                }else if (tempfigure.Type == FigureType.Rook)
+                }
+                else if (tempfigure.Type == FigureType.Rook)
                 {
                     // todo: доделать логику рокировки
                 }
-                
-                
-                
+
+
                 WhitesTurn = !WhitesTurn;
                 return true;
             }
@@ -185,117 +258,118 @@ public class Game
         return sb.ToString();
     }
 
-public string GetBoardAsFENforBlack()
-{
-    var sb = new StringBuilder();
-
-    for (int x = 0; x < 8; x++) // от 8-й линии к 1-й
+    public string GetBoardAsFENforBlack()
     {
-        int emptySquares = 0;
+        var sb = new StringBuilder();
 
-        for (int y = 7; y >=0; y--)
+        for (int x = 0; x < 8; x++) // от 8-й линии к 1-й
         {
-            if (Board[x][y] == null)
+            int emptySquares = 0;
+
+            for (int y = 7; y >= 0; y--)
             {
-                emptySquares++; // увеличиваем счетчик пустых клеток
-            }
-            else
-            {
-                if (emptySquares > 0)
+                if (Board[x][y] == null)
                 {
-                    sb.Append(emptySquares); // добавляем число пустых клеток
-                    emptySquares = 0;
+                    emptySquares++; // увеличиваем счетчик пустых клеток
                 }
-
-                sb.Append(GetFigureSymbol(Board[x][y])); // добавляем символ фигуры
-            }
-        }
-
-        if (emptySquares > 0)
-        {
-            sb.Append(emptySquares); // добавляем оставшиеся пустые клетки в строке
-        }
-
-        if (x < 7)
-        {
-            sb.Append('/'); // разделитель между строками доски
-        }
-    }
-
-    return sb.ToString();
-}
-
-public string GetBoardAsFullFEN()
-{
-    char currentTurn = WhitesTurn ? 'w' : 'b';
-    bool whiteCanCastleKingside = White_O_O; 
-    bool whiteCanCastleQueenside = White_O_O_O;
-    bool blackCanCastleKingside = Black_O_O;
-    bool blackCanCastleQueenside = Black_O_O_O;
-    string enPassantTargetSquare = "-";
-    int halfMoveClock = 2;
-    int fullMoveNumber = 2;
-    var sb = new StringBuilder();
-
-    // 1. Генерация положения фигур на доске (как в предыдущем методе)
-    for (int x = 7; x >= 0; x--) // от 8-й линии к 1-й
-    {
-        int emptySquares = 0;
-
-        for (int y = 0; y < 8; y++)
-        {
-            if (Board[x][y] == null)
-            {
-                emptySquares++; // увеличиваем счетчик пустых клеток
-            }
-            else
-            {
-                if (emptySquares > 0)
+                else
                 {
-                    sb.Append(emptySquares); // добавляем число пустых клеток
-                    emptySquares = 0;
+                    if (emptySquares > 0)
+                    {
+                        sb.Append(emptySquares); // добавляем число пустых клеток
+                        emptySquares = 0;
+                    }
+
+                    sb.Append(GetFigureSymbol(Board[x][y])); // добавляем символ фигуры
                 }
-                sb.Append(GetFigureSymbol(Board[x][y])); // добавляем символ фигуры
+            }
+
+            if (emptySquares > 0)
+            {
+                sb.Append(emptySquares); // добавляем оставшиеся пустые клетки в строке
+            }
+
+            if (x < 7)
+            {
+                sb.Append('/'); // разделитель между строками доски
             }
         }
 
-        if (emptySquares > 0)
-        {
-            sb.Append(emptySquares); // добавляем оставшиеся пустые клетки в строке
-        }
-
-        if (x > 0)
-        {
-            sb.Append('/'); // разделитель между строками доски
-        }
+        return sb.ToString();
     }
 
-    // 2. Добавление информации о ходе
-    sb.Append(' ').Append(currentTurn); // текущий ход: 'w' или 'b'
-
-    // 3. Возможность рокировки
-    sb.Append(' ');
-    if (whiteCanCastleKingside) sb.Append('K');
-    if (whiteCanCastleQueenside) sb.Append('Q');
-    if (blackCanCastleKingside) sb.Append('k');
-    if (blackCanCastleQueenside) sb.Append('q');
-    if (!whiteCanCastleKingside && !whiteCanCastleQueenside && 
-        !blackCanCastleKingside && !blackCanCastleQueenside)
+    public string GetBoardAsFullFEN()
     {
-        sb.Append('-'); // если ни одна рокировка не возможна
+        char currentTurn = WhitesTurn ? 'w' : 'b';
+        bool whiteCanCastleKingside = White_O_O;
+        bool whiteCanCastleQueenside = White_O_O_O;
+        bool blackCanCastleKingside = Black_O_O;
+        bool blackCanCastleQueenside = Black_O_O_O;
+        string enPassantTargetSquare = "-";
+        int halfMoveClock = 2;
+        int fullMoveNumber = 2;
+        var sb = new StringBuilder();
+
+        // 1. Генерация положения фигур на доске (как в предыдущем методе)
+        for (int x = 7; x >= 0; x--) // от 8-й линии к 1-й
+        {
+            int emptySquares = 0;
+
+            for (int y = 0; y < 8; y++)
+            {
+                if (Board[x][y] == null)
+                {
+                    emptySquares++; // увеличиваем счетчик пустых клеток
+                }
+                else
+                {
+                    if (emptySquares > 0)
+                    {
+                        sb.Append(emptySquares); // добавляем число пустых клеток
+                        emptySquares = 0;
+                    }
+
+                    sb.Append(GetFigureSymbol(Board[x][y])); // добавляем символ фигуры
+                }
+            }
+
+            if (emptySquares > 0)
+            {
+                sb.Append(emptySquares); // добавляем оставшиеся пустые клетки в строке
+            }
+
+            if (x > 0)
+            {
+                sb.Append('/'); // разделитель между строками доски
+            }
+        }
+
+        // 2. Добавление информации о ходе
+        sb.Append(' ').Append(currentTurn); // текущий ход: 'w' или 'b'
+
+        // 3. Возможность рокировки
+        sb.Append(' ');
+        if (whiteCanCastleKingside) sb.Append('K');
+        if (whiteCanCastleQueenside) sb.Append('Q');
+        if (blackCanCastleKingside) sb.Append('k');
+        if (blackCanCastleQueenside) sb.Append('q');
+        if (!whiteCanCastleKingside && !whiteCanCastleQueenside &&
+            !blackCanCastleKingside && !blackCanCastleQueenside)
+        {
+            sb.Append('-'); // если ни одна рокировка не возможна
+        }
+
+        // 4. Взятие на проходе
+        sb.Append(' ').Append(string.IsNullOrEmpty(enPassantTargetSquare) ? "-" : enPassantTargetSquare);
+
+        // 5. Счётчик полуходов
+        sb.Append(' ').Append(halfMoveClock);
+
+        // 6. Номер полного хода
+        sb.Append(' ').Append(fullMoveNumber);
+
+        return sb.ToString();
     }
-
-    // 4. Взятие на проходе
-    sb.Append(' ').Append(string.IsNullOrEmpty(enPassantTargetSquare) ? "-" : enPassantTargetSquare);
-
-    // 5. Счётчик полуходов
-    sb.Append(' ').Append(halfMoveClock);
-
-    // 6. Номер полного хода
-    sb.Append(' ').Append(fullMoveNumber);
-
-    return sb.ToString();
-}
 
 
     // Метод для отображения символов фигур

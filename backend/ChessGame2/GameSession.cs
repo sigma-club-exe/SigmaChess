@@ -1,4 +1,5 @@
-﻿using Fleck;
+﻿using System.Text;
+using Fleck;
 using ChessLogic;
 
 namespace ChessGame2;
@@ -63,23 +64,23 @@ public class GameSession
 
                 if (Player1.Color == 'b')
                 {
-                    Player1.PlayerConnection.Send($"FEN:{GetBoardStateBlack()}:{Player1.Color}");
+                    Player1.PlayerConnection.Send($"FEN:{GetBoardStateBlack()}:{Player1.Color}:{GetPlayerCapturedPieces(Player1)}");
                 }
 
                 else
                 {
-                    Player1.PlayerConnection.Send($"FEN:{GetBoardStateWhite()}:{Player1.Color}");
+                    Player1.PlayerConnection.Send($"FEN:{GetBoardStateWhite()}:{Player1.Color}:{GetPlayerCapturedPieces(Player1)}");
                 }
                 
                 if (!BotGame)
                 {
                     if (Player2.Color == 'b')
                     {
-                        Player2.PlayerConnection.Send($"FEN:{GetBoardStateBlack()}:{Player2.Color}");
+                        Player2.PlayerConnection.Send($"FEN:{GetBoardStateBlack()}:{Player2.Color}:{GetPlayerCapturedPieces(Player2)}");
                     }
                     else
                     {
-                        Player2.PlayerConnection.Send($"FEN:{GetBoardStateWhite()}:{Player2.Color}");
+                        Player2.PlayerConnection.Send($"FEN:{GetBoardStateWhite()}:{Player2.Color}:{GetPlayerCapturedPieces(Player2)}");
                     }
                     
                 }
@@ -104,9 +105,14 @@ public class GameSession
         var successfulMove = BoardState.DoMove(move);
         if (successfulMove)
         {
-            Player1.PlayerConnection.Send($"FEN:{GetBoardStateWhite()}:{Player1.Color}");
+            Player1.PlayerConnection.Send($"FEN:{GetBoardStateWhite()}:{Player1.Color}:{GetPlayerCapturedPieces(Player1)}");
             //  }
         }
+    }
+
+    public string GetPlayerCapturedPieces(WsChessClient player)
+    {
+        return BoardState.GetCapturedPieces(player.Color);
     }
 
     public string GetBoardStateWhite()

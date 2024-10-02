@@ -9,19 +9,11 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = ChessGame2
 build_property.RootNamespace = ChessGame2
-<<<<<<< HEAD
-build_property.ProjectDir = C:\Users\fyodo.DESKTOP-9A67S1J\vscode_projects\SigmaChess\backend\ChessGame2\
-=======
-build_property.ProjectDir = D:\vscode.projects\SigmaChess\backend\ChessGame2\
->>>>>>> 45f236ab846c17744c7442f370035cae130b51f3
+build_property.ProjectDir = C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\ChessGame2\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-<<<<<<< HEAD
-build_property.MSBuildProjectDirectory = C:\Users\fyodo.DESKTOP-9A67S1J\vscode_projects\SigmaChess\backend\ChessGame2
-=======
-build_property.MSBuildProjectDirectory = D:\vscode.projects\SigmaChess\backend\ChessGame2
->>>>>>> 45f236ab846c17744c7442f370035cae130b51f3
+build_property.MSBuildProjectDirectory = C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\ChessGame2
 build_property._RazorSourceGeneratorDebug = 
