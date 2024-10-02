@@ -506,19 +506,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-<<<<<<< HEAD
-      "projectUniqueName": "C:\\Users\\fyodo.DESKTOP-9A67S1J\\vscode_projects\\SigmaChess\\backend\\ChessGame2\\ChessGame2.csproj",
-      "projectName": "ChessGame2",
-      "projectPath": "C:\\Users\\fyodo.DESKTOP-9A67S1J\\vscode_projects\\SigmaChess\\backend\\ChessGame2\\ChessGame2.csproj",
-      "packagesPath": "C:\\Users\\fyodo.DESKTOP-9A67S1J\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\fyodo.DESKTOP-9A67S1J\\vscode_projects\\SigmaChess\\backend\\ChessGame2\\obj\\",
-=======
       "projectUniqueName": "D:\\vscode.projects\\SigmaChess\\backend\\ChessGame2\\ChessGame2.csproj",
       "projectName": "ChessGame2",
       "projectPath": "D:\\vscode.projects\\SigmaChess\\backend\\ChessGame2\\ChessGame2.csproj",
       "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
       "outputPath": "D:\\vscode.projects\\SigmaChess\\backend\\ChessGame2\\obj\\",
->>>>>>> 45f236ab846c17744c7442f370035cae130b51f3
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -533,13 +525,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-<<<<<<< HEAD
-            "C:\\Users\\fyodo.DESKTOP-9A67S1J\\vscode_projects\\SigmaChess\\backend\\ChessLOgic\\ChessLOgic.csproj": {
-              "projectPath": "C:\\Users\\fyodo.DESKTOP-9A67S1J\\vscode_projects\\SigmaChess\\backend\\ChessLOgic\\ChessLOgic.csproj"
-=======
             "D:\\vscode.projects\\SigmaChess\\backend\\ChessLOgic\\ChessLOgic.csproj": {
               "projectPath": "D:\\vscode.projects\\SigmaChess\\backend\\ChessLOgic\\ChessLOgic.csproj"
->>>>>>> 45f236ab846c17744c7442f370035cae130b51f3
             }
           }
         }
