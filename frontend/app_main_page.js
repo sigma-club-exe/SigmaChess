@@ -97,9 +97,24 @@ function createWebSocket() {
             logsField.innerHTML = logs.replace(/\n/g, '<br>');
         } else if (data.includes("DRAW-OFFER")) {
             drawAcceptOfferModal.classList.remove('hidden');
+        } else if (data.includes("RESIGN")) {
+            parts = data.split(':');
+            const result = parts[1];
+            if(result === "W"){
+                /// табличка победы
+            }else{
+                /// табличка проигрыша
+            }
+        } else if (data.includes("DRAW-ACCEPTED")) {
+            /// табличка ничьи
         } else if (data.includes("GAMESTARTED")) {
+            var parts = data.split(':');
             waitingModal.classList.add('hidden');
-            const nick = data.slice(12);
+            const nick = parts[1];
+            const fen = parts[2];
+            const color = parts[3];
+            createChessboardFromFEN(fen,color);
+
             // displayStatus(`получил ник ${nick}`);
             const playerInfoUsername = document.querySelector('#opponent-info .username');
             playerInfoUsername.textContent = '@' + nick;

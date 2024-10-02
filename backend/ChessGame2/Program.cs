@@ -38,17 +38,20 @@ server.Start(ws =>
 
                 var player1Nick = usernames[currentSession.Player1.PlayerConnection];
                 var player2Nick = usernames[currentSession.Player2.PlayerConnection];
+                
+                var player1Fen = "";
+                var player2Fen = "";
 
-                currentSession.Player1.PlayerConnection.Send($"GAMESTARTED:{player2Nick}");
-                currentSession.Player2.PlayerConnection.Send($"GAMESTARTED:{player1Nick}");
+                if (currentSession.Player1.Color=='w'){
+                    player1Fen = currentSession.GetBoardStateWhite();
+                     player2Fen = currentSession.GetBoardStateBlack();
+                }else{
+                     player2Fen = currentSession.GetBoardStateWhite();
+                     player1Fen = currentSession.GetBoardStateBlack();
+                }
 
-                // if (currentSession.Player1.Color == 'w'){
-                //     currentSession.Player1.PlayerConnection.Send($"FEN:{currentSession.GetBoardStateWhite()}");
-                //     currentSession.Player2.PlayerConnection.Send($"FEN:{currentSession.GetBoardStateBlack()}");
-                // }else {
-                //      currentSession.Player2.PlayerConnection.Send($"FEN:{currentSession.GetBoardStateWhite()}");
-                //     currentSession.Player1.PlayerConnection.Send($"FEN:{currentSession.GetBoardStateBlack()}");
-                // }
+                currentSession.Player1.PlayerConnection.Send($"GAMESTARTED:{player2Nick}:{player1Fen}:{currentSession.Player1.Color}");
+                currentSession.Player2.PlayerConnection.Send($"GAMESTARTED:{player1Nick}:{player2Fen}:{currentSession.Player2.Color}");
             }
         }
         else if (message.Contains("resign"))
@@ -56,11 +59,6 @@ server.Start(ws =>
             var gameId = message[7..];
             var currentGame = games[gameId];
             wsConnectionsQueue.Remove(gameId);
-            currentGame.Player1.PlayerConnection
-                .Send($"LOGS: Партия {gameId} завершилась так как пользователь сдался :(");
-            currentGame.Player2.PlayerConnection
-                .Send($"LOGS: Партия {gameId} завершилась так как пользователь сдался :(");
-            games.Remove(gameId);
 
             if (ws == currentGame.Player1.PlayerConnection)
             {
@@ -72,7 +70,7 @@ server.Start(ws =>
                 currentGame.Player2.PlayerConnection.Send("RESIGN:L");
                 currentGame.Player1.PlayerConnection.Send("RESIGN:W");
             }
-            
+            games.Remove(gameId);
         }
         else if (message.Contains("draw-accepted"))
         {
@@ -80,6 +78,7 @@ server.Start(ws =>
             var currentGame = games[gameId];
             currentGame.Player1.PlayerConnection.Send("DRAW-ACCEPTED");
             currentGame.Player2.PlayerConnection.Send("DRAW-ACCEPTED");
+            wsConnectionsQueue.Remove(gameId);
             games.Remove(gameId);
         }
         else if (message.Contains("draw"))
