@@ -55,6 +55,7 @@ declineDrawBtn.addEventListener('click', function() {
 
 acceptDrawBtn2.addEventListener('click', function() {
     // displayStatus('Draw accepted');
+    sendCommand(`draw-accepted ${matchId}`);
     drawAcceptOfferModal.classList.add('hidden');
 });
 
