@@ -10,6 +10,10 @@ const declineDrawBtn = document.getElementById('decline-draw');
 const acceptDrawBtn2 = document.getElementById('accept-draw2');
 const declineDrawBtn2 = document.getElementById('decline-draw2');
 const waitingModal = document.getElementById('waitingForPlayerModal');
+const drawModal = document.getElementById('drawModal');
+const winResignModal = document.getElementById('winResignModal');
+const loseResignModal = document.getElementById('loseResignModal');
+const overlay = document.getElementById('overlay');
 
 // function displayStatus(message) {
 //     const statusElement = document.getElementById('status');
@@ -101,12 +105,15 @@ function createWebSocket() {
             parts = data.split(':');
             const result = parts[1];
             if (result === "W"){
-                /// табличка победы
+                winResignModal.classList.remove('hidden');
+                overlay.classList.add('active');
             } else {
-                /// табличка проигрыша
+                loseResignModal.classList.remove('hidden');
+                overlay.classList.add('active');
             }
         } else if (data.includes("DRAW-ACCEPTED")) {
-            /// табличка ничьи
+            drawModal.classList.remove('hidden');
+            overlay.classList.add('active');
         } else if (data.includes("GAMESTARTED")) {
             var parts = data.split(':');
             waitingModal.classList.add('hidden');

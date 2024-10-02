@@ -12,6 +12,7 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
+    <div id="overlay" class="hidden"></div>
     <!-- <div id="status" style="padding: 10px; border: 1px solid #9c0101; margin-bottom: 20px;">
     </div>     -->
     <div class="container">
@@ -30,6 +31,25 @@
             </div>
             <div class="chessboard-container">
                 <div class="chessboard" id="chessboard"></div>
+
+                <div id="drawModal" class="modal hidden">
+                    <div class="modal-content">
+                        <p>Партия завершилась ничьёй!</p>
+                    </div>
+                </div>
+
+                
+                <div id="winResignModal" class="modal hidden">
+                    <div class="modal-content">
+                        <p>Партия завершилась вашей победой! Противник сдался</p>
+                    </div>
+                </div>
+
+                <div id="loseResignModal" class="modal hidden">
+                    <div class="modal-content">
+                        <p>Партия завершилась. Вы сдались</p>
+                    </div>
+                </div>
 
                 <div id="surrenderConfirmModal" class="modal hidden">
                     <div class="modal-content">
