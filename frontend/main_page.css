@@ -301,3 +301,21 @@ p {
     margin-bottom: -6px;
     margin-top: 1px;
 }
+
+#captured-pieces-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.captured-pieces {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.captured-pieces img {
+    width: 40px;
+    height: 40px;
+    margin: 0 5px;
+}

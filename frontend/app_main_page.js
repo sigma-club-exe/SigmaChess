@@ -63,6 +63,38 @@ declineDrawBtn2.addEventListener('click', function() {
     drawAcceptOfferModal.classList.add('hidden');
 });
 
+function updateCapturedPieces(capturedPieces) {
+    const capturedWhiteContainer = document.getElementById('captured-white-pieces');
+    const capturedBlackContainer = document.getElementById('captured-black-pieces');
+
+    capturedWhiteContainer.innerHTML = '';
+    capturedBlackContainer.innerHTML = '';
+
+    const pieceMap = {
+        'p': 'pawn',
+        'r': 'rook',
+        'n': 'knight',
+        'b': 'bishop',
+        'q': 'queen',
+        'k': 'king'
+    };
+
+    capturedPieces.split('').forEach(piece => {
+        const color = piece === piece.toLowerCase() ? 'black' : 'white';
+        const pieceType = pieceMap[piece.toLowerCase()];
+
+        const img = document.createElement('img');
+        img.src = `reqs/${color}_${pieceType}.svg`;
+        img.classList.add('captured-piece');
+
+        if (color === 'white') {
+            capturedWhiteContainer.appendChild(img);
+        } else {
+            capturedBlackContainer.appendChild(img);
+        }
+    });
+}
+
 let commandQueue = [];
 
 function createWebSocket() {
@@ -96,6 +128,7 @@ function createWebSocket() {
             const playerColor = parts[1];
             const capturedPieces = parts[2];
             createChessboardFromFEN(newFEN, playerColor);
+            updateCapturedPieces(capturedPieces); 
             switchTurn(); 
         } else if (data.includes("LOGS:")) {
             const logs = data.slice(5);
