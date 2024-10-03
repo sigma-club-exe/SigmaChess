@@ -105,38 +105,47 @@ body {
 .user-card {
     display: flex;
     align-items: center;
-    width: 100%;
     justify-content: space-between;
+    width: 100%;
 }
 
 .user-image {
     width: 58px;
     height: 58px;
     border-radius: 50%;
+    object-fit: cover; 
 }
 
 .username {
-    text-align: center;
-    color: #f0ede7;
-    font-size: 14px;
-    font-family: Alconica, sans-serif; 
-    -webkit-text-stroke: 0.2px #867d6b;; 
+    text-align: center; 
+    color: #eee9de;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+    font-family: 'Open Sans', sans-serif;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    max-width: 100%; 
+    display: block; 
 }
 
+
 .time {
-    color: #efe6d5;
+    color: #eee9de;
     font-size: 20px;
-    margin-right: -1px;
-    -webkit-text-stroke: 0.2px #ffffff;
-    background-color: rgb(44, 80, 80); 
     padding: 5px;
     border-radius: 100px;
-    display: inline-block; 
-    line-height: 40px; 
-    height: 40px; 
+    display: flex; 
+    justify-content: center;
+    align-items: center; 
     text-align: center; 
-    vertical-align: middle; 
-  }
+    height: 34px; 
+    width: 60px; 
+    background-color: rgb(48, 90, 90); 
+    margin-top: 2px;
+}
+
 
 .btns {
     width: 340px;
@@ -239,7 +248,7 @@ p {
     border-radius: 15px;
     border:none;
     font-size: 15px;
-    color: rgb(33, 51, 47);
+    color: rgb(43, 68, 63);
     font-weight: 600;
 }
 

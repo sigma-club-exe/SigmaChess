@@ -329,5 +329,29 @@ try {
     // displayStatus(`Ошибка при отправке команды: ${error}`);
 }
 
+adjustUsernameSpacing();
+
+function adjustUsernameSpacing() {
+    const usernameElement = document.querySelector('.username');
+    const maxAllowedWidth = usernameElement.clientWidth;
+
+    const tempElement = document.createElement('span');
+    tempElement.style.visibility = 'hidden'; 
+    tempElement.style.whiteSpace = 'nowrap';
+    tempElement.style.fontSize = window.getComputedStyle(usernameElement).fontSize;
+    tempElement.style.fontFamily = window.getComputedStyle(usernameElement).fontFamily;
+    tempElement.innerHTML = usernameElement.textContent;
+    document.body.appendChild(tempElement);
+
+    const actualWidth = tempElement.clientWidth;
+    document.body.removeChild(tempElement); 
+
+    if (actualWidth > maxAllowedWidth) {
+        usernameElement.style.marginLeft = '5px';
+    } else {
+        usernameElement.style.marginLeft = '0';
+    }
+}
+
 const whiteFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"; 
 createChessboardFromFEN(whiteFEN, 'w');
