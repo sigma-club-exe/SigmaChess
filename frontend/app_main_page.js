@@ -70,21 +70,11 @@ function updateCapturedPieces(capturedPieces) {
     capturedWhiteContainer.innerHTML = '';
     capturedBlackContainer.innerHTML = '';
 
-    const pieceMap = {
-        'p': 'pawn',
-        'r': 'rook',
-        'n': 'knight',
-        'b': 'bishop',
-        'q': 'queen',
-        'k': 'king'
-    };
-
     capturedPieces.split('').forEach(piece => {
         const color = piece === piece.toLowerCase() ? 'black' : 'white';
-        const pieceType = pieceMap[piece.toLowerCase()];
 
         const img = document.createElement('img');
-        img.src = `reqs/${color}_${pieceType}.svg`;
+        img.src = `reqs/${color}_${piece.toLowerCase()}.svg`;
         img.classList.add('captured-piece');
 
         if (color === 'white') {
