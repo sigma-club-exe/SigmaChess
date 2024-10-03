@@ -59,7 +59,7 @@ body {
 }
 
 .square.dark {
-    background-color: rgba(60, 111, 111, 0.8); 
+    background-color: rgba(55, 102, 102, 0.904); 
 }
 
 .square::before {
@@ -78,60 +78,74 @@ body {
     align-items: center;
 }
 
+.time {
+    color: #eee9de;
+    font-size: 27px;
+    padding: 3px;
+    border-radius: 100px;
+    display: flex; 
+    justify-content: center;
+    align-items: center; 
+    text-align: center; 
+    height: 60px; 
+    width: 82px; 
+    background: rgba(55, 102, 102, 0.904);
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+}
+
 .user-info1 {
-    width: 340px;
+    width: 260px;
     height: 60px;
-    background: rgba(60, 111, 111, 0.8);
-    border-radius: 20px;
+    background: rgba(55, 102, 102, 0.904);
+    border-radius: 100px;
     display: flex;
     align-items: center;
     padding: 4px;
-    margin-bottom: -10px;
-    margin-top: -3px;
 }
 
 .user-info2 {
-    width: 340px;
+    width: 260px;
     height: 60px;
-    background: rgba(60, 111, 111, 0.8);
-    border-radius: 20px;
+    background: rgba(55, 102, 102, 0.904);
+    border-radius: 100px;
     display: flex;
     align-items: center;
     padding: 4px;
-    margin-bottom: 15px;
-    margin-top: -10px;
 }
 
 .user-card {
     display: flex;
     align-items: center;
     width: 100%;
-    justify-content: space-between;
+    overflow: hidden;
 }
 
 .user-image {
     width: 58px;
     height: 58px;
     border-radius: 50%;
+    object-fit: cover; 
 }
 
 .username {
     text-align: center;
-    color: #f0ede7;
-    font-size: 14px;
-    font-family: Krona One, sans-serif; 
-    -webkit-text-stroke: 0.2px #867d6b;; 
-}
-
-.time {
-    color: #f0ede7;
-    font-size: 20px;
-    margin-right: 10px;
-    -webkit-text-stroke: 0.2px #FFFFFF; 
+    color: #eee9de;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+    font-family: 'Open Sans', sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-left: 2px;
+    max-width: 200px;
+    flex-grow: 1;
+    text-align: center;
 }
 
 .btns {
-    width: 340px;
+    width: 360px;
     height: 50px;
     background: rgba(255, 255, 255, 0);
     border-radius: 20px;
@@ -139,7 +153,7 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 4px;
-    margin: -15px 0 0px 0;
+    margin-top: 4px;
 }
 
 .action-btn {
@@ -154,7 +168,7 @@ body {
 .btn-image {
     width: 45px;
     height: 45px;
-    background: rgba(60, 111, 111, 0.8);
+    background: rgba(55, 102, 102, 0.904);
     border-radius: 20%;
     padding: 3px;
 }
@@ -186,10 +200,10 @@ body {
 }
 
 .command-container{
-    border: 5px solid rgba(60, 111, 111, 0.8);
+    border: 5px solid rgba(55, 102, 102, 0.904);
     /* display: none; */
     .command-btn{
-        background-color: rgba(60, 111, 111, 0.8);
+        background-color: rgba(55, 102, 102, 0.904);
     }
 }
 
@@ -206,10 +220,11 @@ body {
 }
 
 .modal-content {
-    background-color: rgb(51, 94, 94);
+    background-color: rgb(41, 73, 73);
     padding: 20px;
     border-radius: 10px;
     text-align: center;
+    border: 2px solid rgb(38, 68, 68);
 }
 
 .hidden {
@@ -231,7 +246,7 @@ p {
     border-radius: 15px;
     border:none;
     font-size: 15px;
-    color: rgb(33, 51, 47);
+    color: rgb(43, 68, 63);
     font-weight: 600;
 }
 
@@ -266,4 +281,23 @@ p {
 
 .disabled .btn-image:hover {
     border: none; 
+}
+
+.contik {
+    width: 360px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: -6px;
+}
+
+.contik2 {
+    width: 360px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: -6px;
+    margin-top: 1px;
 }
