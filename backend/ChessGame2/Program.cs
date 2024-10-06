@@ -131,8 +131,8 @@ server.Start(ws =>
                         currentSession.ApplyMove(currentMove, currentSession.Player1);
                         if (currentSession.BoardState.Checkmate == currentSession.Player2.Color)
                         {
-                            currentSession.Player2.PlayerConnection.Send("LOGS:Вы проиграли, вам поставили мат :(");
-                            currentSession.Player1.PlayerConnection.Send("LOGS:Вы победили, поставив мат!");
+                            currentSession.Player2.PlayerConnection.Send("CHECKMATE:L");
+                            currentSession.Player1.PlayerConnection.Send("CHECKMATE:W");
                         }
                     }
                 }
@@ -143,8 +143,8 @@ server.Start(ws =>
                     currentSession.ApplyMove(currentMove, currentSession.Player2);
                     if (currentSession.BoardState.Checkmate == currentSession.Player1.Color)
                     {
-                        currentSession.Player1.PlayerConnection.Send("LOGS:Вы проиграли, вам поставили мат :(");
-                        currentSession.Player2.PlayerConnection.Send("LOGS:Вы победили, поставив мат!");
+                        currentSession.Player2.PlayerConnection.Send("CHECKMATE:W");
+                        currentSession.Player1.PlayerConnection.Send("CHECKMATE:L");
                     }
                 }
             }
