@@ -21,7 +21,8 @@ public class Pawn : Figure
         {
             board[startX][startY] = null;
             board[endX][endY] = figure;
-            if (KingIsUnderAttack(board, figure.Color))
+            var kingPos = FindKing(board, figure.Color);
+            if (SquareIsUnderAttack(ref board,kingPos, figure.Color))
             {
                 board[startX][startY] = figure;
                 board[endX][endY] = null;
@@ -38,7 +39,8 @@ public class Pawn : Figure
         {
             board[startX][startY] = null;
             board[endX][endY] = figure;
-            if (KingIsUnderAttack(board, figure.Color))
+            var kingPos = FindKing(board, figure.Color);
+            if (SquareIsUnderAttack(ref board,kingPos, figure.Color))
             {
                 board[startX][startY] = figure;
                 board[endX][endY] = null;
@@ -55,7 +57,8 @@ public class Pawn : Figure
             board[startX][startY] = null;
             var tempFigure = board[endX][endY];
             board[endX][endY] = figure;
-            if (KingIsUnderAttack(board, figure.Color))
+            var kingPos = FindKing(board, figure.Color);
+            if (SquareIsUnderAttack(ref board,kingPos, figure.Color))
             {
                 board[startX][startY] = figure;
                 board[endX][endY] = tempFigure;

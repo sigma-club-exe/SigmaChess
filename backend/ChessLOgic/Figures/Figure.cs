@@ -12,62 +12,6 @@ public abstract class Figure : IFigure
     public FigureType Type { get; protected set; }
     public abstract bool PossibleMove(ref IFigure?[][] board, (int, int) moveStartPosition, (int, int) moveEndPosition);
 
-    public virtual bool KingIsUnderAttack(IFigure?[][] board, (int x, int y) position, char kingColor)
-    {
-        for (var column = 0; column < 8; column++)
-        {
-            for (var row = 0; row < 8; row++)
-            {
-                var figure = board[column][row];
-                // Если фигура противника
-                if (figure != null && figure.Color != kingColor)
-                {
-                    // Проверяем, может ли фигура атаковать клетку
-                    var tempKing = board[position.x][position.y];
-                    if (figure.PossibleMove(ref board, (column, row), position))
-                    {
-                        figure.PossibleMove(ref board, position, (column, row));
-                        board[position.x][position.y] = tempKing;
-                        return true; // Клетка под ударом
-                    }
-                }
-            }
-        }
-
-        return false;
-    }
-
-    public virtual bool KingIsUnderAttack(IFigure?[][] board, char pieceColor)
-    {
-        (int x, int y) kingPosition = FindKing(board, pieceColor);
-
-        for (var column = 0; column < 8; column++)
-        {
-            for (var row = 0; row < 8; row++)
-            {
-                var figure = board[column][row];
-                // Если фигура противника
-                if (figure != null && figure.Color != pieceColor)
-                {
-                    var tempPiece = board[kingPosition.x][kingPosition.y];
-                    // Проверяем, может ли фигура атаковать клетку
-                    if (figure.PossibleMove(ref board, (column, row), kingPosition))
-                    {
-                        figure.PossibleMove(ref board, kingPosition, (column, row));
-                        if (tempPiece != null)
-                        {
-                            board[kingPosition.x][kingPosition.y] = tempPiece;
-                        }
-
-                        return true; // Клетка под ударом
-                    }
-                }
-            }
-        }
-
-        return false;
-    }
-
 
     public virtual List<(int, int)> GetPossibleMoves(ref IFigure?[][] board, (int, int) currentPos)
     {
@@ -95,6 +39,8 @@ public abstract class Figure : IFigure
 
     public virtual bool SquareIsUnderAttack(ref IFigure?[][] board, (int, int) square, char pieceColor)
     {
+        var pieceOnSquare = board[square.Item1][square.Item2];
+        board[square.Item1][square.Item2] = null;
         for (var column = 0; column < 8; column++)
         {
             for (var row = 0; row < 8; row++)
@@ -104,21 +50,17 @@ public abstract class Figure : IFigure
                 if (figure != null && figure.Color != pieceColor)
                 {
                     // Проверяем, может ли фигура атаковать клетку
-                    var tempFigure = board[square.Item1][square.Item2];
                     if (figure.PossibleMove(ref board, (column, row), square))
                     {
                         figure.PossibleMove(ref board, square, (column, row));
-                        if (tempFigure != null)
-                        {
-                            board[square.Item1][square.Item2] = tempFigure;
-                        }
-
+                        
+                        board[square.Item1][square.Item2] = pieceOnSquare;
                         return true; // Клетка под ударом
                     }
                 }
             }
         }
-
+        board[square.Item1][square.Item2] = pieceOnSquare;
         return false;
     }
 
@@ -129,7 +71,7 @@ public abstract class Figure : IFigure
         var king = board[kingPos.kingX][kingPos.kingY];
 
         // Шаг 2: Проверить, под шахом ли король
-        if (!KingIsUnderAttack(board, kingPos, color))
+        if (!SquareIsUnderAttack(ref board, kingPos, color))
         {
             return false; // Если король не под шахом, мата нет
         }
@@ -156,7 +98,7 @@ public abstract class Figure : IFigure
                         figure.PossibleMove(ref board, (x, y), move);
 
                         // Если после этого хода король больше не под шахом, мата нет
-                        if (!KingIsUnderAttack(board, kingPos, color))
+                        if (!SquareIsUnderAttack(ref board, kingPos, color))
                         {
                             figure.PossibleMove(ref board, move,(x, y));
                             board[move.Item1][move.Item2] =  tempFigure;

@@ -142,7 +142,7 @@ public class King : Figure
             if (board[endX][endY] == null || board[endX][endY].Color != figure.Color)
             {
                 // проверка то что поле на которое ходит король не находится под ударом вражеских фигур
-                if (!KingIsUnderAttack(board, moveEndPosition, figure.Color))
+                if (!SquareIsUnderAttack(ref board, moveEndPosition, figure.Color))
                 {
                     board[startX][startY] = null;
                     board[endX][endY] = figure;
@@ -185,10 +185,15 @@ public class King : Figure
         {
             for (int j = 0; j < 8; j++)
             {
+                var tempPiece = board[i][j];
                 if ((i, j) != currentPos && PossibleMove(ref board, currentPos, (i, j)))
                 {
                     PossibleMove(ref board, (i, j), currentPos);
                     possibleMoves.Add((i, j));
+                    if (tempPiece != null)
+                    {
+                        board[i][j] = tempPiece;
+                    }
                 }
             }
         }
