@@ -118,7 +118,7 @@ public class Game
 
         for (int j = 0; j < 2 - capturedPieces[1]; j++)
         {
-            capturedPiecesAsString.Append('k'); // Кони
+            capturedPiecesAsString.Append('n'); // Кони
         }
 
         for (int j = 0; j < 2 - capturedPieces[2]; j++)
