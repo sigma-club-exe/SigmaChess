@@ -188,7 +188,9 @@ public class King : Figure
                 var tempPiece = board[i][j];
                 if ((i, j) != currentPos && PossibleMove(ref board, currentPos, (i, j)))
                 {
-                    PossibleMove(ref board, (i, j), currentPos);
+                    // PossibleMove(ref board, (i, j), currentPos);
+                    board[i][j] = null;
+                    board[x][y] = king;
                     possibleMoves.Add((i, j));
                     if (tempPiece != null)
                     {
