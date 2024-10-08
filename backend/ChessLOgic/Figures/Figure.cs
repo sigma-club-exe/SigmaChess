@@ -100,7 +100,8 @@ public abstract class Figure : IFigure
                         // Если после этого хода король больше не под шахом, мата нет
                         if (!SquareIsUnderAttack(ref board, kingPos, color))
                         {
-                            figure.PossibleMove(ref board, move,(x, y));
+                            // figure.PossibleMove(ref board, move,(x, y));
+                            board[x][y] = figure;
                             board[move.Item1][move.Item2] =  tempFigure;
                             return false;
                         }

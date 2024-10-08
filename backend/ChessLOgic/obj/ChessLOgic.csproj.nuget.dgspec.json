@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\fyodo.DESKTOP-9A67S1J\\RiderProjects\\SigmaChess\\backend\\ChessLOgic\\ChessLOgic.csproj": {}
+    "/Users/mefedraw/RiderProjects/SigmaChess/backend/ChessLOgic/ChessLOgic.csproj": {}
   },
   "projects": {
-    "C:\\Users\\fyodo.DESKTOP-9A67S1J\\RiderProjects\\SigmaChess\\backend\\ChessLOgic\\ChessLOgic.csproj": {
+    "/Users/mefedraw/RiderProjects/SigmaChess/backend/ChessLOgic/ChessLOgic.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\fyodo.DESKTOP-9A67S1J\\RiderProjects\\SigmaChess\\backend\\ChessLOgic\\ChessLOgic.csproj",
+        "projectUniqueName": "/Users/mefedraw/RiderProjects/SigmaChess/backend/ChessLOgic/ChessLOgic.csproj",
         "projectName": "ChessLOgic",
-        "projectPath": "C:\\Users\\fyodo.DESKTOP-9A67S1J\\RiderProjects\\SigmaChess\\backend\\ChessLOgic\\ChessLOgic.csproj",
-        "packagesPath": "C:\\Users\\fyodo.DESKTOP-9A67S1J\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\fyodo.DESKTOP-9A67S1J\\RiderProjects\\SigmaChess\\backend\\ChessLOgic\\obj\\",
+        "projectPath": "/Users/mefedraw/RiderProjects/SigmaChess/backend/ChessLOgic/ChessLOgic.csproj",
+        "packagesPath": "/Users/mefedraw/.nuget/packages/",
+        "outputPath": "/Users/mefedraw/RiderProjects/SigmaChess/backend/ChessLOgic/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\fyodo.DESKTOP-9A67S1J\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/mefedraw/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -60,7 +58,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.206/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.300/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
