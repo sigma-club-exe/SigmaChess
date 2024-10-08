@@ -27,7 +27,8 @@ public abstract class Figure : IFigure
                 var tempFigure = board[i][j];
                 if ((i, j) != currentPos && PossibleMove(ref board, currentPos, (i, j)))
                 {
-                    PossibleMove(ref board, (i, j), currentPos);
+                    // PossibleMove(ref board, (i, j), currentPos);
+                    board[currentPos.Item1][currentPos.Item2] = figure;
                     board[i][j] = tempFigure;
                     possibleMoves.Add((i, j));
                 }
@@ -103,12 +104,12 @@ public abstract class Figure : IFigure
                         {
                             // figure.PossibleMove(ref board, move,(x, y));
                             board[x][y] = figure;
-                            // board[move.Item1][move.Item2] =  tempFigure;
+                            board[move.Item1][move.Item2] =  tempFigure;
                             return false;
                         }
                         // figure.PossibleMove(ref board, move,(x, y));
                         board[x][y] = figure;
-                        //board[move.Item1][move.Item2] =  tempFigure;
+                        board[move.Item1][move.Item2] =  tempFigure;
                     }
                 }
             }
