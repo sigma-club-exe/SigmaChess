@@ -52,7 +52,8 @@ public abstract class Figure : IFigure
                     // Проверяем, может ли фигура атаковать клетку
                     if (figure.PossibleMove(ref board, (column, row), square))
                     {
-                        figure.PossibleMove(ref board, square, (column, row));
+                        //figure.PossibleMove(ref board, square, (column, row));
+                        board[column][row] = figure;
                         
                         board[square.Item1][square.Item2] = pieceOnSquare;
                         return true; // Клетка под ударом
@@ -102,11 +103,12 @@ public abstract class Figure : IFigure
                         {
                             // figure.PossibleMove(ref board, move,(x, y));
                             board[x][y] = figure;
-                            board[move.Item1][move.Item2] =  tempFigure;
+                            // board[move.Item1][move.Item2] =  tempFigure;
                             return false;
                         }
-                        figure.PossibleMove(ref board, move,(x, y));
-                        board[move.Item1][move.Item2] =  tempFigure;
+                        // figure.PossibleMove(ref board, move,(x, y));
+                        board[x][y] = figure;
+                        //board[move.Item1][move.Item2] =  tempFigure;
                     }
                 }
             }
