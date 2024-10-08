@@ -7,6 +7,7 @@ body {
     background-size: cover;
     font-family: Aclonica, sans-serif;
     background-color: #efe6d5;
+    touch-action: none; 
 }
 
 .container {
@@ -306,16 +307,27 @@ p {
     display: flex;
     justify-content: space-between;
     padding: 10px;
+    max-width: 250px; 
+    max-height: 45px; 
 }
 
 .captured-pieces {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap; 
 }
 
 .captured-pieces img {
     width: 40px;
     height: 40px;
     margin: 0 5px;
+}
+
+
+* {
+    user-select: none; 
+}
+
+@media (min-height: 600px) {
 }
