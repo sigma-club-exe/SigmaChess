@@ -341,6 +341,7 @@ p {
     max-width: 360px;
     min-height: 42px;
     margin: 10px 0; 
+    margin-bottom: 3px;
 }
 
 .mobile-captured-pieces {
@@ -366,7 +367,7 @@ img[src*="8capt_"] {
     transform-origin: center;
 }
 
-img[src*="capt_"]:not([src*="3capt_"]):not([src*="4capt_"]):not([src*="5capt_"]):not([src*="6capt_"]):not([src*="7capt_"]):not([src*="8capt_"]) {
+img[src*="capt_"]:not([src*="2capt_white_p"]):not([src*="2capt_black_p"]):not([src*="3capt_"]):not([src*="4capt_"]):not([src*="5capt_"]):not([src*="6capt_"]):not([src*="7capt_"]):not([src*="8capt_"]) {
     transform: scale(1.4);
     transform-origin: center;
 }
