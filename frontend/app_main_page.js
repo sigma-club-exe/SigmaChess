@@ -63,18 +63,24 @@ declineDrawBtn2.addEventListener('click', function() {
     drawAcceptOfferModal.classList.add('hidden');
 });
 
-function updateCapturedPieces(capturedPieces) {
-    const capturedWhiteContainer = document.getElementById('captured-white-pieces');
-    const capturedBlackContainer = document.getElementById('captured-black-pieces');
+function updateCapturedPieces(playerCapturedPieces, enemyCapturedPieces) {
+    const capturedWhiteContainer = document.getElementById('captured-white-pieces'); 
+    const capturedBlackContainer = document.getElementById('captured-black-pieces'); 
+    const capturedMobileWhiteContainer = document.getElementById('captured-mobile-white-pieces'); 
+    const capturedMobileBlackContainer = document.getElementById('captured-mobile-black-pieces'); 
 
     capturedWhiteContainer.innerHTML = '';
     capturedBlackContainer.innerHTML = '';
+    
+    capturedMobileWhiteContainer.innerHTML = '';
+    capturedMobileBlackContainer.innerHTML = '';
 
-    const pieceOrder = ['p', 'b', 'n', 'r', 'q']; // Порядок отображения
+    const pieceOrder = ['p', 'b', 'n', 'r', 'q']; 
+
     const capturedWhite = { p: 0, b: 0, n: 0, r: 0, q: 0 };
     const capturedBlack = { p: 0, b: 0, n: 0, r: 0, q: 0 };
 
-    capturedPieces.split('').forEach(piece => {
+    playerCapturedPieces.split('').forEach(piece => {
         const color = piece === piece.toLowerCase() ? 'black' : 'white';
         const pieceType = piece.toLowerCase();
 
@@ -85,26 +91,37 @@ function updateCapturedPieces(capturedPieces) {
         }
     });
 
+    const capturedEnemyWhite = { p: 0, b: 0, n: 0, r: 0, q: 0 };
+    const capturedEnemyBlack = { p: 0, b: 0, n: 0, r: 0, q: 0 };
+
+    enemyCapturedPieces.split('').forEach(piece => {
+        const color = piece === piece.toLowerCase() ? 'black' : 'white';
+        const pieceType = piece.toLowerCase();
+
+        if (color === 'white') {
+            capturedEnemyWhite[pieceType]++;
+        } else {
+            capturedEnemyBlack[pieceType]++;
+        }
+    });
+
     function addPiecesToContainer(pieces, container, color) {
         pieceOrder.forEach(type => {
             const count = pieces[type];
             if (count > 0) {
                 const img = document.createElement('img');
-
-                if (count === 1) {
-                    img.src = `reqs/${color}_${type}.svg`;
-                } else {
-                    img.src = `reqs/${count}capt_${color}_${type}.svg`;
-                }
-                
+                img.src = count === 1 ? `reqs/${color}_${type}.svg` : `reqs/${count}capt_${color}_${type}.svg`;
                 img.classList.add('captured-piece');
                 container.appendChild(img);
             }
         });
     }
-
     addPiecesToContainer(capturedWhite, capturedWhiteContainer, 'white');
     addPiecesToContainer(capturedBlack, capturedBlackContainer, 'black');
+    addPiecesToContainer(capturedWhite, capturedMobileWhiteContainer, 'white');
+    addPiecesToContainer(capturedBlack, capturedMobileBlackContainer, 'black');
+    addPiecesToContainer(capturedEnemyWhite, capturedMobileWhiteContainer, 'white');
+    addPiecesToContainer(capturedEnemyBlack, capturedMobileBlackContainer, 'black');
 }
 
 let commandQueue = [];
@@ -139,8 +156,13 @@ function createWebSocket() {
             const newFEN = parts[0];
             const playerColor = parts[1];
             const capturedPieces = parts[2];
+            const enemyCapturedPieces = parts[3];
             createChessboardFromFEN(newFEN, playerColor);
-            updateCapturedPieces(capturedPieces); 
+            if (window.matchMedia('(min-height: 665px)').matches) {
+                updateCapturedPieces(playerCapturedPieces, enemyCapturedPieces);
+            } else {
+                updateCapturedPieces(playerCapturedPieces, ''); 
+            } 
             switchTurn(); 
         } else if (data.includes("LOGS:")) {
             const logs = data.slice(5);
