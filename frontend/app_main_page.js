@@ -174,6 +174,9 @@ function createWebSocket() {
             // displayStatus(`получил ник ${nick}`);
             const playerInfoUsername = document.querySelector('#opponent-info .username');
             playerInfoUsername.textContent = '@' + nick;
+            if (nick === 'Игрок') {
+                playerInfoUsername.textContent = nick;
+            }
             const playerInfoImage = document.querySelector('#opponent-info .user-image');
             playerInfoImage.src = `https://t.me/i/userpic/320/${nick}.jpg`;
             playerInfoImage.onerror = function () {
@@ -361,7 +364,11 @@ const user = Telegram.WebApp.initDataUnsafe.user;
 // displayStatus(`Извлеченный matchId and user: ${matchId} ${user}`);  
 
 const playerInfoUsername = document.querySelector('#player-info .username');
-playerInfoUsername.textContent = '@' + user.username;
+if (user.username) {
+    playerInfoUsername.textContent = '@' + user.username;
+} else {
+    playerInfoUsername.textContent = 'Гость'; 
+}
 const playerInfoImage = document.querySelector('#player-info .user-image');
 playerInfoImage.src = `https://t.me/i/userpic/320/${user.username}.jpg`;
 playerInfoImage.onerror = function () {
