@@ -15,6 +15,6 @@ public class WsChessClient
         // bot has no IWebSocketConnection
     }
 
-    public IWebSocketConnection? PlayerConnection { set; get; }
+    public IWebSocketConnection? PlayerConnection {get; set;}
     public char Color { get; set; }
 }

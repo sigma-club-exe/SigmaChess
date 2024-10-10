@@ -6,7 +6,6 @@ public interface IFigure
     public FigureType Type { get; }
     public  bool PossibleMove( ref IFigure?[][] board,(int,int) moveStartPosition, (int,int) moveEndPosition);
     protected bool SquareIsUnderAttack( ref IFigure?[][] board,(int,int) square, char pieceColor);
-    protected bool KingIsUnderAttack(IFigure?[][] board, char pieceColor);
     public bool IsCheckmate(ref IFigure?[][] board, char color);
 
     public List<(int, int)> GetPossibleMoves(ref IFigure?[][] board, (int, int) currentPos);

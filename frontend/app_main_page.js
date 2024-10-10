@@ -9,12 +9,20 @@ const acceptDrawBtn = document.getElementById('accept-draw');
 const declineDrawBtn = document.getElementById('decline-draw');
 const acceptDrawBtn2 = document.getElementById('accept-draw2');
 const declineDrawBtn2 = document.getElementById('decline-draw2');
-const notificationModal = document.getElementById('notification');
+const waitingModal = document.getElementById('waitingForPlayerModal');
+const drawModal = document.getElementById('drawModal');
+const winResignModal = document.getElementById('winResignModal');
+const loseResignModal = document.getElementById('loseResignModal');
 
+// function displayStatus(message) {
+//     const statusElement = document.getElementById('status');
+//     statusElement.innerHTML += `<p>${message}</p>`; 
+// }
 
 surrenderBtn.addEventListener('click', function () {
     // displayStatus('Surrender button clicked');
     surrenderModal.classList.remove('hidden');
+
 });
 
 drawOfferBtn.addEventListener('click', function () {
@@ -46,6 +54,7 @@ declineDrawBtn.addEventListener('click', function() {
 
 acceptDrawBtn2.addEventListener('click', function() {
     // displayStatus('Draw accepted');
+    sendCommand(`draw-accepted ${matchId}`);
     drawAcceptOfferModal.classList.add('hidden');
 });
 
@@ -53,6 +62,28 @@ declineDrawBtn2.addEventListener('click', function() {
     // displayStatus('Draw killed');
     drawAcceptOfferModal.classList.add('hidden');
 });
+
+function updateCapturedPieces(capturedPieces) {
+    const capturedWhiteContainer = document.getElementById('captured-white-pieces');
+    const capturedBlackContainer = document.getElementById('captured-black-pieces');
+
+    capturedWhiteContainer.innerHTML = '';
+    capturedBlackContainer.innerHTML = '';
+
+    capturedPieces.split('').forEach(piece => {
+        const color = piece === piece.toLowerCase() ? 'black' : 'white';
+
+        const img = document.createElement('img');
+        img.src = `reqs/${color}_${piece.toLowerCase()}.svg`;
+        img.classList.add('captured-piece');
+
+        if (color === 'white') {
+            capturedWhiteContainer.appendChild(img);
+        } else {
+            capturedBlackContainer.appendChild(img);
+        }
+    });
+}
 
 let commandQueue = [];
 
@@ -85,13 +116,47 @@ function createWebSocket() {
             const parts = data.slice(4).split(":");
             const newFEN = parts[0];
             const playerColor = parts[1];
+            const capturedPieces = parts[2];
             createChessboardFromFEN(newFEN, playerColor);
+            updateCapturedPieces(capturedPieces); 
             switchTurn(); 
         } else if (data.includes("LOGS:")) {
             const logs = data.slice(5);
             logsField.innerHTML = logs.replace(/\n/g, '<br>');
         } else if (data.includes("DRAW-OFFER")) {
             drawAcceptOfferModal.classList.remove('hidden');
+        } else if (data.includes("RESIGN")) {
+            parts = data.split(':');
+            const result = parts[1];
+            if (result === "W"){
+                winResignModal.classList.remove('hidden');
+                document.getElementById('surrender-btn').classList.add('disabled');
+                document.getElementById('draw-offer-btn').classList.add('disabled');
+            } else {
+                loseResignModal.classList.remove('hidden');
+                document.getElementById('surrender-btn').classList.add('disabled');
+                document.getElementById('draw-offer-btn').classList.add('disabled');
+            }
+        } else if (data.includes("DRAW-ACCEPTED")) {
+            drawModal.classList.remove('hidden');
+            document.getElementById('surrender-btn').classList.add('disabled');
+            document.getElementById('draw-offer-btn').classList.add('disabled');
+        } else if (data.includes("GAMESTARTED")) {
+            var parts = data.split(':');
+            waitingModal.classList.add('hidden');
+            const nick = parts[1];
+            const fen = parts[2];
+            const color = parts[3];
+            createChessboardFromFEN(fen,color);
+
+            // displayStatus(`получил ник ${nick}`);
+            const playerInfoUsername = document.querySelector('#opponent-info .username');
+            playerInfoUsername.textContent = '@' + nick;
+            const playerInfoImage = document.querySelector('#opponent-info .user-image');
+            playerInfoImage.src = `https://t.me/i/userpic/320/${nick}.jpg`;
+            playerInfoImage.onerror = function () {
+                playerInfoImage.src = 'reqs/ava.jpg';
+            };
         }
     };
 
@@ -267,52 +332,25 @@ function handleSquareClick(row, col, files, ranks, playerColor) {
 //     }
 // });
 
-// function displayStatus(message) {
-//     const statusElement = document.getElementById('status');
-//     statusElement.innerHTML += `<p>${message}</p>`; // Добавляем сообщение в HTML
-// }
-
 // displayStatus(JSON.stringify(Telegram.WebApp.initDataUnsafe));
 
 const matchId = Telegram.WebApp.initDataUnsafe.start_param;
-// displayStatus(`Извлеченный matchId: ${matchId}`);  // Отладка
-
-if (matchId) {
-    // displayStatus(`Отправка команды challenge для game_id: ${matchId}`);
-    try {
-        sendCommand(`challenge ${matchId}`);
-    } catch (error) {
-        // displayStatus(`Ошибка при отправке команды: ${error}`);
-    }
-}
-
 const user = Telegram.WebApp.initDataUnsafe.user;
+// displayStatus(`Извлеченный matchId and user: ${matchId} ${user}`);  
 
-if (user) {
-    const playerInfoUsername = document.querySelector('#player-info .username');
-    playerInfoUsername.textContent = '@' + user.username;
-    const playerInfoImage = document.querySelector('#player-info .user-image');
-    playerInfoImage.src = `https://t.me/i/userpic/320/${user.username}.jpg`;
-    playerInfoImage.onerror = function () {
-        playerInfoImage.src = 'reqs/ava.jpg';
-    };
-    
-    const notificationMessage = document.querySelector('#notification .modal-content2 p');
-    notificationMessage.textContent = `${playerInfoUsername.textContent} присоединился`;
-
-    notificationModal.classList.remove('hidden');
-    notificationModal.classList.add('fade-in');
-
-    setTimeout(() => {
-        notificationModal.classList.add('fade-out');
-        setTimeout(() => {
-            notificationModal.classList.add('hidden');
-            notificationModal.classList.remove('fade-in', 'fade-out');
-        }, 1000);
-    }, 2000);
-
-    sendCommand(`connected ${matchId} ${user.username}`);
+const playerInfoUsername = document.querySelector('#player-info .username');
+playerInfoUsername.textContent = '@' + user.username;
+const playerInfoImage = document.querySelector('#player-info .user-image');
+playerInfoImage.src = `https://t.me/i/userpic/320/${user.username}.jpg`;
+playerInfoImage.onerror = function () {
+    playerInfoImage.src = 'reqs/ava.jpg';
+};
+// displayStatus(`Отправка команды challenge для game_id: ${matchId}`);
+try {
+    sendCommand(`challenge ${matchId} ${user.username}`);
+} catch (error) {
+    // displayStatus(`Ошибка при отправке команды: ${error}`);
 }
 
-const whiteFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
+const whiteFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"; 
 createChessboardFromFEN(whiteFEN, 'w');

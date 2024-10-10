@@ -1,4 +1,5 @@
-﻿using Fleck;
+﻿using System.Text;
+using Fleck;
 using ChessLogic;
 
 namespace ChessGame2;
@@ -63,23 +64,23 @@ public class GameSession
 
                 if (Player1.Color == 'b')
                 {
-                    Player1.PlayerConnection.Send($"FEN:{GetBoardStateBlack()}:{Player1.Color}");
+                    Player1.PlayerConnection.Send($"FEN:{GetBoardStateBlack()}:{Player1.Color}:{GetPlayerCapturedPieces(Player1)}:{GetPlayerCapturedPieces(Player2)}");
                 }
 
                 else
                 {
-                    Player1.PlayerConnection.Send($"FEN:{GetBoardStateWhite()}:{Player1.Color}");
+                    Player1.PlayerConnection.Send($"FEN:{GetBoardStateWhite()}:{Player1.Color}:{GetPlayerCapturedPieces(Player1)}:{GetPlayerCapturedPieces(Player2)}");
                 }
                 
                 if (!BotGame)
                 {
                     if (Player2.Color == 'b')
                     {
-                        Player2.PlayerConnection.Send($"FEN:{GetBoardStateBlack()}:{Player2.Color}");
+                        Player2.PlayerConnection.Send($"FEN:{GetBoardStateBlack()}:{Player2.Color}:{GetPlayerCapturedPieces(Player2)}:{GetPlayerCapturedPieces(Player1)}");
                     }
                     else
                     {
-                        Player2.PlayerConnection.Send($"FEN:{GetBoardStateWhite()}:{Player2.Color}");
+                        Player2.PlayerConnection.Send($"FEN:{GetBoardStateWhite()}:{Player2.Color}:{GetPlayerCapturedPieces(Player2)}:{GetPlayerCapturedPieces(Player1)}");
                     }
                     
                 }
@@ -95,26 +96,25 @@ public class GameSession
         var whitePieceMove = char.IsUpper(
             BoardState.GetFigureSymbol(
                 BoardState.Board[num][letter]));
-
-        // we are checking the color of piece on specified cell (upper case means white)
-
-        // if ((whitePieceMove && Player1.Color == 'b') || (!whitePieceMove && Player1.Color == 'w'))
-        // ход не игрока -> ход бота
-        //  {
         var successfulMove = BoardState.DoMove(move);
         if (successfulMove)
         {
-            Player1.PlayerConnection.Send($"FEN:{GetBoardStateWhite()}:{Player1.Color}");
-            //  }
+            Player1.PlayerConnection.Send($"FEN:{GetBoardStateWhite()}:{Player1.Color}:{GetPlayerCapturedPieces(Player1)}:{GetPlayerCapturedPieces(Player2)}");
+
         }
     }
 
-    private string GetBoardStateWhite()
+    public string GetPlayerCapturedPieces(WsChessClient player)
+    {
+        return BoardState.GetCapturedPieces(player.Color);
+    }
+
+    public string GetBoardStateWhite()
     {
         return BoardState.GetBoardAsFEN();
     }
     
-    private string GetBoardStateBlack()
+    public string GetBoardStateBlack()
     {
         return BoardState.GetBoardAsFENforBlack();
     }
