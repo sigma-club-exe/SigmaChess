@@ -69,17 +69,18 @@ function updateCapturedPieces(playerCapturedPieces, enemyCapturedPieces) {
     const capturedMobileWhiteContainer = document.getElementById('captured-mobile-white-pieces'); 
     const capturedMobileBlackContainer = document.getElementById('captured-mobile-black-pieces'); 
 
+    // Очищаем контейнеры захваченных фигур
     capturedWhiteContainer.innerHTML = '';
     capturedBlackContainer.innerHTML = '';
-    
     capturedMobileWhiteContainer.innerHTML = '';
     capturedMobileBlackContainer.innerHTML = '';
 
-    const pieceOrder = ['p', 'b', 'n', 'r', 'q']; 
+    const pieceOrder = ['p', 'b', 'n', 'r', 'q'];
 
     const capturedWhite = { p: 0, b: 0, n: 0, r: 0, q: 0 };
     const capturedBlack = { p: 0, b: 0, n: 0, r: 0, q: 0 };
 
+    // Обработка захваченных фигур игрока
     playerCapturedPieces.split('').forEach(piece => {
         const color = piece === piece.toLowerCase() ? 'black' : 'white';
         const pieceType = piece.toLowerCase();
@@ -91,6 +92,7 @@ function updateCapturedPieces(playerCapturedPieces, enemyCapturedPieces) {
         }
     });
 
+    // Обработка захваченных фигур противника (только для мобильной версии)
     const capturedEnemyWhite = { p: 0, b: 0, n: 0, r: 0, q: 0 };
     const capturedEnemyBlack = { p: 0, b: 0, n: 0, r: 0, q: 0 };
 
@@ -105,6 +107,7 @@ function updateCapturedPieces(playerCapturedPieces, enemyCapturedPieces) {
         }
     });
 
+    // Добавление захваченных фигур в контейнеры
     function addPiecesToContainer(pieces, container, color) {
         pieceOrder.forEach(type => {
             const count = pieces[type];
@@ -116,12 +119,18 @@ function updateCapturedPieces(playerCapturedPieces, enemyCapturedPieces) {
             }
         });
     }
+
+    // Добавляем фигуры для десктопной версии
     addPiecesToContainer(capturedWhite, capturedWhiteContainer, 'white');
     addPiecesToContainer(capturedBlack, capturedBlackContainer, 'black');
-    addPiecesToContainer(capturedWhite, capturedMobileWhiteContainer, 'white');
-    addPiecesToContainer(capturedBlack, capturedMobileBlackContainer, 'black');
-    addPiecesToContainer(capturedEnemyWhite, capturedMobileWhiteContainer, 'white');
-    addPiecesToContainer(capturedEnemyBlack, capturedMobileBlackContainer, 'black');
+
+    // Проверяем, мобильная ли версия, и только тогда показываем захваченные фигуры противника
+    if (window.matchMedia('(min-height: 665px)').matches) {
+        addPiecesToContainer(capturedWhite, capturedMobileWhiteContainer, 'white');
+        addPiecesToContainer(capturedBlack, capturedMobileBlackContainer, 'black');
+        addPiecesToContainer(capturedEnemyWhite, capturedMobileWhiteContainer, 'white');
+        addPiecesToContainer(capturedEnemyBlack, capturedMobileBlackContainer, 'black');
+    }
 }
 
 let commandQueue = [];
