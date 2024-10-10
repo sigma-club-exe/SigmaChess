@@ -334,6 +334,27 @@ p {
     margin: 0 3px;
 }
 
+.mobile-captured-container {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    max-width: 360px;
+    margin: 10px 0; 
+}
+
+.mobile-captured-pieces {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+}
+
+.mobile-captured-pieces img {
+    width: 40px;
+    height: 40px;
+    margin: 0 5px;
+}
+
 img[src*="3capt_"],
 img[src*="4capt_"],
 img[src*="5capt_"],
@@ -359,7 +380,7 @@ img[src*="capt_"]:not([src*="3capt_"]):not([src*="4capt_"]):not([src*="5capt_"])
     }
 
     .chessboard-container {
-        margin: 65px 0;
+        margin: 1px 0;
     }
 
     .contik2 {
@@ -368,5 +389,18 @@ img[src*="capt_"]:not([src*="3capt_"]):not([src*="4capt_"]):not([src*="5capt_"])
 
     .btns {
         margin-top: 10px;
+    }
+
+    #captured-pieces-container {
+        display: none;
+    }
+    .mobile-captured-container {
+        display: flex;
+    }
+    #mobile-captured-top {
+        margin-bottom: 8px;
+    }
+    #mobile-captured-bottom {
+        margin-bottom: 15px;
     }
 }
