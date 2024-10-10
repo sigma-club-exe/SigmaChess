@@ -67,44 +67,52 @@ function updateCapturedPieces(capturedPieces) {
     const capturedWhiteContainer = document.getElementById('captured-white-pieces');
     const capturedBlackContainer = document.getElementById('captured-black-pieces');
 
-    // Clear the current captured pieces display
+    // Очищаем контейнеры с захваченными фигурами
     capturedWhiteContainer.innerHTML = '';
     capturedBlackContainer.innerHTML = '';
 
-    // Create a dictionary to store captured pieces by type for each color
-    const pieceOrder = ['p', 'b', 'n', 'r', 'q']; // Order of pieces to be displayed
-    const capturedWhite = { p: [], b: [], n: [], r: [], q: [] };
-    const capturedBlack = { p: [], b: [], n: [], r: [], q: [] };
+    // Создаем словарь для хранения захваченных фигур по типу для каждого цвета
+    const pieceOrder = ['p', 'b', 'n', 'r', 'q']; // Порядок отображения
+    const capturedWhite = { p: 0, b: 0, n: 0, r: 0, q: 0 };
+    const capturedBlack = { p: 0, b: 0, n: 0, r: 0, q: 0 };
 
-    // Organize pieces into the respective color and type
+    // Подсчитываем количество захваченных фигур каждого типа для белых и черных
     capturedPieces.split('').forEach(piece => {
         const color = piece === piece.toLowerCase() ? 'black' : 'white';
         const pieceType = piece.toLowerCase();
 
         if (color === 'white') {
-            capturedWhite[pieceType].push(piece);
+            capturedWhite[pieceType]++;
         } else {
-            capturedBlack[pieceType].push(piece);
+            capturedBlack[pieceType]++;
         }
     });
 
-    // Helper function to add pieces to the container in order
+    // Функция для добавления фигур в контейнер
     function addPiecesToContainer(pieces, container, color) {
         pieceOrder.forEach(type => {
-            pieces[type].forEach(() => {
+            const count = pieces[type];
+            if (count > 0) {
                 const img = document.createElement('img');
-                img.src = `reqs/${color}_${type}.svg`;
+
+                if (count === 1) {
+                    // Если захвачена одна фигура, используем стандартный SVG
+                    img.src = `reqs/${color}_${type}.svg`;
+                } else {
+                    // Если захвачено больше одной, используем файл с префиксом `Ncapt_`
+                    img.src = `reqs/${count}capt_${color}_${type}.svg`;
+                }
+                
                 img.classList.add('captured-piece');
                 container.appendChild(img);
-            });
+            }
         });
     }
 
-    // Add pieces to the containers in the specified order
+    // Добавляем фигуры в контейнеры для белых и черных в указанном порядке
     addPiecesToContainer(capturedWhite, capturedWhiteContainer, 'white');
     addPiecesToContainer(capturedBlack, capturedBlackContainer, 'black');
 }
-
 
 let commandQueue = [];
 
