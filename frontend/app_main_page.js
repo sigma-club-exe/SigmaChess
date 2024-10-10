@@ -67,23 +67,44 @@ function updateCapturedPieces(capturedPieces) {
     const capturedWhiteContainer = document.getElementById('captured-white-pieces');
     const capturedBlackContainer = document.getElementById('captured-black-pieces');
 
+    // Clear the current captured pieces display
     capturedWhiteContainer.innerHTML = '';
     capturedBlackContainer.innerHTML = '';
 
+    // Create a dictionary to store captured pieces by type for each color
+    const pieceOrder = ['p', 'b', 'n', 'r', 'q']; // Order of pieces to be displayed
+    const capturedWhite = { p: [], b: [], n: [], r: [], q: [] };
+    const capturedBlack = { p: [], b: [], n: [], r: [], q: [] };
+
+    // Organize pieces into the respective color and type
     capturedPieces.split('').forEach(piece => {
         const color = piece === piece.toLowerCase() ? 'black' : 'white';
-
-        const img = document.createElement('img');
-        img.src = `reqs/${color}_${piece.toLowerCase()}.svg`;
-        img.classList.add('captured-piece');
+        const pieceType = piece.toLowerCase();
 
         if (color === 'white') {
-            capturedWhiteContainer.appendChild(img);
+            capturedWhite[pieceType].push(piece);
         } else {
-            capturedBlackContainer.appendChild(img);
+            capturedBlack[pieceType].push(piece);
         }
     });
+
+    // Helper function to add pieces to the container in order
+    function addPiecesToContainer(pieces, container, color) {
+        pieceOrder.forEach(type => {
+            pieces[type].forEach(() => {
+                const img = document.createElement('img');
+                img.src = `reqs/${color}_${type}.svg`;
+                img.classList.add('captured-piece');
+                container.appendChild(img);
+            });
+        });
+    }
+
+    // Add pieces to the containers in the specified order
+    addPiecesToContainer(capturedWhite, capturedWhiteContainer, 'white');
+    addPiecesToContainer(capturedBlack, capturedBlackContainer, 'black');
 }
+
 
 let commandQueue = [];
 
