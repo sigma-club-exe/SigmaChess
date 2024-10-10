@@ -38,33 +38,63 @@ public abstract class Figure : IFigure
         return possibleMoves;
     }
 
-    public virtual bool SquareIsUnderAttack(ref IFigure?[][] board, (int, int) square, char pieceColor)
+public virtual bool SquareIsUnderAttack(ref IFigure?[][] board, (int, int) square, char pieceColor)
+{
+    var pieceOnSquare = board[square.Item1][square.Item2];
+    board[square.Item1][square.Item2] = null; // Temporarily remove the piece to check for attacks
+
+    for (var column = 0; column < 8; column++)
     {
-        var pieceOnSquare = board[square.Item1][square.Item2];
-        board[square.Item1][square.Item2] = null;
-        for (var column = 0; column < 8; column++)
+        for (var row = 0; row < 8; row++)
         {
-            for (var row = 0; row < 8; row++)
+            var figure = board[column][row];
+
+            // If the figure belongs to the opponent
+            if (figure != null && figure.Color != pieceColor)
             {
-                var figure = board[column][row];
-                // Если фигура противника
-                if (figure != null && figure.Color != pieceColor)
+                // Special case for pawns: only consider diagonal attacks
+                if (figure is Pawn)
                 {
-                    // Проверяем, может ли фигура атаковать клетку
-                    if (figure.PossibleMove(ref board, (column, row), square))
+                    // For a white pawn (assumes it moves upward)
+                    if (figure.Color == 'w' && 
+                        (square == (column + 1, row - 1) || square == (column + 1, row + 1)))
                     {
-                        //figure.PossibleMove(ref board, square, (column, row));
-                        board[column][row] = figure;
-                        
                         board[square.Item1][square.Item2] = pieceOnSquare;
-                        return true; // Клетка под ударом
+                        return true; // Square is attacked by a black pawn
                     }
+
+                    // For a black pawn (assumes it moves downward)
+                    if (figure.Color == 'b' && 
+                        (square == (column - 1, row - 1) || square == (column - 1, row + 1)))
+                    {
+                        board[square.Item1][square.Item2] = pieceOnSquare;
+                        return true; // Square is attacked by a white pawn
+                    }
+                }
+                // Special case for a king's adjacent attacks
+                else if (figure is King)
+                {
+                    if (Math.Abs(square.Item1 - column) <= 1 && Math.Abs(square.Item2 - row) <= 1)
+                    {
+                        board[square.Item1][square.Item2] = pieceOnSquare;
+                        return true; // Square is attacked by an opponent's king
+                    }
+                }
+                // For other pieces, use the PossibleMove method
+                else if (figure.PossibleMove(ref board, (column, row), square))
+                {
+                    board[square.Item1][square.Item2] = pieceOnSquare;
+                    board[column][row] = figure;
+                    return true; // Square is under attack by another piece
                 }
             }
         }
-        board[square.Item1][square.Item2] = pieceOnSquare;
-        return false;
     }
+    board[square.Item1][square.Item2] = pieceOnSquare; // Restore the board state
+    return false; // Square is not under attack
+}
+
+
 
     public bool IsCheckmate(ref IFigure?[][] board, char color)
     {

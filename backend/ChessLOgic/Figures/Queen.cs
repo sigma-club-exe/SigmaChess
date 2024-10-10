@@ -43,13 +43,14 @@ public class Queen : Figure
             // Если конечная клетка пуста или там фигура противника, ход возможен
             if (board[endX][endY] == null || board[endX][endY].Color != figure.Color)
             {
+                var tempPiece = board[endX][endY];
                 board[startX][startY] = null;
                 board[endX][endY] = figure;
                 var kingPos = FindKing(board, figure.Color);
                 if (SquareIsUnderAttack(ref board,kingPos, figure.Color))
                 {
                     board[startX][startY] = figure;
-                    board[endX][endY] = null;
+                    board[endX][endY] = tempPiece;
                     return false;
                 }
 
@@ -87,13 +88,14 @@ public class Queen : Figure
             // Если конечная клетка пуста или там фигура противника, ход возможен
             if (board[endX][endY] == null || board[endX][endY].Color != figure.Color)
             {
+                var tempPiece = board[endX][endY];
                 board[startX][startY] = null;
                 board[endX][endY] = figure;
                 var kingPos = FindKing(board, figure.Color);
                 if (SquareIsUnderAttack(ref board,kingPos, figure.Color))
                 {
                     board[startX][startY] = figure;
-                    board[endX][endY] = null;
+                    board[endX][endY] = tempPiece;
                     return false;
                 }
 
@@ -103,118 +105,6 @@ public class Queen : Figure
 
         return false; // Все другие ходы недопустимы для ферзя
     }
-
-    public override List<(int, int)> GetPossibleMoves(ref IFigure?[][] board, (int, int) currentPos)
-    {
-        List<(int, int)> possibleMoves = new List<(int, int)>();
-
-        // Ферзь может двигаться как ладья (по горизонтали и вертикали)
-        possibleMoves.AddRange(GetRookMoves(ref board, currentPos));
-
-        // Ферзь может двигаться как слон (по диагонали)
-        possibleMoves.AddRange(GetBishopMoves(ref board, currentPos));
-
-        return possibleMoves;
-    }
-
-    private List<(int, int)> GetBishopMoves(ref IFigure?[][] board, (int, int) currentPos)
-    {
-        List<(int, int)> possibleMoves = new List<(int, int)>();
-        int x = currentPos.Item1;
-        int y = currentPos.Item2;
-
-        // Вправо-вверх
-        for (int i = 1; x + i < 8 && y + i < 8; i++)
-        {
-            if (AddMoveIfValidForBishop(ref board, possibleMoves, x + i, y + i)) break;
-        }
-
-        // Влево-вверх
-        for (int i = 1; x - i >= 0 && y + i < 8; i++)
-        {
-            if (AddMoveIfValidForBishop(ref board, possibleMoves, x - i, y + i)) break;
-        }
-
-        // Вправо-вниз
-        for (int i = 1; x + i < 8 && y - i >= 0; i++)
-        {
-            if (AddMoveIfValidForBishop(ref board, possibleMoves, x + i, y - i)) break;
-        }
-
-        // Влево-вниз
-        for (int i = 1; x - i >= 0 && y - i >= 0; i++)
-        {
-            if (AddMoveIfValidForBishop(ref board, possibleMoves, x - i, y - i)) break;
-        }
-
-        return possibleMoves;
-    }
-
-    private bool AddMoveIfValidForBishop(ref IFigure?[][] board, List<(int, int)> moves, int x, int y)
-    {
-        if (board[x][y] == null)
-        {
-            moves.Add((x, y));
-            return false; // Продолжаем движение
-        }
-        else if (board[x][y].Color != this.Color)
-        {
-            moves.Add((x, y)); // Вражеская фигура, добавляем и прекращаем движение
-            return true;
-        }
-
-        return true; // Своя фигура, прекращаем движение
-    }
-
-    private List<(int, int)> GetRookMoves(ref IFigure?[][] board, (int, int) currentPos)
-    {
-        List<(int, int)> possibleMoves = new List<(int, int)>();
-        int x = currentPos.Item1;
-        int y = currentPos.Item2;
-
-        // Двигаемся вверх
-        for (int i = x + 1; i < 8; i++)
-        {
-            if (AddMoveIfValidForRook(ref board, possibleMoves, i, y)) break;
-        }
-
-        // Двигаемся вниз
-        for (int i = x - 1; i >= 0; i--)
-        {
-            if (AddMoveIfValidForRook(ref board, possibleMoves, i, y)) break;
-        }
-
-        // Двигаемся вправо
-        for (int i = y + 1; i < 8; i++)
-        {
-            if (AddMoveIfValidForRook(ref board, possibleMoves, x, i)) break;
-        }
-
-        // Двигаемся влево
-        for (int i = y - 1; i >= 0; i--)
-        {
-            if (AddMoveIfValidForRook(ref board, possibleMoves, x, i)) break;
-        }
-
-        return possibleMoves;
-    }
-
-    private bool AddMoveIfValidForRook(ref IFigure?[][] board, List<(int, int)> moves, int x, int y)
-    {
-        if (board[x][y] == null)
-        {
-            moves.Add((x, y));
-            return false; // Продолжаем движение
-        }
-        else if (board[x][y].Color != this.Color)
-        {
-            moves.Add((x, y)); // Вражеская фигура, добавляем и прекращаем движение
-            return true;
-        }
-
-        return true; // Своя фигура, прекращаем движение
-    }
-
 
     public Queen(char color) : base(color, FigureType.Queen)
     {

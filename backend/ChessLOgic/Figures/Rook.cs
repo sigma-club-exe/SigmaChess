@@ -49,13 +49,14 @@ public class Rook : Figure
         // Если в конечной клетке стоит фигура противника, её можно съесть
         if (board[endX][endY] == null || board[endX][endY].Color != figure.Color)
         {
+            var tempPiece = board[endX][endY];
             board[startX][startY] = null;
             board[endX][endY] = figure;
             var kingPos = FindKing(board, figure.Color);
             if (SquareIsUnderAttack(ref board,kingPos, figure.Color))
             {
                 board[startX][startY] = figure;
-                board[endX][endY] = null;
+                board[endX][endY] = tempPiece;
                 return false;
             }
             RookDidMove = true;

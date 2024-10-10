@@ -54,8 +54,8 @@ public class Pawn : Figure
         if (endX == startX + direction && (endY == startY - 1 || endY == startY + 1) && board[endX][endY] != null &&
             board[endX][endY].Color != figure.Color)
         {
-            board[startX][startY] = null;
             var tempFigure = board[endX][endY];
+            board[startX][startY] = null;
             board[endX][endY] = figure;
             var kingPos = FindKing(board, figure.Color);
             if (SquareIsUnderAttack(ref board,kingPos, figure.Color))
