@@ -255,7 +255,7 @@ p {
     font-weight: 600;
 }
 
-.modalfull-screen{
+.modalfull-screen {
     position: fixed;
     top: 0;
     left: 0;
@@ -265,14 +265,19 @@ p {
     justify-content: center;
     align-items: center;
     background-color: #efe6d5; 
-    z-index: 1000; 
+    background-image: url("reqs/bg3.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: auto 100%;
+    z-index: 1000;
 }
 
 .modal-content2 p {
-    color: rgba(51, 94, 94, 0.8); 
+    color: rgba(255, 255, 255, 0.863); 
     font-size: 24px;
     font-weight: bold;
     text-align: center;
+    margin-top: -115px;
 }
 
 .disabled {

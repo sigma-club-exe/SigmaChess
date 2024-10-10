@@ -174,7 +174,7 @@ function createWebSocket() {
             // displayStatus(`получил ник ${nick}`);
             const playerInfoUsername = document.querySelector('#opponent-info .username');
             playerInfoUsername.textContent = '@' + nick;
-            if (nick === 'Игрок') {
+            if (nick === 'Гость') {
                 playerInfoUsername.textContent = nick;
             }
             const playerInfoImage = document.querySelector('#opponent-info .user-image');
@@ -371,6 +371,9 @@ if (user.username) {
 }
 const playerInfoImage = document.querySelector('#player-info .user-image');
 playerInfoImage.src = `https://t.me/i/userpic/320/${user.username}.jpg`;
+if (playerInfoUsername.textContent  === 'Гость') {
+    playerInfoImage.src = 'reqs/ava.jpg';
+}
 playerInfoImage.onerror = function () {
     playerInfoImage.src = 'reqs/ava.jpg';
 };
