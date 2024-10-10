@@ -63,18 +63,27 @@ declineDrawBtn2.addEventListener('click', function() {
     drawAcceptOfferModal.classList.add('hidden');
 });
 
-function updateCapturedPieces(capturedPieces) {
+function updateCapturedPieces(playerCapturedPieces, enemyCapturedPieces) {
     const capturedWhiteContainer = document.getElementById('captured-white-pieces');
     const capturedBlackContainer = document.getElementById('captured-black-pieces');
 
+    const capturedMobileWhiteContainer = document.getElementById('captured-mobile-white-pieces'); // Снизу (для игрока)
+    const capturedMobileBlackContainer = document.getElementById('captured-mobile-black-pieces'); // Сверху (для противника)
+
+    // Очищаем контейнеры
     capturedWhiteContainer.innerHTML = '';
     capturedBlackContainer.innerHTML = '';
+    capturedMobileWhiteContainer.innerHTML = '';
+    capturedMobileBlackContainer.innerHTML = '';
 
-    const pieceOrder = ['p', 'b', 'n', 'r', 'q']; // Порядок отображения
+    const pieceOrder = ['p', 'b', 'n', 'r', 'q'];
+
+    // Захваченные фигуры игрока (отображаются снизу)
     const capturedWhite = { p: 0, b: 0, n: 0, r: 0, q: 0 };
     const capturedBlack = { p: 0, b: 0, n: 0, r: 0, q: 0 };
 
-    capturedPieces.split('').forEach(piece => {
+    // Обработка захваченных фигур игрока
+    playerCapturedPieces.split('').forEach(piece => {
         const color = piece === piece.toLowerCase() ? 'black' : 'white';
         const pieceType = piece.toLowerCase();
 
@@ -85,26 +94,48 @@ function updateCapturedPieces(capturedPieces) {
         }
     });
 
+    // Захваченные фигуры противника (отображаются сверху)
+    const capturedEnemyWhite = { p: 0, b: 0, n: 0, r: 0, q: 0 };
+    const capturedEnemyBlack = { p: 0, b: 0, n: 0, r: 0, q: 0 };
+
+    enemyCapturedPieces.split('').forEach(piece => {
+        const color = piece === piece.toLowerCase() ? 'black' : 'white';
+        const pieceType = piece.toLowerCase();
+
+        if (color === 'white') {
+            capturedEnemyWhite[pieceType]++;
+        } else {
+            capturedEnemyBlack[pieceType]++;
+        }
+    });
+
+    // Функция для добавления фигур в контейнер
     function addPiecesToContainer(pieces, container, color) {
         pieceOrder.forEach(type => {
             const count = pieces[type];
             if (count > 0) {
                 const img = document.createElement('img');
-
-                if (count === 1) {
-                    img.src = `reqs/${color}_${type}.svg`;
-                } else {
-                    img.src = `reqs/${count}capt_${color}_${type}.svg`;
-                }
-                
+                img.src = count === 1 ? `reqs/${color}_${type}.svg` : `reqs/${count}capt_${color}_${type}.svg`;
                 img.classList.add('captured-piece');
                 container.appendChild(img);
             }
         });
     }
 
+    // Десктопная версия: отображаем захваченные фигуры игрока
     addPiecesToContainer(capturedWhite, capturedWhiteContainer, 'white');
     addPiecesToContainer(capturedBlack, capturedBlackContainer, 'black');
+
+    // Мобильная версия: захваченные фигуры игрока (снизу) и противника (сверху)
+    if (window.matchMedia('(min-height: 665px)').matches) {
+        // Захваченные фигуры игрока (снизу)
+        addPiecesToContainer(capturedWhite, capturedMobileWhiteContainer, 'white');
+        addPiecesToContainer(capturedBlack, capturedMobileWhiteContainer, 'black');
+
+        // Захваченные фигуры противника (сверху)
+        addPiecesToContainer(capturedEnemyWhite, capturedMobileBlackContainer, 'white');
+        addPiecesToContainer(capturedEnemyBlack, capturedMobileBlackContainer, 'black');
+    }
 }
 
 let commandQueue = [];
@@ -141,7 +172,7 @@ function createWebSocket() {
             const capturedPieces = parts[2];
             const enemyCapturedPieces = parts[3];
             createChessboardFromFEN(newFEN, playerColor);
-            updateCapturedPieces(capturedPieces); 
+            updateCapturedPieces(capturedPieces, enemyCapturedPieces);
             switchTurn(); 
         } else if (data.includes("LOGS:")) {
             const logs = data.slice(5);
