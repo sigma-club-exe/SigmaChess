@@ -374,7 +374,7 @@ img[src*="capt_"]:not([src*="3capt_"]):not([src*="4capt_"]):not([src*="5capt_"])
     user-select: none; 
 }
 
-@media (min-height: 670px) {
+@media (min-height: 660px) {
     .body {
         height: 100vh;
     }
