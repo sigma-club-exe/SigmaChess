@@ -310,24 +310,39 @@ p {
 #captured-pieces-container {
     display: flex;
     justify-content: space-between;
-    padding: 10px;
     max-width: 250px; 
     max-height: 45px; 
+    margin-left: -7px;
+    margin-right: -10px;
 }
 
 .captured-pieces {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-wrap: wrap; 
+    flex-wrap:  nowrap; 
 }
 
 .captured-pieces img {
     width: 40px;
     height: 40px;
-    margin: 0 5px;
+    margin: 0 3px;
 }
 
+img[src*="3capt_"],
+img[src*="4capt_"],
+img[src*="5capt_"],
+img[src*="6capt_"],
+img[src*="7capt_"],
+img[src*="8capt_"] {
+    transform: scale(1.7);
+    transform-origin: center;
+}
+
+img[src*="capt_"]:not([src*="3capt_"]):not([src*="4capt_"]):not([src*="5capt_"]):not([src*="6capt_"]):not([src*="7capt_"]):not([src*="8capt_"]) {
+    transform: scale(1.4);
+    transform-origin: center;
+}
 
 * {
     user-select: none; 

@@ -67,16 +67,13 @@ function updateCapturedPieces(capturedPieces) {
     const capturedWhiteContainer = document.getElementById('captured-white-pieces');
     const capturedBlackContainer = document.getElementById('captured-black-pieces');
 
-    // Очищаем контейнеры с захваченными фигурами
     capturedWhiteContainer.innerHTML = '';
     capturedBlackContainer.innerHTML = '';
 
-    // Создаем словарь для хранения захваченных фигур по типу для каждого цвета
     const pieceOrder = ['p', 'b', 'n', 'r', 'q']; // Порядок отображения
     const capturedWhite = { p: 0, b: 0, n: 0, r: 0, q: 0 };
     const capturedBlack = { p: 0, b: 0, n: 0, r: 0, q: 0 };
 
-    // Подсчитываем количество захваченных фигур каждого типа для белых и черных
     capturedPieces.split('').forEach(piece => {
         const color = piece === piece.toLowerCase() ? 'black' : 'white';
         const pieceType = piece.toLowerCase();
@@ -88,7 +85,6 @@ function updateCapturedPieces(capturedPieces) {
         }
     });
 
-    // Функция для добавления фигур в контейнер
     function addPiecesToContainer(pieces, container, color) {
         pieceOrder.forEach(type => {
             const count = pieces[type];
@@ -96,10 +92,8 @@ function updateCapturedPieces(capturedPieces) {
                 const img = document.createElement('img');
 
                 if (count === 1) {
-                    // Если захвачена одна фигура, используем стандартный SVG
                     img.src = `reqs/${color}_${type}.svg`;
                 } else {
-                    // Если захвачено больше одной, используем файл с префиксом `Ncapt_`
                     img.src = `reqs/${count}capt_${color}_${type}.svg`;
                 }
                 
@@ -109,7 +103,6 @@ function updateCapturedPieces(capturedPieces) {
         });
     }
 
-    // Добавляем фигуры в контейнеры для белых и черных в указанном порядке
     addPiecesToContainer(capturedWhite, capturedWhiteContainer, 'white');
     addPiecesToContainer(capturedBlack, capturedBlackContainer, 'black');
 }
