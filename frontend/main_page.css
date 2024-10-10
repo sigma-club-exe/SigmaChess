@@ -339,6 +339,7 @@ p {
     justify-content: center;
     align-items: center;
     max-width: 360px;
+    min-height: 42px;
     margin: 10px 0; 
 }
 
@@ -374,7 +375,7 @@ img[src*="capt_"]:not([src*="3capt_"]):not([src*="4capt_"]):not([src*="5capt_"])
     user-select: none; 
 }
 
-@media (min-height: 660px) {
+@media (min-height: 665px) {
     .body {
         height: 100vh;
     }
@@ -396,11 +397,5 @@ img[src*="capt_"]:not([src*="3capt_"]):not([src*="4capt_"]):not([src*="5capt_"])
     }
     .mobile-captured-container {
         display: flex;
-    }
-    #mobile-captured-top {
-        margin-bottom: 8px;
-    }
-    #mobile-captured-bottom {
-        margin-bottom: 15px;
     }
 }
