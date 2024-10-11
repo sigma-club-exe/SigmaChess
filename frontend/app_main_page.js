@@ -138,6 +138,25 @@ function updateCapturedPieces(playerCapturedPieces, enemyCapturedPieces) {
     }
 }
 
+function loadUserAvatar(imageElement, username) {
+    if (!username || username === 'Гость') {
+        imageElement.src = 'reqs/ava.jpg';
+        return;
+    }
+
+    const avatarUrl = `https://t.me/i/userpic/320/${username}.jpg`;
+
+    fetch(avatarUrl).then(response => {
+        if (response.ok) {
+            imageElement.src = avatarUrl;
+        } else {
+            imageElement.src = 'reqs/ava.jpg';
+        }
+    }).catch(error => {
+        imageElement.src = 'reqs/ava.jpg';
+    });
+}
+
 let commandQueue = [];
 
 function createWebSocket() {
@@ -204,17 +223,18 @@ function createWebSocket() {
             createChessboardFromFEN(fen,color);
 
             // displayStatus(`получил ник ${nick}`);
+            // Отображаем никнейм оппонента
             const playerInfoUsername = document.querySelector('#opponent-info .username');
-            playerInfoUsername.textContent = '@' + nick;
             if (nick === 'Гость') {
                 playerInfoUsername.textContent = nick;
+            } else {
+                playerInfoUsername.textContent = '@' + nick;
             }
+
+            // Проверяем аватарку оппонента
             const playerInfoImage = document.querySelector('#opponent-info .user-image');
-            playerInfoImage.src = `https://t.me/i/userpic/320/${nick}.jpg`;
-            playerInfoImage.onerror = function () {
-                playerInfoImage.src = 'reqs/ava.jpg';
-            };
-        }
+            loadUserAvatar(playerInfoImage, nick);
+            }
     };
 
     return socket;
@@ -396,19 +416,16 @@ const user = Telegram.WebApp.initDataUnsafe.user;
 // displayStatus(`Извлеченный matchId and user: ${matchId} ${user}`);  
 
 const playerInfoUsername = document.querySelector('#player-info .username');
+const playerInfoImage = document.querySelector('#player-info .user-image');
+
 if (user.username) {
     playerInfoUsername.textContent = '@' + user.username;
+    loadUserAvatar(playerInfoImage, user.username);
 } else {
-    playerInfoUsername.textContent = 'Гость'; 
-}
-const playerInfoImage = document.querySelector('#player-info .user-image');
-playerInfoImage.src = `https://t.me/i/userpic/320/${user.username}.jpg`;
-if (playerInfoUsername.textContent  === 'Гость') {
+    playerInfoUsername.textContent = 'Гость';
     playerInfoImage.src = 'reqs/ava.jpg';
 }
-playerInfoImage.onerror = function () {
-    playerInfoImage.src = 'reqs/ava.jpg';
-};
+
 // displayStatus(`Отправка команды challenge для game_id: ${matchId}`);
 try {
     sendCommand(`challenge ${matchId} ${user.username}`);
