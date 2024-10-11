@@ -138,32 +138,6 @@ function updateCapturedPieces(playerCapturedPieces, enemyCapturedPieces) {
     }
 }
 
-async function updatePlayerImage(playerImageElement, username) {
-    if (!username) {
-        playerImageElement.src = 'reqs/ava.jpg';
-        return;
-    }
-    if (username === 'Гость') {
-        playerImageElement.src = 'reqs/ava.jpg';
-        return;
-    }
-    const imageSrc = `https://t.me/i/userpic/320/${username}.jpg`;
-    playerImageElement.src = imageSrc;
-
-    try {
-        const response = await fetch(imageSrc);
-        if (response.status === 404) {
-            playerImageElement.src = 'reqs/ava.jpg';
-        }
-    } catch (error) {
-        playerImageElement.src = 'reqs/ava.jpg';
-    }
-
-    playerImageElement.onerror = function () {
-        playerImageElement.src = 'reqs/ava.jpg';
-    };
-}
-
 let commandQueue = [];
 
 function createWebSocket() {
@@ -187,6 +161,45 @@ function createWebSocket() {
             socket = createWebSocket();
         }, 1000);
     };
+
+    async function loadOpponentImage(opponentNick) {
+        const opponentInfoImage = document.querySelector('#opponent-info .user-image');
+        opponentInfoImage.src = `https://t.me/i/userpic/320/${opponentNick}.jpg`;
+    
+        try {
+            const response = await fetch(opponentInfoImage.src);
+    
+            if (response.status === 404) {
+                opponentInfoImage.src = 'reqs/ava.jpg';
+            }
+        } catch (error) {
+            opponentInfoImage.src = 'reqs/ava.jpg';
+        }
+    
+        opponentInfoImage.onerror = function () {
+            opponentInfoImage.src = 'reqs/ava.jpg';
+        };
+    }
+    
+    async function handleGameStarted(data) {
+        const parts = data.split(':');
+        waitingModal.classList.add('hidden');
+        const opponentNick = parts[1];
+        const fen = parts[2];
+        const color = parts[3];
+        createChessboardFromFEN(fen, color);
+        
+        const opponentInfoUsername = document.querySelector('#opponent-info .username');
+        const opponentInfoImage = document.querySelector('#opponent-info .user-image');
+    
+        if (opponentNick === 'Гость') {
+            opponentInfoUsername.textContent = opponentNick;
+            opponentInfoImage.src = 'reqs/ava.jpg';
+        } else {
+            opponentInfoUsername.textContent = '@' + opponentNick;
+            await loadOpponentImage(opponentNick);
+        }
+    }
 
     socket.onmessage = function (event) {
         const data = event.data;
@@ -222,23 +235,7 @@ function createWebSocket() {
             document.getElementById('surrender-btn').classList.add('disabled');
             document.getElementById('draw-offer-btn').classList.add('disabled');
         } else if (data.includes("GAMESTARTED")) {
-            var parts = data.split(':');
-            waitingModal.classList.add('hidden');
-            const opponentNick = parts[1];
-            const fen = parts[2];
-            const color = parts[3];
-            createChessboardFromFEN(fen,color);
-
-            // displayStatus(`получил ник ${nick}`);
-            const opponentInfoUsername = document.querySelector('#opponent-info .username');
-            const opponentInfoImage = document.querySelector('#opponent-info .user-image');
-    
-            opponentInfoUsername.textContent = '@' + opponentNick;
-            if (opponentNick === 'Гость') {
-                opponentInfoUsername.textContent = opponentNick;
-            }
-    
-            updatePlayerImage(opponentInfoImage, opponentNick);
+            handleGameStarted(data);
         }
     };
 
@@ -416,22 +413,42 @@ function handleSquareClick(row, col, files, ranks, playerColor) {
 
 // displayStatus(JSON.stringify(Telegram.WebApp.initDataUnsafe));
 
-const matchId = Telegram.WebApp.initDataUnsafe.start_param;
-const user = Telegram.WebApp.initDataUnsafe.user;
+async function loadPlayerImage(user) {
+    const playerInfoImage = document.querySelector('#player-info .user-image');
+    playerInfoImage.src = `https://t.me/i/userpic/320/${user.username}.jpg`;    
 
-const playerInfoUsername = document.querySelector('#player-info .username');
-const playerInfoImage = document.querySelector('#player-info .user-image');
+    try {
+        const response = await fetch(playerInfoImage.src);
+        
+        if (response.status === 404) {
+            playerInfoImage.src = 'reqs/ava.jpg';
+        }
+    } catch (error) {
+        playerInfoImage.src = 'reqs/ava.jpg';
+    }
 
-if (user.username) {
-    playerInfoUsername.textContent = '@' + user.username;
-    updatePlayerImage(playerInfoImage, user.username);
-} else {
-    playerInfoUsername.textContent = 'Гость';
-    playerInfoImage.src = 'reqs/ava.jpg';
     playerInfoImage.onerror = function () {
         playerInfoImage.src = 'reqs/ava.jpg';
     };
 }
+
+async function initializeUser(user) {
+    const playerInfoUsername = document.querySelector('#player-info .username');
+    const playerInfoImage = document.querySelector('#player-info .user-image');
+
+    if (user.username) {
+        playerInfoUsername.textContent = '@' + user.username;
+        await loadPlayerImage(user);
+    } else {
+        playerInfoUsername.textContent = 'Гость';
+        playerInfoImage.src = 'reqs/ava.jpg';
+    }
+}
+
+const matchId = Telegram.WebApp.initDataUnsafe.start_param;
+const user = Telegram.WebApp.initDataUnsafe.user;
+
+initializeUser(user);
 // displayStatus(`Отправка команды challenge для game_id: ${matchId}`);
 try {
     sendCommand(`challenge ${matchId} ${user.username}`);
