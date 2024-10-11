@@ -147,27 +147,21 @@ function logMessage(message) {
 function loadUserAvatar(imageElement, username) {
     if (!username || username === 'Гость') {
         imageElement.src = 'reqs/ava.jpg';
-        logMessage(`Пользователь ${username || 'Гость'}: установлен дефолтный аватар.`);
         return;
     }
 
     const avatarUrl = `https://t.me/i/userpic/320/${username}.jpg`;
 
-    fetch(avatarUrl).then(response => {
-        logMessage(`Пользователь ${username}: статус ответа ${response.status}.`);
-        if (response.ok) {
-            imageElement.src = avatarUrl;
-            logMessage(`Пользователь ${username}: аватар успешно загружен.`);
-        } else {
-            imageElement.src = 'reqs/ava.jpg';
-            logMessage(`Пользователь ${username}: аватар недоступен, установлен дефолтный.`);
-        }
-    }).catch(error => {
+    const img = new Image();
+    img.onload = function() {
+        imageElement.src = avatarUrl;
+    };
+    img.onerror = function() {
         imageElement.src = 'reqs/ava.jpg';
-        logMessage(`Пользователь ${username}: ошибка при загрузке аватара. Ошибка: ${error}`);
-    });
-}
+    };
 
+    img.src = avatarUrl;
+}
 
 let commandQueue = [];
 
