@@ -399,17 +399,22 @@ const playerInfoImage = document.querySelector('#player-info .user-image');
 
 if (user.username) {
     playerInfoUsername.textContent = '@' + user.username;
-    playerInfoImage.src = `https://t.me/i/userpic/320/${user.username}.jpg`;    
-    try {
-        const response = await fetch(playerInfoImage.src);
-        
-        if (response.status === 404) {
+    playerInfoImage.src = `https://t.me/i/userpic/320/${user.username}.jpg`;
+
+    async function updatePlayerImage() {
+        try {
+            const response = await fetch(playerInfoImage.src);
+            
+            if (response.status === 404) {
+                playerInfoImage.src = 'reqs/ava.jpg';
+            }
+            
+        } catch (error) {
             playerInfoImage.src = 'reqs/ava.jpg';
         }
-        
-    } catch (error) {
-        playerInfoImage.src = 'reqs/ava.jpg';
     }
+
+    updatePlayerImage();
 } else {
     playerInfoUsername.textContent = 'Гость';
     playerInfoImage.src = 'reqs/ava.jpg';
