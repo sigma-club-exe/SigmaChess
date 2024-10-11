@@ -211,6 +211,21 @@ function createWebSocket() {
             }
             const playerInfoImage = document.querySelector('#opponent-info .user-image');
             playerInfoImage.src = `https://t.me/i/userpic/320/${nick}.jpg`;
+
+            async function updatePlayerImage() {
+                try {
+                    const response = await fetch(playerInfoImage.src);
+                    
+                    if (response.status === 404) {
+                        playerInfoImage.src = 'reqs/ava.jpg';
+                    }
+                    
+                } catch (error) {
+                    playerInfoImage.src = 'reqs/ava.jpg';
+                }
+            }
+        
+            updatePlayerImage();
             playerInfoImage.onerror = function () {
                 playerInfoImage.src = 'reqs/ava.jpg';
             };
