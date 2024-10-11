@@ -146,22 +146,32 @@ function logMessage(message) {
 
 function loadUserAvatar(imageElement, username) {
     if (!username || username === 'Гость') {
+        // Если нет имени пользователя или это гость, сразу показываем дефолтную аватарку
         imageElement.src = 'reqs/ava.jpg';
         return;
     }
 
     const avatarUrl = `https://t.me/i/userpic/320/${username}.jpg`;
 
+    // Создаем новый объект изображения для проверки загрузки
     const img = new Image();
+    
+    // Устанавливаем обработчик на случай успешной загрузки
     img.onload = function() {
+        // Если изображение успешно загружено, устанавливаем его
         imageElement.src = avatarUrl;
     };
+    
+    // Обработчик на случай ошибки загрузки (например, если аватарка приватная)
     img.onerror = function() {
+        // Если изображение не загружается, ставим дефолтную аватарку
         imageElement.src = 'reqs/ava.jpg';
     };
 
+    // Попытка загрузить аватарку
     img.src = avatarUrl;
 }
+
 
 let commandQueue = [];
 
