@@ -415,19 +415,29 @@ function handleSquareClick(row, col, files, ranks, playerColor) {
 
 async function loadPlayerImage(user) {
     const playerInfoImage = document.querySelector('#player-info .user-image');
-    playerInfoImage.src = `https://t.me/i/userpic/320/${user.username}.jpg`;    
+
+    // Заранее устанавливать аватарку не нужно, ждем проверки
+    const imageUrl = `https://t.me/i/userpic/320/${user.username}.jpg`;
 
     try {
-        const response = await fetch(playerInfoImage.src);
-        
-        if (response.status === 404) {
+        // Проверяем, существует ли изображение
+        const response = await fetch(imageUrl);
+
+        if (response.status === 200) {
+            // Если изображение существует, устанавливаем его
+            playerInfoImage.src = imageUrl;
+        } else {
+            // Если не существует, устанавливаем изображение по умолчанию
             playerInfoImage.src = 'reqs/ava.jpg';
         }
     } catch (error) {
+        // В случае любой ошибки устанавливаем изображение по умолчанию
         playerInfoImage.src = 'reqs/ava.jpg';
     }
 
     playerInfoImage.onerror = function () {
+        // Если произошла ошибка загрузки (например, неправильный формат изображения),
+        // используем изображение по умолчанию
         playerInfoImage.src = 'reqs/ava.jpg';
     };
 }
