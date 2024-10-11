@@ -138,6 +138,32 @@ function updateCapturedPieces(playerCapturedPieces, enemyCapturedPieces) {
     }
 }
 
+async function updatePlayerImage(playerImageElement, username) {
+    if (!username) {
+        playerImageElement.src = 'reqs/ava.jpg';
+        return;
+    }
+    if (username === 'Гость') {
+        playerImageElement.src = 'reqs/ava.jpg';
+        return;
+    }
+    const imageSrc = `https://t.me/i/userpic/320/${username}.jpg`;
+    playerImageElement.src = imageSrc;
+
+    try {
+        const response = await fetch(imageSrc);
+        if (response.status === 404) {
+            playerImageElement.src = 'reqs/ava.jpg';
+        }
+    } catch (error) {
+        playerImageElement.src = 'reqs/ava.jpg';
+    }
+
+    playerImageElement.onerror = function () {
+        playerImageElement.src = 'reqs/ava.jpg';
+    };
+}
+
 let commandQueue = [];
 
 function createWebSocket() {
@@ -198,37 +224,21 @@ function createWebSocket() {
         } else if (data.includes("GAMESTARTED")) {
             var parts = data.split(':');
             waitingModal.classList.add('hidden');
-            const nick = parts[1];
+            const opponentNick = parts[1];
             const fen = parts[2];
             const color = parts[3];
             createChessboardFromFEN(fen,color);
 
             // displayStatus(`получил ник ${nick}`);
-            const playerInfoUsername = document.querySelector('#opponent-info .username');
-            playerInfoUsername.textContent = '@' + nick;
-            if (nick === 'Гость') {
-                playerInfoUsername.textContent = nick;
+            const opponentInfoUsername = document.querySelector('#opponent-info .username');
+            const opponentInfoImage = document.querySelector('#opponent-info .user-image');
+    
+            opponentInfoUsername.textContent = '@' + opponentNick;
+            if (opponentNick === 'Гость') {
+                opponentInfoUsername.textContent = opponentNick;
             }
-            const playerInfoImage = document.querySelector('#opponent-info .user-image');
-            playerInfoImage.src = `https://t.me/i/userpic/320/${nick}.jpg`;
-
-            async function updatePlayerImage() {
-                try {
-                    const response = await fetch(playerInfoImage.src);
-                    
-                    if (response.status === 404) {
-                        playerInfoImage.src = 'reqs/ava.jpg';
-                    }
-                    
-                } catch (error) {
-                    playerInfoImage.src = 'reqs/ava.jpg';
-                }
-            }
-        
-            updatePlayerImage();
-            playerInfoImage.onerror = function () {
-                playerInfoImage.src = 'reqs/ava.jpg';
-            };
+    
+            updatePlayerImage(opponentInfoImage, opponentNick);
         }
     };
 
@@ -414,29 +424,14 @@ const playerInfoImage = document.querySelector('#player-info .user-image');
 
 if (user.username) {
     playerInfoUsername.textContent = '@' + user.username;
-    playerInfoImage.src = `https://t.me/i/userpic/320/${user.username}.jpg`;
-
-    async function updatePlayerImage() {
-        try {
-            const response = await fetch(playerInfoImage.src);
-            
-            if (response.status === 404) {
-                playerInfoImage.src = 'reqs/ava.jpg';
-            }
-            
-        } catch (error) {
-            playerInfoImage.src = 'reqs/ava.jpg';
-        }
-    }
-
-    updatePlayerImage();
+    updatePlayerImage(playerInfoImage, user.username);
 } else {
     playerInfoUsername.textContent = 'Гость';
     playerInfoImage.src = 'reqs/ava.jpg';
+    playerInfoImage.onerror = function () {
+        playerInfoImage.src = 'reqs/ava.jpg';
+    };
 }
-playerInfoImage.onerror = function () {
-    playerInfoImage.src = 'reqs/ava.jpg';
-};
 // displayStatus(`Отправка команды challenge для game_id: ${matchId}`);
 try {
     sendCommand(`challenge ${matchId} ${user.username}`);
