@@ -138,40 +138,33 @@ function updateCapturedPieces(playerCapturedPieces, enemyCapturedPieces) {
     }
 }
 
-function logMessage(message) {
-    const logContainer = document.getElementById('log-container');
-    logContainer.style.display = 'block'; // Сделать видимым блок с логами
-    logContainer.innerHTML += `<p>${message}</p>`;
-}
-
 function loadUserAvatar(imageElement, username) {
     if (!username || username === 'Гость') {
-        // Если нет имени пользователя или это гость, сразу показываем дефолтную аватарку
+        // Если у пользователя нет юзернейма или это гость, сразу показываем дефолтное изображение
         imageElement.src = 'reqs/ava.jpg';
         return;
     }
 
     const avatarUrl = `https://t.me/i/userpic/320/${username}.jpg`;
 
-    // Создаем новый объект изображения для проверки загрузки
+    // Создаем временный объект изображения для проверки
     const img = new Image();
     
-    // Устанавливаем обработчик на случай успешной загрузки
+    // Если аватарка успешно загружается
     img.onload = function() {
-        // Если изображение успешно загружено, устанавливаем его
+        // Устанавливаем аватарку пользователя, если она загрузилась
         imageElement.src = avatarUrl;
     };
-    
-    // Обработчик на случай ошибки загрузки (например, если аватарка приватная)
+
+    // Если аватарка не загружается (например, она приватная)
     img.onerror = function() {
-        // Если изображение не загружается, ставим дефолтную аватарку
+        // Устанавливаем дефолтную аватарку
         imageElement.src = 'reqs/ava.jpg';
     };
 
-    // Попытка загрузить аватарку
+    // Попытка загрузить аватар
     img.src = avatarUrl;
 }
-
 
 let commandQueue = [];
 
