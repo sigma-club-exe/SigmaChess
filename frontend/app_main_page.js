@@ -393,19 +393,27 @@ function handleSquareClick(row, col, files, ranks, playerColor) {
 
 const matchId = Telegram.WebApp.initDataUnsafe.start_param;
 const user = Telegram.WebApp.initDataUnsafe.user;
-// displayStatus(`Извлеченный matchId and user: ${matchId} ${user}`);  
 
 const playerInfoUsername = document.querySelector('#player-info .username');
 if (user.username) {
     playerInfoUsername.textContent = '@' + user.username;
 } else {
-    playerInfoUsername.textContent = 'Гость'; 
+    playerInfoUsername.textContent = 'Гость';
 }
+
 const playerInfoImage = document.querySelector('#player-info .user-image');
-playerInfoImage.src = `https://t.me/i/userpic/320/${user.username}.jpg`;
-if (playerInfoUsername.textContent  === 'Гость') {
+
+if (user.username) {
+    playerInfoImage.src = `https://t.me/i/userpic/320/${user.username}.jpg`;
+} else {
     playerInfoImage.src = 'reqs/ava.jpg';
 }
+
+playerInfoImage.onload = function () {
+    if (playerInfoImage.naturalWidth === 0 || playerInfoImage.naturalHeight === 0) {
+        playerInfoImage.src = 'reqs/ava.jpg';
+    }
+};
 playerInfoImage.onerror = function () {
     playerInfoImage.src = 'reqs/ava.jpg';
 };
