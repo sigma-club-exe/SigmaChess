@@ -138,24 +138,36 @@ function updateCapturedPieces(playerCapturedPieces, enemyCapturedPieces) {
     }
 }
 
+function logMessage(message) {
+    const logContainer = document.getElementById('log-container');
+    logContainer.style.display = 'block'; // Сделать видимым блок с логами
+    logContainer.innerHTML += `<p>${message}</p>`;
+}
+
 function loadUserAvatar(imageElement, username) {
     if (!username || username === 'Гость') {
         imageElement.src = 'reqs/ava.jpg';
+        logMessage(`Пользователь ${username || 'Гость'}: установлен дефолтный аватар.`);
         return;
     }
 
     const avatarUrl = `https://t.me/i/userpic/320/${username}.jpg`;
 
     fetch(avatarUrl).then(response => {
+        logMessage(`Пользователь ${username}: статус ответа ${response.status}.`);
         if (response.ok) {
             imageElement.src = avatarUrl;
+            logMessage(`Пользователь ${username}: аватар успешно загружен.`);
         } else {
             imageElement.src = 'reqs/ava.jpg';
+            logMessage(`Пользователь ${username}: аватар недоступен, установлен дефолтный.`);
         }
     }).catch(error => {
         imageElement.src = 'reqs/ava.jpg';
+        logMessage(`Пользователь ${username}: ошибка при загрузке аватара. Ошибка: ${error}`);
     });
 }
+
 
 let commandQueue = [];
 
