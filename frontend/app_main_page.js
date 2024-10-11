@@ -162,45 +162,6 @@ function createWebSocket() {
         }, 1000);
     };
 
-    async function loadOpponentImage(opponentNick) {
-        const opponentInfoImage = document.querySelector('#opponent-info .user-image');
-        opponentInfoImage.src = `https://t.me/i/userpic/320/${opponentNick}.jpg`;
-    
-        try {
-            const response = await fetch(opponentInfoImage.src);
-    
-            if (response.status === 404) {
-                opponentInfoImage.src = 'reqs/ava.jpg';
-            }
-        } catch (error) {
-            opponentInfoImage.src = 'reqs/ava.jpg';
-        }
-    
-        opponentInfoImage.onerror = function () {
-            opponentInfoImage.src = 'reqs/ava.jpg';
-        };
-    }
-    
-    async function handleGameStarted(data) {
-        const parts = data.split(':');
-        waitingModal.classList.add('hidden');
-        const opponentNick = parts[1];
-        const fen = parts[2];
-        const color = parts[3];
-        createChessboardFromFEN(fen, color);
-        
-        const opponentInfoUsername = document.querySelector('#opponent-info .username');
-        const opponentInfoImage = document.querySelector('#opponent-info .user-image');
-    
-        if (opponentNick === 'Гость') {
-            opponentInfoUsername.textContent = opponentNick;
-            opponentInfoImage.src = 'reqs/ava.jpg';
-        } else {
-            opponentInfoUsername.textContent = '@' + opponentNick;
-            await loadOpponentImage(opponentNick);
-        }
-    }
-
     socket.onmessage = function (event) {
         const data = event.data;
 
@@ -235,7 +196,24 @@ function createWebSocket() {
             document.getElementById('surrender-btn').classList.add('disabled');
             document.getElementById('draw-offer-btn').classList.add('disabled');
         } else if (data.includes("GAMESTARTED")) {
-            handleGameStarted(data);
+            var parts = data.split(':');
+            waitingModal.classList.add('hidden');
+            const nick = parts[1];
+            const fen = parts[2];
+            const color = parts[3];
+            createChessboardFromFEN(fen,color);
+
+            // displayStatus(`получил ник ${nick}`);
+            const playerInfoUsername = document.querySelector('#opponent-info .username');
+            playerInfoUsername.textContent = '@' + nick;
+            if (nick === 'Гость') {
+                playerInfoUsername.textContent = nick;
+            }
+            const playerInfoImage = document.querySelector('#opponent-info .user-image');
+            playerInfoImage.src = `https://t.me/i/userpic/320/${nick}.jpg`;
+            playerInfoImage.onerror = function () {
+                playerInfoImage.src = 'reqs/ava.jpg';
+            };
         }
     };
 
@@ -413,52 +391,24 @@ function handleSquareClick(row, col, files, ranks, playerColor) {
 
 // displayStatus(JSON.stringify(Telegram.WebApp.initDataUnsafe));
 
-async function loadPlayerImage(user) {
-    const playerInfoImage = document.querySelector('#player-info .user-image');
-
-    // Заранее устанавливать аватарку не нужно, ждем проверки
-    const imageUrl = `https://t.me/i/userpic/320/${user.username}.jpg`;
-
-    try {
-        // Проверяем, существует ли изображение
-        const response = await fetch(imageUrl);
-
-        if (response.status === 200) {
-            // Если изображение существует, устанавливаем его
-            playerInfoImage.src = imageUrl;
-        } else {
-            // Если не существует, устанавливаем изображение по умолчанию
-            playerInfoImage.src = 'reqs/ava.jpg';
-        }
-    } catch (error) {
-        // В случае любой ошибки устанавливаем изображение по умолчанию
-        playerInfoImage.src = 'reqs/ava.jpg';
-    }
-
-    playerInfoImage.onerror = function () {
-        // Если произошла ошибка загрузки (например, неправильный формат изображения),
-        // используем изображение по умолчанию
-        playerInfoImage.src = 'reqs/ava.jpg';
-    };
-}
-
-async function initializeUser(user) {
-    const playerInfoUsername = document.querySelector('#player-info .username');
-    const playerInfoImage = document.querySelector('#player-info .user-image');
-
-    if (user.username) {
-        playerInfoUsername.textContent = '@' + user.username;
-        await loadPlayerImage(user);
-    } else {
-        playerInfoUsername.textContent = 'Гость';
-        playerInfoImage.src = 'reqs/ava.jpg';
-    }
-}
-
 const matchId = Telegram.WebApp.initDataUnsafe.start_param;
 const user = Telegram.WebApp.initDataUnsafe.user;
+// displayStatus(`Извлеченный matchId and user: ${matchId} ${user}`);  
 
-initializeUser(user);
+const playerInfoUsername = document.querySelector('#player-info .username');
+if (user.username) {
+    playerInfoUsername.textContent = '@' + user.username;
+} else {
+    playerInfoUsername.textContent = 'Гость'; 
+}
+const playerInfoImage = document.querySelector('#player-info .user-image');
+playerInfoImage.src = `https://t.me/i/userpic/320/${user.username}.jpg`;
+if (playerInfoUsername.textContent  === 'Гость') {
+    playerInfoImage.src = 'reqs/ava.jpg';
+}
+playerInfoImage.onerror = function () {
+    playerInfoImage.src = 'reqs/ava.jpg';
+};
 // displayStatus(`Отправка команды challenge для game_id: ${matchId}`);
 try {
     sendCommand(`challenge ${matchId} ${user.username}`);
