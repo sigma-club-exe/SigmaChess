@@ -374,6 +374,27 @@ img[src*="capt_"]:not([src*="2capt_white_p"]):not([src*="2capt_black_p"]):not([s
     transform-origin: center;
 }
 
+img[src*="2capt_black_p"] {
+    transform: scale(1.4);
+    transform-origin: center;
+}
+
+img[src*="3capt_white_p"] {
+    transform: scale(1.2);
+    transform-origin: center;
+}
+
+.mobile-captured-pieces img[src*="5capt_black_p"] {
+    margin-right: 10px;
+}
+
+.mobile-captured-pieces img[src*="8capt_white_p"],
+.mobile-captured-pieces img[src*="7capt_white_p"],
+.mobile-captured-pieces img[src*="6capt_white_p"],
+.mobile-captured-pieces img[src*="5capt_white_p"] {
+    margin-right: 13px;
+}
+
 * {
     user-select: none; 
 }
