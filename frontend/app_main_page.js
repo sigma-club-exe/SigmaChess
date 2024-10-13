@@ -215,7 +215,6 @@ function createWebSocket() {
             createChessboardFromFEN(fen,color);
 
             // displayStatus(`получил ник ${nick}`);
-            // Отображаем никнейм оппонента
             const playerInfoUsername = document.querySelector('#opponent-info .username');
             if (nick === 'Гость') {
                 playerInfoUsername.textContent = nick;
@@ -223,10 +222,21 @@ function createWebSocket() {
                 playerInfoUsername.textContent = '@' + nick;
             }
 
-            // Проверяем аватарку оппонента
             const playerInfoImage = document.querySelector('#opponent-info .user-image');
             loadUserAvatar(playerInfoImage, nick);
+        } else if (data.includes("CHECKMATE")) {
+            var parts = data.split(':');
+            var result  = parts[1];
+            if (result === 'W') {
+                winCheckmateModal.classList.remove('hidden');
+                document.getElementById('surrender-btn').classList.add('disabled');
+                document.getElementById('draw-offer-btn').classList.add('disabled');
+            } else {
+                loseCheckmateModal.classList.remove('hidden');
+                document.getElementById('surrender-btn').classList.add('disabled');
+                document.getElementById('draw-offer-btn').classList.add('disabled');
             }
+        }
     };
 
     return socket;
