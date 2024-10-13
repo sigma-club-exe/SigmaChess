@@ -139,34 +139,24 @@ function updateCapturedPieces(playerCapturedPieces, enemyCapturedPieces) {
 }
 
 function loadUserAvatar(imageElement, username) {
-    // Устанавливаем фоновое изображение дефолтной аватарки через CSS
-    imageElement.style.backgroundImage = "url('reqs/ava.jpg')";
+    imageElement.style.backgroundImage = "url('reqs/ava.jpg')";  
 
-    // Проверяем наличие имени пользователя
     if (!username || username === 'Гость') {
-        return;  // Если пользователь "Гость", оставляем дефолтное изображение
+        return; 
     }
 
     const avatarUrl = `https://t.me/i/userpic/320/${username}.jpg`;
 
-    // Создаем объект изображения для проверки
     const img = new Image();
     
-    // Если аватарка успешно загружается
-    img.onload = function() {
-        // Устанавливаем аватарку пользователя в качестве изображения
-        imageElement.style.backgroundImage = `url('${avatarUrl}')`;
-    };
+    imageElement.style.backgroundImage = `url('${avatarUrl}'), url('reqs/ava.jpg')`;
 
-    // Если аватарка не загружается (например, она приватная)
     img.onerror = function() {
-        // Оставляем фоновую дефолтную аватарку
+        imageElement.style.backgroundImage = "url('reqs/ava.jpg')";
     };
 
-    // Попытка загрузить аватар
     img.src = avatarUrl;
 }
-
 
 let commandQueue = [];
 
