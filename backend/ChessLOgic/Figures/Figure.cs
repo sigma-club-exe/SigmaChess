@@ -12,6 +12,16 @@ public abstract class Figure : IFigure
     public FigureType Type { get; protected set; }
     public abstract bool PossibleMove(ref IFigure?[][] board, (int, int) moveStartPosition, (int, int) moveEndPosition);
 
+    public  (int, int) IsCheck(ref IFigure?[][] board, char kingColor)
+    {
+        var (kingX, kingY) = FindKing(board, kingColor);
+        if (SquareIsUnderAttack(ref board, (kingX, kingY), kingColor))
+        {
+            return (kingX, kingY);
+        }
+
+        return (-1, -1);
+    }
 
     public virtual List<(int, int)> GetPossibleMoves(ref IFigure?[][] board, (int, int) currentPos)
     {

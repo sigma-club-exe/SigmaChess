@@ -72,6 +72,8 @@ public class Game
 
     public char Checkmate { get; set; }
 
+    public (int, int) Check { get; set; }
+
     public string GetCapturedPieces(char color)
     {
         // Массив для подсчета недостающих фигур (0: Pawn, 1: Knight, 2: Bishop, 3: Rook, 4: Queen)
@@ -168,6 +170,20 @@ public class Game
                 {
                     Checkmate = figure.Color == 'w' ? 'b' : 'w';
                 }
+                else if (Board[moveEndCoords.Item1][moveEndCoords.Item2]
+                             .IsCheck(ref Board, 'w') != (-1, -1))
+                {
+                    Check = Board[moveEndCoords.Item1][moveEndCoords.Item2].IsCheck(ref Board, 'w');
+                }
+                else if (Board[moveEndCoords.Item1][moveEndCoords.Item2]
+                             .IsCheck(ref Board, 'b') != (-1, -1))
+                {
+                    Check = Board[moveEndCoords.Item1][moveEndCoords.Item2].IsCheck(ref Board, 'b');
+                }
+                else
+                {
+                    Check = (-1, -1);
+                }
 
 
                 if (tempfigure.Type == FigureType.King)
@@ -199,6 +215,32 @@ public class Game
         }
 
         return false;
+    }
+    
+    public char CoordToChar(int coord, bool isLetter)
+    {
+        if (isLetter)
+        {
+            if (coord >= 0 && coord <= 7)
+            {
+                return (char)('a' + coord); // Преобразуем индексы 0-7 в буквы 'a'-'h'
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException("coord", "Индекс для буквы должен быть в диапазоне от 0 до 7");
+            }
+        }
+        else
+        {
+            if (coord >= 0 && coord <= 7)
+            {
+                return (char)('8' - coord); // Преобразуем индексы 0-7 в цифры '8'-'1'
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException("coord", "Индекс для цифры должен быть в диапазоне от 0 до 7");
+            }
+        }
     }
 
     public int CharToCoord(char c)
