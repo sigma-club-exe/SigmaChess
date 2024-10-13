@@ -127,7 +127,6 @@ body {
     height: 58px;
     border-radius: 50%;
     object-fit: cover; 
-    background-image: url('reqs/ava.jpg');
     background-size: cover;
     background-position: center;
 }
