@@ -14,10 +14,10 @@ const drawModal = document.getElementById('drawModal');
 const winResignModal = document.getElementById('winResignModal');
 const loseResignModal = document.getElementById('loseResignModal');
 
-// function displayStatus(message) {
-//     const statusElement = document.getElementById('status');
-//     statusElement.innerHTML += `<p>${message}</p>`; 
-// }
+function displayStatus(message) {
+    const statusElement = document.getElementById('status');
+    statusElement.innerHTML += `<p>${message}</p>`; 
+}
 
 surrenderBtn.addEventListener('click', function () {
     // displayStatus('Surrender button clicked');
@@ -186,6 +186,7 @@ function createWebSocket() {
             const enemyCapturedPieces = parts[3];
             const checkSquare = parts[4];
             const lastMove = parts[5];
+            displayStatus(`${checkSquare} and ${lastMove}`);
             createChessboardFromFEN(newFEN, playerColor, checkSquare, lastMove);
             updateCapturedPieces(capturedPieces, enemyCapturedPieces);
             switchTurn(); 
