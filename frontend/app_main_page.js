@@ -373,7 +373,7 @@ function createChessboardFromFEN(fen, playerColor, checkSquare = null, lastMove 
         
             if (squareId === toSquare) {
                 // Более яркий цвет с градиентом
-                square.style.backgroundImage = 'radial-gradient(circle, rgba(228, 119, 111, 0) 0%, rgba(228, 119, 111, 0.9) 70%)';
+                square.style.backgroundImage = 'radial-gradient(circle, rgba(152, 153, 100, 0.815) 0%, rgba(152, 153, 100, 0.815) 70%)';
             }
         
             previousLastMoveSquares.push(square); // Запоминаем текущие клетки последнего хода
