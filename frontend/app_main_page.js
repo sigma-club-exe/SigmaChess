@@ -148,7 +148,8 @@ function loadUserAvatar(imageElement, username) {
     imageElement.src = `https://t.me/i/userpic/320/${username}.jpg`;
 }
 
-
+let previousCheckSquare = null;
+let previousLastMoveSquares = [];
 let commandQueue = [];
 
 function createWebSocket() {
@@ -182,7 +183,9 @@ function createWebSocket() {
             const playerColor = parts[1];
             const capturedPieces = parts[2];
             const enemyCapturedPieces = parts[3];
-            createChessboardFromFEN(newFEN, playerColor);
+            const checkSquare = parts[4];
+            const lastMove = parts[5];
+            createChessboardFromFEN(newFEN, playerColor, checkSquare, lastMove);
             updateCapturedPieces(capturedPieces, enemyCapturedPieces);
             switchTurn(); 
         } else if (data.includes("LOGS:")) {
@@ -212,7 +215,7 @@ function createWebSocket() {
             const nick = parts[1];
             const fen = parts[2];
             const color = parts[3];
-            createChessboardFromFEN(fen,color);
+            createChessboardFromFEN(fen, color, checkSquare, lastMove);
 
             // displayStatus(`получил ник ${nick}`);
             const playerInfoUsername = document.querySelector('#opponent-info .username');
@@ -299,13 +302,15 @@ function updateTimerDisplay(player, time) {
     document.querySelector(`.${player}-time`).textContent = timeString;
 }
 
-function createChessboardFromFEN(fen, playerColor) {
-
+function createChessboardFromFEN(fen, playerColor, checkSquare, lastMove) {
     chessboard.innerHTML = ''; 
     const ranks = playerColor === 'w' ? ranksWhite : ranksBlack;
     const files = playerColor === 'w' ? ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'] : ['h', 'g', 'f', 'e', 'd', 'c', 'b', 'a'];
     let position = fen.split(' ')[0];
     let rows = position.split('/');
+
+    // Clear previous highlights for check and last move
+    clearHighlights();
 
     for (let i = 0; i < 64; i++) {
         const square = document.createElement('div');
@@ -335,10 +340,38 @@ function createChessboardFromFEN(fen, playerColor) {
             square.appendChild(fileLabel);
         }
 
+        // Highlight check square in red
+        const squareId = files[col] + ranks[row];
+        if (squareId === checkSquare) {
+            square.style.backgroundColor = 'red';
+            previousCheckSquare = square;  // Store the current check square for clearing later
+        }
+
+        // Highlight last move squares in yellow
+        if (lastMove && (squareId === lastMove.slice(0, 2) || squareId === lastMove.slice(2, 4))) {
+            square.style.backgroundColor = 'yellow';
+            previousLastMoveSquares.push(square);  // Store the current last move squares for clearing later
+        }
+
         addPieceFromFEN(square, row, col, rows);
         square.addEventListener('click', () => handleSquareClick(row, col, files, ranks, playerColor));
     }
 }
+
+function clearHighlights() {
+    // Clear previous check square highlight
+    if (previousCheckSquare) {
+        previousCheckSquare.style.backgroundColor = previousCheckSquare.classList.contains('light') ? '#efe6d5' : 'rgba(60, 111, 111, 0.8)';
+        previousCheckSquare = null;
+    }
+
+    // Clear previous last move highlights
+    previousLastMoveSquares.forEach(square => {
+        square.style.backgroundColor = square.classList.contains('light') ? '#efe6d5' : 'rgba(60, 111, 111, 0.8)';
+    });
+    previousLastMoveSquares = [];
+}
+
 
 function addPieceFromFEN(square, row, col, rows) {
     const fenRow = rows[row];
@@ -436,4 +469,4 @@ try {
 }
 
 const whiteFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"; 
-createChessboardFromFEN(whiteFEN, 'w');
+createChessboardFromFEN(whiteFEN, 'w', checkSquare, lastMove);
