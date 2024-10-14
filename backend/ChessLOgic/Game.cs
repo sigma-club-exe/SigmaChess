@@ -231,7 +231,7 @@ public class Game
         {
             if (coord >= 0 && coord <= 7)
             {
-                return (char)('8' - coord); // Преобразуем индексы 0-7 в цифры '8'-'1'
+                return (char)('1' + coord); // Преобразуем индексы 0-7 в цифры '1'-'8' (зеркальное отображение)
             }
             else
             {
@@ -239,6 +239,7 @@ public class Game
             }
         }
     }
+
 
     public int CharToCoord(char c)
     {

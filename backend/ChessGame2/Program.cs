@@ -145,6 +145,7 @@ server.Start(ws =>
                     {
                         currentSession.Player2.PlayerConnection.Send("CHECKMATE:W");
                         currentSession.Player1.PlayerConnection.Send("CHECKMATE:L");
+                        games.Remove(gameId);
                     }
                 }
             }
