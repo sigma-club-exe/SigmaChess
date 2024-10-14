@@ -165,24 +165,21 @@ public class Game
             IFigure? tempfigure = Board[moveStartCoords.Item1][moveStartCoords.Item2];
             if (figure.PossibleMove(ref Board, moveStartCoords, moveEndCoords))
             {
+                var attackedKingColor = figure.Color == 'w' ? 'b' : 'w';
                 if (Board[moveEndCoords.Item1][moveEndCoords.Item2]
-                    .IsCheckmate(ref Board, figure.Color == 'w' ? 'b' : 'w'))
+                    .IsCheckmate(ref Board, attackedKingColor))
                 {
-                    Checkmate = figure.Color == 'w' ? 'b' : 'w';
+                    Checkmate = attackedKingColor; 
                 }
                 else if (Board[moveEndCoords.Item1][moveEndCoords.Item2]
-                             .IsCheck(ref Board, 'w') != (-1, -1))
+                             .IsCheck(ref Board, attackedKingColor) != (-1, -1))
                 {
-                    Check = Board[moveEndCoords.Item1][moveEndCoords.Item2].IsCheck(ref Board, 'w');
-                }
-                else if (Board[moveEndCoords.Item1][moveEndCoords.Item2]
-                             .IsCheck(ref Board, 'b') != (-1, -1))
-                {
-                    Check = Board[moveEndCoords.Item1][moveEndCoords.Item2].IsCheck(ref Board, 'b');
+                    Check = Board[moveEndCoords.Item1][moveEndCoords.Item2]
+                        .IsCheck(ref Board, attackedKingColor);
                 }
                 else
                 {
-                    Check = (-1, -1);
+                    Check = (-1, -1); 
                 }
 
 
