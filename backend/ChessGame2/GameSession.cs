@@ -62,7 +62,7 @@ public class GameSession
                 if (BoardState.Check != (-1, -1))
                 {
                     checkSquare =
-                        $"{BoardState.CoordToChar(BoardState.Check.Item2, true)}{BoardState.CoordToChar(BoardState.Check.Item1, false)}";
+                        $"{BoardState.CoordToChar(BoardState.Check.Item1, true)}{BoardState.CoordToChar(BoardState.Check.Item2, false)}";
                 }
                 else
                 {
