@@ -14,14 +14,14 @@ public abstract class Figure : IFigure
 
     public  (int, int) IsCheck(ref IFigure?[][] board)
     {
-        var (kingX, kingY) = FindKing(board,'w');
-        if (SquareIsUnderAttack(ref board, (kingX, kingY), 'b'))
+        var (kingX, kingY) = FindKing(board,'b');
+        if (SquareIsUnderAttack(ref board, (kingX, kingY), 'w'))
         {
             return (kingX, kingY);
         }
         
-        (kingX, kingY) = FindKing(board,'b');
-        if (SquareIsUnderAttack(ref board, (kingX, kingY), 'w'))
+        (kingX, kingY) = FindKing(board,'w');
+        if (SquareIsUnderAttack(ref board, (kingX, kingY), 'b'))
         {
             return (kingX, kingY);
         }
