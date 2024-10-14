@@ -150,6 +150,7 @@ function loadUserAvatar(imageElement, username) {
 
 let previousCheckSquare = null;
 let previousLastMoveSquares = [];
+
 let commandQueue = [];
 
 function createWebSocket() {
@@ -215,7 +216,7 @@ function createWebSocket() {
             const nick = parts[1];
             const fen = parts[2];
             const color = parts[3];
-            createChessboardFromFEN(fen, color, checkSquare, lastMove);
+            createChessboardFromFEN(fen,color);
 
             // displayStatus(`получил ник ${nick}`);
             const playerInfoUsername = document.querySelector('#opponent-info .username');
@@ -302,14 +303,28 @@ function updateTimerDisplay(player, time) {
     document.querySelector(`.${player}-time`).textContent = timeString;
 }
 
-function createChessboardFromFEN(fen, playerColor, checkSquare, lastMove) {
+function clearHighlights() {
+    // Clear previous check square highlight
+    if (previousCheckSquare) {
+        previousCheckSquare.style.backgroundColor = previousCheckSquare.classList.contains('light') ? '#efe6d5' : 'rgba(60, 111, 111, 0.8)';
+        previousCheckSquare = null;
+    }
+
+    // Clear previous last move highlights
+    previousLastMoveSquares.forEach(square => {
+        square.style.backgroundColor = square.classList.contains('light') ? '#efe6d5' : 'rgba(60, 111, 111, 0.8)';
+    });
+    previousLastMoveSquares = [];
+}
+
+function createChessboardFromFEN(fen, playerColor, checkSquare = null, lastMove = null) {
     chessboard.innerHTML = ''; 
     const ranks = playerColor === 'w' ? ranksWhite : ranksBlack;
     const files = playerColor === 'w' ? ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'] : ['h', 'g', 'f', 'e', 'd', 'c', 'b', 'a'];
     let position = fen.split(' ')[0];
     let rows = position.split('/');
 
-    // Clear previous highlights for check and last move
+    // Clear previous highlights
     clearHighlights();
 
     for (let i = 0; i < 64; i++) {
@@ -340,38 +355,24 @@ function createChessboardFromFEN(fen, playerColor, checkSquare, lastMove) {
             square.appendChild(fileLabel);
         }
 
-        // Highlight check square in red
         const squareId = files[col] + ranks[row];
-        if (squareId === checkSquare) {
+
+        // Highlight the check square in red
+        if (checkSquare && squareId === checkSquare) {
             square.style.backgroundColor = 'red';
-            previousCheckSquare = square;  // Store the current check square for clearing later
+            previousCheckSquare = square; // Store the current check square to clear it later
         }
 
-        // Highlight last move squares in yellow
+        // Highlight the last move squares in yellow
         if (lastMove && (squareId === lastMove.slice(0, 2) || squareId === lastMove.slice(2, 4))) {
             square.style.backgroundColor = 'yellow';
-            previousLastMoveSquares.push(square);  // Store the current last move squares for clearing later
+            previousLastMoveSquares.push(square); // Store the current last move squares to clear them later
         }
 
         addPieceFromFEN(square, row, col, rows);
         square.addEventListener('click', () => handleSquareClick(row, col, files, ranks, playerColor));
     }
 }
-
-function clearHighlights() {
-    // Clear previous check square highlight
-    if (previousCheckSquare) {
-        previousCheckSquare.style.backgroundColor = previousCheckSquare.classList.contains('light') ? '#efe6d5' : 'rgba(60, 111, 111, 0.8)';
-        previousCheckSquare = null;
-    }
-
-    // Clear previous last move highlights
-    previousLastMoveSquares.forEach(square => {
-        square.style.backgroundColor = square.classList.contains('light') ? '#efe6d5' : 'rgba(60, 111, 111, 0.8)';
-    });
-    previousLastMoveSquares = [];
-}
-
 
 function addPieceFromFEN(square, row, col, rows) {
     const fenRow = rows[row];
@@ -469,4 +470,4 @@ try {
 }
 
 const whiteFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"; 
-createChessboardFromFEN(whiteFEN, 'w', checkSquare, lastMove);
+createChessboardFromFEN(whiteFEN, 'w');
