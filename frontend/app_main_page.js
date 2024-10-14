@@ -305,18 +305,17 @@ function updateTimerDisplay(player, time) {
 }
 
 function clearHighlights() {
-    // Clear previous check square highlight
     if (previousCheckSquare) {
-        previousCheckSquare.style.backgroundColor = previousCheckSquare.classList.contains('light') ? '#efe6d5' : 'rgba(60, 111, 111, 0.8)';
+        previousCheckSquare.style.backgroundImage = ''; // Сбросить градиент
         previousCheckSquare = null;
     }
 
-    // Clear previous last move highlights
     previousLastMoveSquares.forEach(square => {
-        square.style.backgroundColor = square.classList.contains('light') ? '#efe6d5' : 'rgba(60, 111, 111, 0.8)';
+        square.style.backgroundImage = ''; // Сбросить градиент
     });
     previousLastMoveSquares = [];
 }
+
 
 function createChessboardFromFEN(fen, playerColor, checkSquare = null, lastMove = null) {
     chessboard.innerHTML = ''; 
@@ -358,16 +357,26 @@ function createChessboardFromFEN(fen, playerColor, checkSquare = null, lastMove 
 
         const squareId = files[col] + ranks[row];
 
-        // Highlight the check square in red
         if (checkSquare && squareId === checkSquare) {
-            square.style.backgroundColor = 'red';
+            square.style.backgroundColor = '#e4776fe0';
             previousCheckSquare = square; // Store the current check square to clear it later
         }
 
-        // Highlight the last move squares in yellow
-        if (lastMove && (squareId === lastMove.slice(0, 2) || squareId === lastMove.slice(2, 4))) {
-            square.style.backgroundColor = 'yellow';
-            previousLastMoveSquares.push(square); // Store the current last move squares to clear them later
+        if (lastMove) {
+            const fromSquare = lastMove.slice(0, 2); // Откуда пошла фигура
+            const toSquare = lastMove.slice(2, 4); // Куда пришла фигура
+        
+            if (squareId === fromSquare) {
+                // Более тёмный цвет с градиентом
+                square.style.backgroundImage = 'radial-gradient(circle, rgba(171, 172, 117, 0) 0%, rgba(171, 172, 117, 0.8) 70%)';
+            }
+        
+            if (squareId === toSquare) {
+                // Более яркий цвет с градиентом
+                square.style.backgroundImage = 'radial-gradient(circle, rgba(228, 119, 111, 0) 0%, rgba(228, 119, 111, 0.9) 70%)';
+            }
+        
+            previousLastMoveSquares.push(square); // Запоминаем текущие клетки последнего хода
         }
 
         addPieceFromFEN(square, row, col, rows);
