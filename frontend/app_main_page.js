@@ -148,6 +148,8 @@ function loadUserAvatar(imageElement, username) {
     imageElement.src = `https://t.me/i/userpic/320/${username}.jpg`;
 }
 
+let previousCheckSquare = null;
+let previousLastMoveSquares = [];
 
 let commandQueue = [];
 
@@ -182,7 +184,10 @@ function createWebSocket() {
             const playerColor = parts[1];
             const capturedPieces = parts[2];
             const enemyCapturedPieces = parts[3];
-            createChessboardFromFEN(newFEN, playerColor);
+            const checkSquare = parts[4];
+            const lastMove = parts[5];
+            // displayStatus(`${checkSquare} and ${lastMove}`);
+            createChessboardFromFEN(newFEN, playerColor, checkSquare, lastMove);
             updateCapturedPieces(capturedPieces, enemyCapturedPieces);
             switchTurn(); 
         } else if (data.includes("LOGS:")) {
@@ -299,13 +304,28 @@ function updateTimerDisplay(player, time) {
     document.querySelector(`.${player}-time`).textContent = timeString;
 }
 
-function createChessboardFromFEN(fen, playerColor) {
+function clearHighlights() {
+    if (previousCheckSquare) {
+        previousCheckSquare.style.backgroundImage = ''; // Сбросить градиент
+        previousCheckSquare = null;
+    }
 
+    previousLastMoveSquares.forEach(square => {
+        square.style.backgroundImage = ''; // Сбросить градиент
+    });
+    previousLastMoveSquares = [];
+}
+
+
+function createChessboardFromFEN(fen, playerColor, checkSquare = null, lastMove = null) {
     chessboard.innerHTML = ''; 
     const ranks = playerColor === 'w' ? ranksWhite : ranksBlack;
     const files = playerColor === 'w' ? ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'] : ['h', 'g', 'f', 'e', 'd', 'c', 'b', 'a'];
     let position = fen.split(' ')[0];
     let rows = position.split('/');
+
+    // Clear previous highlights
+    clearHighlights();
 
     for (let i = 0; i < 64; i++) {
         const square = document.createElement('div');
@@ -333,6 +353,30 @@ function createChessboardFromFEN(fen, playerColor) {
             fileLabel.textContent = files[col];
             fileLabel.classList.add('file-label');
             square.appendChild(fileLabel);
+        }
+
+        const squareId = files[col] + ranks[row];
+
+        if (checkSquare && squareId === checkSquare) {
+            square.style.backgroundColor = '#e4776fe0';
+            previousCheckSquare = square; // Store the current check square to clear it later
+        }
+
+        if (lastMove) {
+            const fromSquare = lastMove.slice(0, 2); // Откуда пошла фигура
+            const toSquare = lastMove.slice(2, 4); // Куда пришла фигура
+        
+            if (squareId === fromSquare) {
+                // Более тёмный цвет с градиентом
+                square.style.backgroundImage = 'radial-gradient(circle, rgba(181, 182, 114, 0) 0%, rgba(181, 182, 114, 0.8) 70%)';
+            }
+        
+            if (squareId === toSquare) {
+                // Более яркий цвет с градиентом
+                square.style.backgroundImage = 'radial-gradient(circle, rgba(186, 187, 128, 0) 0%, rgba(186, 187, 128, 0.8) 70%)';
+            }
+        
+            previousLastMoveSquares.push(square); // Запоминаем текущие клетки последнего хода
         }
 
         addPieceFromFEN(square, row, col, rows);
