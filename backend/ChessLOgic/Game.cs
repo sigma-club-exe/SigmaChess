@@ -172,10 +172,10 @@ public class Game
                     Checkmate = attackedKingColor; 
                 }
                 else if (Board[moveEndCoords.Item1][moveEndCoords.Item2]
-                             .IsCheck(ref Board, attackedKingColor) != (-1, -1))
+                             .IsCheck(ref Board) != (-1, -1))
                 {
                     Check = Board[moveEndCoords.Item1][moveEndCoords.Item2]
-                        .IsCheck(ref Board, attackedKingColor);
+                        .IsCheck(ref Board);
                 }
                 else
                 {

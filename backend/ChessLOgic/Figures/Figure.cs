@@ -12,10 +12,16 @@ public abstract class Figure : IFigure
     public FigureType Type { get; protected set; }
     public abstract bool PossibleMove(ref IFigure?[][] board, (int, int) moveStartPosition, (int, int) moveEndPosition);
 
-    public  (int, int) IsCheck(ref IFigure?[][] board, char kingColor)
+    public  (int, int) IsCheck(ref IFigure?[][] board)
     {
-        var (kingX, kingY) = FindKing(board, kingColor);
-        if (SquareIsUnderAttack(ref board, (kingX, kingY), kingColor))
+        var (kingX, kingY) = FindKing(board,'w');
+        if (SquareIsUnderAttack(ref board, (kingX, kingY), 'w'))
+        {
+            return (kingX, kingY);
+        }
+        
+        (kingX, kingY) = FindKing(board,'b');
+        if (SquareIsUnderAttack(ref board, (kingX, kingY), 'b'))
         {
             return (kingX, kingY);
         }
