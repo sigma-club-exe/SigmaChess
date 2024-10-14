@@ -368,12 +368,12 @@ function createChessboardFromFEN(fen, playerColor, checkSquare = null, lastMove 
         
             if (squareId === fromSquare) {
                 // Более тёмный цвет с градиентом
-                square.style.backgroundImage = 'radial-gradient(circle, rgba(171, 172, 117, 0) 0%, rgba(171, 172, 117, 0.8) 70%)';
+                square.style.backgroundImage = 'radial-gradient(circle, rgba(181, 182, 114, 0) 0%, rgba(181, 182, 114, 0.8) 70%)';
             }
         
             if (squareId === toSquare) {
                 // Более яркий цвет с градиентом
-                square.style.backgroundImage = 'radial-gradient(circle, rgba(152, 153, 100, 0.815) 0%, rgba(152, 153, 100, 0.815) 70%)';
+                square.style.backgroundImage = 'radial-gradient(circle, rgba(186, 187, 128, 0) 0%, rgba(186, 187, 128, 0.8) 70%)';
             }
         
             previousLastMoveSquares.push(square); // Запоминаем текущие клетки последнего хода
