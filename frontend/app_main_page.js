@@ -148,6 +148,32 @@ function loadUserAvatar(imageElement, username) {
     imageElement.src = `https://t.me/i/userpic/320/${username}.jpg`;
 }
 
+document.getElementById('promote-queen').addEventListener('click', () => sendPromotionChoice('q'));
+document.getElementById('promote-rook').addEventListener('click', () => sendPromotionChoice('r'));
+document.getElementById('promote-bishop').addEventListener('click', () => sendPromotionChoice('b'));
+document.getElementById('promote-knight').addEventListener('click', () => sendPromotionChoice('n'));
+
+function sendPromotionChoice(figure) {
+    // Скрыть модальное окно
+    pawnPromotionModal.classList.add('hidden');
+
+    // Отправляем команду на сервер с выбранной фигурой для превращения
+    sendCommand(`create ${matchId} ${lastMove} ${figure}`);
+}
+
+// Функция для показа модального окна превращения пешки
+function showPawnPromotionModal(playerColor) {
+    const promotionImages = document.querySelectorAll('.promotion-image');
+    promotionImages.forEach((img) => {
+        // Меняем изображения в зависимости от цвета игрока
+        const piece = img.src.split('/').pop().split('_')[1]; // Определяем тип фигуры (q, r, b, n)
+        img.src = `reqs/${playerColor}_${piece}.svg`; // Заменяем цвет фигур на нужный
+    });
+    
+    // Показываем модальное окно
+    pawnPromotionModal.classList.remove('hidden');
+}
+
 let previousCheckSquare = null;
 let previousLastMoveSquares = [];
 
@@ -241,6 +267,11 @@ function createWebSocket() {
                 document.getElementById('surrender-btn').classList.add('disabled');
                 document.getElementById('draw-offer-btn').classList.add('disabled');
             }
+        } else if (data.includes("PAWN-TRANSFORMATION")) {
+            var parts = data.split(':');
+            const transromationSquare = parts[1];
+            const playerColorMove = parts[2];
+            showPawnPromotionModal(playerColorMove);
         }
     };
 
