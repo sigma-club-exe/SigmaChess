@@ -4,7 +4,7 @@ public class Bishop : Figure
 {
     private Figure _figureImplementation;
 
-    public override bool PossibleMove(ref IFigure?[][] board, (int, int) moveStartPosition, (int, int) moveEndPosition)
+    public override MoveResult PossibleMove(ref IFigure?[][] board, (int, int) moveStartPosition, (int, int) moveEndPosition)
     {
         int startX = moveStartPosition.Item1; // Горизонтальная координата (столбец)
         int startY = moveStartPosition.Item2; // Вертикальная координата (строка)
@@ -15,7 +15,7 @@ public class Bishop : Figure
 
         if (figure == null || figure.Type != FigureType.Bishop)
         {
-            return false; // Если на начальной позиции нет фигуры или это не слон
+            return new MoveResult.Failure(); // Если на начальной позиции нет фигуры или это не слон
         }
 
         // Слон может двигаться только по диагоналям, то есть |dx| == |dy|
@@ -24,7 +24,7 @@ public class Bishop : Figure
 
         if (deltaX != deltaY)
         {
-            return false; // Если движение не по диагонали
+            return new MoveResult.Failure(); // Если движение не по диагонали
         }
 
         // Определяем направление движения
@@ -38,7 +38,7 @@ public class Bishop : Figure
         {
             if (board[x][y] != null)
             {
-                return false; // Если на пути есть фигура, ход невозможен
+                return new MoveResult.Failure(); // Если на пути есть фигура, ход невозможен
             }
 
             x += stepX;
@@ -56,13 +56,13 @@ public class Bishop : Figure
             {
                 board[startX][startY] = figure;
                 board[endX][endY] = tempPiece;
-                return false;
+                return new MoveResult.Failure();
             }
 
-            return true;
+            return new MoveResult.Success();
         }
 
-        return false; // Если в конечной клетке фигура того же цвета, ход невозможен
+        return new MoveResult.Failure(); // Если в конечной клетке фигура того же цвета, ход невозможен
     }
 
     public Bishop(char color) : base(color, FigureType.Bishop)

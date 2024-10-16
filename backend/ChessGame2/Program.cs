@@ -38,20 +38,25 @@ server.Start(ws =>
 
                 var player1Nick = usernames[currentSession.Player1.PlayerConnection];
                 var player2Nick = usernames[currentSession.Player2.PlayerConnection];
-                
+
                 var player1Fen = "";
                 var player2Fen = "";
 
-                if (currentSession.Player1.Color=='w'){
+                if (currentSession.Player1.Color == 'w')
+                {
                     player1Fen = currentSession.GetBoardStateWhite();
-                     player2Fen = currentSession.GetBoardStateBlack();
-                }else{
-                     player2Fen = currentSession.GetBoardStateWhite();
-                     player1Fen = currentSession.GetBoardStateBlack();
+                    player2Fen = currentSession.GetBoardStateBlack();
+                }
+                else
+                {
+                    player2Fen = currentSession.GetBoardStateWhite();
+                    player1Fen = currentSession.GetBoardStateBlack();
                 }
 
-                currentSession.Player1.PlayerConnection.Send($"GAMESTARTED:{player2Nick}:{player1Fen}:{currentSession.Player1.Color}");
-                currentSession.Player2.PlayerConnection.Send($"GAMESTARTED:{player1Nick}:{player2Fen}:{currentSession.Player2.Color}");
+                currentSession.Player1.PlayerConnection.Send(
+                    $"GAMESTARTED:{player2Nick}:{player1Fen}:{currentSession.Player1.Color}");
+                currentSession.Player2.PlayerConnection.Send(
+                    $"GAMESTARTED:{player1Nick}:{player2Fen}:{currentSession.Player2.Color}");
                 usernames.Remove(currentSession.Player1.PlayerConnection);
                 usernames.Remove(currentSession.Player2.PlayerConnection);
             }
@@ -72,6 +77,7 @@ server.Start(ws =>
                 currentGame.Player2.PlayerConnection.Send("RESIGN:L");
                 currentGame.Player1.PlayerConnection.Send("RESIGN:W");
             }
+
             games.Remove(gameId);
         }
         else if (message.Contains("draw-accepted"))
@@ -92,12 +98,21 @@ server.Start(ws =>
                 currentSession.Player2.PlayerConnection.Send("LOGS:соперник предлагает вам ничью");
                 currentSession.Player2.PlayerConnection.Send("DRAW-OFFER");
             }
-            
+
             else
             {
                 currentSession.Player1.PlayerConnection.Send("LOGS:соперник предлагает вам ничью");
                 currentSession.Player1.PlayerConnection.Send("DRAW-OFFER");
             }
+        }
+        else if (message.Contains("create"))
+        {
+            var parts = message.Split(' ');
+            var gameId = parts[1];
+            var move = parts[2];
+            var figureToTransform = parts[3];
+            var currentSession = games[gameId];
+            currentSession.ApplyPawnTransformation(move, figureToTransform);
         }
         else if (message.Contains(':')) // moves handler
         {
@@ -139,7 +154,8 @@ server.Start(ws =>
                 else if (ws == currentSession.Player2.PlayerConnection &&
                          ((currentSession.Player2.Color == 'b' && !currentSessionWhitesTurn) ||
                           (currentSession.Player2.Color == 'w' && currentSessionWhitesTurn)))
-                { // ходит игрок 2
+                {
+                    // ходит игрок 2
                     currentSession.ApplyMove(currentMove, currentSession.Player2);
                     if (currentSession.BoardState.Checkmate == currentSession.Player1.Color)
                     {

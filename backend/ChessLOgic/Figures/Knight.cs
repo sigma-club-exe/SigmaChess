@@ -2,19 +2,18 @@
 
 public class Knight : Figure
 {
-
-    public override bool PossibleMove(ref IFigure?[][] board, (int, int) moveStartPosition, (int, int) moveEndPosition)
+    public override MoveResult PossibleMove(ref IFigure?[][] board, (int, int) moveStartPosition, (int, int) moveEndPosition)
     {
         int startX = moveStartPosition.Item1; // Горизонтальная координата (столбец)
         int startY = moveStartPosition.Item2; // Вертикальная координата (строка)
-        int endX = moveEndPosition.Item1;     // Горизонтальная координата (столбец)
-        int endY = moveEndPosition.Item2;     // Вертикальная координата (строка)
+        int endX = moveEndPosition.Item1; // Горизонтальная координата (столбец)
+        int endY = moveEndPosition.Item2; // Вертикальная координата (строка)
 
         IFigure? figure = board[startX][startY];
 
         if (figure == null || figure.Type != FigureType.Knight)
         {
-            return false; // Если на начальной позиции нет фигуры или это не конь
+            return new MoveResult.Failure(); // Если на начальной позиции нет фигуры или это не конь
         }
 
         // Варианты возможных движений коня
@@ -35,21 +34,31 @@ public class Knight : Figure
                     board[startX][startY] = null;
                     board[endX][endY] = figure;
                     var kingPos = FindKing(board, figure.Color);
-                    if (SquareIsUnderAttack(ref board,kingPos, figure.Color))
+                    
+                    var enemyKingPos = FindKing(board, figure.Color == 'w' ? 'b' : 'w');
+                    if (SquareIsUnderAttack(ref board, enemyKingPos, figure.Color == 'w' ? 'b' : 'w') &&
+                        SquareIsUnderAttack(ref board, kingPos, figure.Color))
                     {
                         board[startX][startY] = figure;
                         board[endX][endY] = tempPiece;
-                        return false;
+                        return new MoveResult.Failure();
                     }
-                    return true;
+                    if (SquareIsUnderAttack(ref board, kingPos, figure.Color))
+                    {
+                        board[startX][startY] = figure;
+                        board[endX][endY] = tempPiece;
+                        return new MoveResult.Failure();
+                    }
+                    
+                    return new MoveResult.Success();
                 }
             }
         }
-        
-        return false; // Если ни одно из возможных движений коня не подходит
+
+        return new MoveResult.Failure(); // Если ни одно из возможных движений коня не подходит
     }
-    
-    public Knight(char color): base(color,FigureType.Knight)
+
+    public Knight(char color) : base(color, FigureType.Knight)
     {
         Type = FigureType.Knight;
     }

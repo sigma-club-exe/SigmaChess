@@ -2,7 +2,7 @@
 
 public class Queen : Figure
 {
-    public override bool PossibleMove(ref IFigure?[][] board, (int, int) moveStartPosition, (int, int) moveEndPosition)
+    public override MoveResult PossibleMove(ref IFigure?[][] board, (int, int) moveStartPosition, (int, int) moveEndPosition)
     {
         int startX = moveStartPosition.Item1; // Горизонтальная координата (столбец)
         int startY = moveStartPosition.Item2; // Вертикальная координата (строка)
@@ -13,7 +13,7 @@ public class Queen : Figure
 
         if (figure == null || figure.Type != FigureType.Queen)
         {
-            return false; // Если на начальной позиции нет фигуры или это не ферзь
+            return new MoveResult.Failure(); // Если на начальной позиции нет фигуры или это не ферзь
         }
 
         // Ферзь может двигаться как по диагонали, так и по горизонтали/вертикали
@@ -33,7 +33,7 @@ public class Queen : Figure
             {
                 if (board[x][y] != null)
                 {
-                    return false; // Если на пути есть фигура, ход невозможен
+                    return new MoveResult.Failure(); // Если на пути есть фигура, ход невозможен
                 }
 
                 x += stepX;
@@ -51,10 +51,10 @@ public class Queen : Figure
                 {
                     board[startX][startY] = figure;
                     board[endX][endY] = tempPiece;
-                    return false;
+                    return new MoveResult.Failure();
                 }
 
-                return true;
+                return new MoveResult.Success();
             }
         }
 
@@ -69,7 +69,7 @@ public class Queen : Figure
                 {
                     if (board[startX][y] != null)
                     {
-                        return false; // Если на пути есть фигура, ход невозможен
+                        return new MoveResult.Failure(); // Если на пути есть фигура, ход невозможен
                     }
                 }
             }
@@ -80,7 +80,7 @@ public class Queen : Figure
                 {
                     if (board[x][startY] != null)
                     {
-                        return false; // Если на пути есть фигура, ход невозможен
+                        return new MoveResult.Failure(); // Если на пути есть фигура, ход невозможен
                     }
                 }
             }
@@ -96,14 +96,14 @@ public class Queen : Figure
                 {
                     board[startX][startY] = figure;
                     board[endX][endY] = tempPiece;
-                    return false;
+                    return new MoveResult.Failure();
                 }
 
-                return true;
+                return new MoveResult.Success();
             }
         }
 
-        return false; // Все другие ходы недопустимы для ферзя
+        return new MoveResult.Failure(); // Все другие ходы недопустимы для ферзя
     }
 
     public Queen(char color) : base(color, FigureType.Queen)

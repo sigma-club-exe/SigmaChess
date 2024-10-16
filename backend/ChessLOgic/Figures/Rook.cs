@@ -2,7 +2,7 @@
 
 public class Rook : Figure
 {
-    public override bool PossibleMove(ref IFigure?[][] board, (int, int) moveStartPosition, (int, int) moveEndPosition)
+    public override MoveResult PossibleMove(ref IFigure?[][] board, (int, int) moveStartPosition, (int, int) moveEndPosition)
     {
         int startX = moveStartPosition.Item1; // Горизонтальная координата (столбец)
         int startY = moveStartPosition.Item2; // Вертикальная координата (строка)
@@ -13,13 +13,13 @@ public class Rook : Figure
 
         if (figure == null || figure.Type != FigureType.Rook)
         {
-            return false; // Если на начальной позиции нет фигуры или это не ладья
+            return new MoveResult.Failure(); // Если на начальной позиции нет фигуры или это не ладья
         }
 
         // Ладья может двигаться только по прямой линии: либо по горизонтали, либо по вертикали
         if (startX != endX && startY != endY)
         {
-            return false; // Ладья не может двигаться по диагонали
+            return new MoveResult.Failure(); // Ладья не может двигаться по диагонали
         }
 
         // Проверка пути: должен быть свободен весь путь от старта до конца (без препятствий)
@@ -30,7 +30,7 @@ public class Rook : Figure
             {
                 if (board[startX][y] != null)
                 {
-                    return false; // Если на пути есть фигура, ход невозможен
+                    return new MoveResult.Failure(); // Если на пути есть фигура, ход невозможен
                 }
             }
         }
@@ -41,7 +41,7 @@ public class Rook : Figure
             {
                 if (board[x][startY] != null)
                 {
-                    return false; // Если на пути есть фигура, ход невозможен
+                    return new MoveResult.Failure(); // Если на пути есть фигура, ход невозможен
                 }
             }
         }
@@ -57,13 +57,13 @@ public class Rook : Figure
             {
                 board[startX][startY] = figure;
                 board[endX][endY] = tempPiece;
-                return false;
+                return new MoveResult.Failure();
             }
             RookDidMove = true;
-            return true;
+            return new MoveResult.Success();
         }
 
-        return false; // Если в конечной клетке фигура того же цвета, ход невозможен
+        return new MoveResult.Failure(); // Если в конечной клетке фигура того же цвета, ход невозможен
     }
     
     public bool RookDidMove { get; set; }

@@ -2,7 +2,7 @@
 
 public class King : Figure
 {
-    public override bool PossibleMove(ref IFigure?[][] board, (int, int) moveStartPosition, (int, int) moveEndPosition)
+    public override MoveResult PossibleMove(ref IFigure?[][] board, (int, int) moveStartPosition, (int, int) moveEndPosition)
     {
         int startX = moveStartPosition.Item1; // Горизонтальная координата (столбец)
         int startY = moveStartPosition.Item2; // Вертикальная координата (строка)
@@ -13,7 +13,7 @@ public class King : Figure
 
         if (figure == null || figure.Type != FigureType.King)
         {
-            return false; // Если на начальной позиции нет фигуры или это не король
+            return new MoveResult.Failure(); // Если на начальной позиции нет фигуры или это не король
         }
 
         // Король может двигаться на одну клетку в любом направлении
@@ -44,7 +44,7 @@ public class King : Figure
                     KingDidMove = true; // Обновляем флаг движения короля
                     castedRook.RookDidMove = true; // Обновляем флаг движения ладьи
 
-                    return true;
+                    return new MoveResult.Success();
                 }
             }
         }
@@ -74,7 +74,7 @@ public class King : Figure
                     KingDidMove = true; // Обновляем флаг движения короля
                     castedRook.RookDidMove = true; // Обновляем флаг движения ладьи
 
-                    return true;
+                    return new MoveResult.Success();
                 }
             }
         }
@@ -100,7 +100,7 @@ public class King : Figure
 
                     KingDidMove = true; // Обновляем флаг движения короля
                     castedRook.RookDidMove = true; // Обновляем флаг движения ладьи
-                    return true;
+                    return new MoveResult.Success();
                 }
             }
         }
@@ -130,7 +130,7 @@ public class King : Figure
                     KingDidMove = true; // Обновляем флаг движения короля
                     castedRook.RookDidMove = true; // Обновляем флаг движения ладьи
 
-                    return true;
+                    return new MoveResult.Success();
                 }
             }
         }
@@ -147,12 +147,12 @@ public class King : Figure
                     board[startX][startY] = null;
                     board[endX][endY] = figure;
                     KingDidMove = true;
-                    return true;
+                    return new MoveResult.Success();
                 }
             }
         }
 
-        return false; // Любое другое движение недопустимо для короля
+        return new MoveResult.Failure(); // Любое другое движение недопустимо для короля
     }
 
     public override (int, int) FindKing(IFigure?[][] board, char kingColor)
@@ -186,7 +186,7 @@ public class King : Figure
             for (int j = 0; j < 8; j++)
             {
                 var tempPiece = board[i][j];
-                if ((i, j) != currentPos && PossibleMove(ref board, currentPos, (i, j)))
+                if ((i, j) != currentPos && PossibleMove(ref board, currentPos, (i, j)) == new MoveResult.Success())
                 {
                     // PossibleMove(ref board, (i, j), currentPos);
                     board[i][j] = null;

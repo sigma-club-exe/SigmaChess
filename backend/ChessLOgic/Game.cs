@@ -146,7 +146,17 @@ public class Game
         return capturedPiecesAsString.ToString();
     }
 
-    public bool DoMove(string move)
+    public void DoPawnTransformation(string move, string figure)
+    {
+        var figureSymbol = GetFigureTypeFromSymbol(figure);
+        (int, int) moveStartCoords = (CharToCoord(move[1]), CharToCoord(move[0]));
+        (int, int) moveEndCoords = (CharToCoord(move[3]), CharToCoord(move[2]));
+        var pawn = Board[moveStartCoords.Item1][moveStartCoords.Item2] as Pawn;
+        pawn.TransformTo(figureSymbol, ref Board, moveStartCoords, moveEndCoords); // cast to pawn
+
+    }
+
+    public MoveResult DoMove(string move)
     {
         try
         {
@@ -158,12 +168,12 @@ public class Game
             var figure = Board[moveStartCoords.Item1][moveStartCoords.Item2];
             if (figure == null)
             {
-                return false;
+                return new MoveResult.Failure();
             }
 
             // Выполняем ход
             IFigure? tempfigure = Board[moveStartCoords.Item1][moveStartCoords.Item2];
-            if (figure.PossibleMove(ref Board, moveStartCoords, moveEndCoords))
+            if (figure.PossibleMove(ref Board, moveStartCoords, moveEndCoords) == new MoveResult.Success())
             {
                 var attackedKingColor = figure.Color == 'w' ? 'b' : 'w';
                 if (Board[moveEndCoords.Item1][moveEndCoords.Item2]
@@ -203,15 +213,18 @@ public class Game
 
 
                 WhitesTurn = !WhitesTurn;
-                return true;
+                return  new MoveResult.Success();
+            }else if (figure.PossibleMove(ref Board, moveStartCoords, moveEndCoords) is MoveResult.PawnTransformation)
+            {
+                return new MoveResult.PawnTransformation(figure.Color);
             }
         }
         catch (Exception ex)
         {
-            return false; // Возвращаем false при любой ошибке
+            return  new MoveResult.Failure(); // Возвращаем false при любой ошибке
         }
 
-        return false;
+        return  new MoveResult.Failure();
     }
     
     public char CoordToChar(int coord, bool isLetter)
@@ -410,7 +423,28 @@ public class Game
 
         return sb.ToString();
     }
-
+    
+    public FigureType GetFigureTypeFromSymbol(string figureSymbol)
+    {
+        char symbol = figureSymbol[0];
+        switch (char.ToLower(symbol))
+        {
+            case 'p':
+                return FigureType.Pawn;
+            case 'k':
+                return FigureType.King;
+            case 'q':
+                return FigureType.Queen;
+            case 'b':
+                return FigureType.Bishop;
+            case 'n':
+                return FigureType.Knight;
+            case 'r':
+                return FigureType.Rook;
+            default:
+                throw new ArgumentException("Invalid figure symbol");
+        }
+    }
 
     // Метод для отображения символов фигур
     public char GetFigureSymbol(IFigure? figure)

@@ -1,5 +1,4 @@
-﻿using System.Text;
-using Fleck;
+﻿using Fleck;
 using ChessLogic;
 
 namespace ChessGame2;
@@ -43,6 +42,32 @@ public class GameSession
 
     public bool BotGame { get; set; }
 
+    public void ApplyPawnTransformation(string move, string figure)
+    {
+        BoardState.DoPawnTransformation(move, figure);
+        if (Player1.Color == 'b')
+        {
+            Player1.PlayerConnection.Send($"FEN:{GetBoardStateBlack()}:{Player1.Color}");
+        }
+
+        else
+        {
+            Player1.PlayerConnection.Send($"FEN:{GetBoardStateWhite()}:{Player1.Color}");
+        }
+
+        if (!BotGame)
+        {
+            if (Player2.Color == 'b')
+            {
+                Player2.PlayerConnection.Send($"FEN:{GetBoardStateBlack()}:{Player2.Color}");
+            }
+            else
+            {
+                Player2.PlayerConnection.Send($"FEN:{GetBoardStateWhite()}:{Player2.Color}");
+            }
+        }
+    }
+
     public void ApplyMove(string move, WsChessClient player)
     {
         var num = BoardState.CharToCoord(move[1]);
@@ -56,44 +81,41 @@ public class GameSession
         if ((whitePieceMove && player.Color == 'w') || (!whitePieceMove && player.Color == 'b'))
         {
             var successfulMove = BoardState.DoMove(move);
-            if (successfulMove)
+            if (successfulMove == new MoveResult.Success())
             {
-                string  checkSquare = string.Empty;
-                if (BoardState.Check != (-1, -1))
-                {
-                    checkSquare =
-                        $"{BoardState.CoordToChar(BoardState.Check.Item2, true)}{BoardState.CoordToChar(BoardState.Check.Item1, false)}";
-                }
-                else
-                {
-                    checkSquare = "--";
-                }
+                string colorMessage = Player1.Color == 'w' ? "белыми" : "черными";
+
+                string turnString = BoardState.WhitesTurn ? "белых" : "черных";
 
                 if (Player1.Color == 'b')
                 {
-                    Player1.PlayerConnection.Send(
-                        $"FEN:{GetBoardStateBlack()}:{Player1.Color}:{GetPlayerCapturedPieces(Player1)}:{GetPlayerCapturedPieces(Player2)}:{checkSquare}:{move}");
+                    Player1.PlayerConnection.Send($"FEN:{GetBoardStateBlack()}:{Player1.Color}");
                 }
 
                 else
                 {
-                    Player1.PlayerConnection.Send(
-                        $"FEN:{GetBoardStateWhite()}:{Player1.Color}:{GetPlayerCapturedPieces(Player1)}:{GetPlayerCapturedPieces(Player2)}:{checkSquare}:{move}");
+                    Player1.PlayerConnection.Send($"FEN:{GetBoardStateWhite()}:{Player1.Color}");
                 }
 
                 if (!BotGame)
                 {
                     if (Player2.Color == 'b')
                     {
-                        Player2.PlayerConnection.Send(
-                            $"FEN:{GetBoardStateBlack()}:{Player2.Color}:{GetPlayerCapturedPieces(Player2)}:{GetPlayerCapturedPieces(Player1)}:{checkSquare}:{move}");
+                        Player2.PlayerConnection.Send($"FEN:{GetBoardStateBlack()}:{Player2.Color}");
                     }
                     else
                     {
-                        Player2.PlayerConnection.Send(
-                            $"FEN:{GetBoardStateWhite()}:{Player2.Color}:{GetPlayerCapturedPieces(Player2)}:{GetPlayerCapturedPieces(Player1)}:{checkSquare}:{move}");
+                        Player2.PlayerConnection.Send($"FEN:{GetBoardStateWhite()}:{Player2.Color}");
                     }
                 }
+
+                Player1.PlayerConnection.Send($"MOVES:{move}\n");
+                Player2.PlayerConnection.Send($"MOVES:{move}\n");
+            }
+            else if (successfulMove is MoveResult.PawnTransformation transformation)
+            {
+                var currentPlayer = GetPlayerByColor(transformation.PieceColor);
+                currentPlayer.PlayerConnection.Send($"PAWN-TRANSFORMATION:{move[2]}{move[3]}:{currentPlayer.Color}");
             }
         }
     }
@@ -106,17 +128,12 @@ public class GameSession
         var whitePieceMove = char.IsUpper(
             BoardState.GetFigureSymbol(
                 BoardState.Board[num][letter]));
-        var successfulMove = BoardState.DoMove(move);
-        if (successfulMove)
-        {
-            Player1.PlayerConnection.Send(
-                $"FEN:{GetBoardStateWhite()}:{Player1.Color}:{GetPlayerCapturedPieces(Player1)}:{GetPlayerCapturedPieces(Player2)}"); // checkSquare
-        }
-    }
 
-    public string GetPlayerCapturedPieces(WsChessClient player)
-    {
-        return BoardState.GetCapturedPieces(player.Color);
+        var successfulMove = BoardState.DoMove(move);
+        if (successfulMove == new MoveResult.Success())
+        {
+            Player1.PlayerConnection.Send($"FEN:{GetBoardStateWhite()}:{Player1.Color}");
+        }
     }
 
     public string GetBoardStateWhite()
@@ -127,5 +144,17 @@ public class GameSession
     public string GetBoardStateBlack()
     {
         return BoardState.GetBoardAsFENforBlack();
+    }
+
+    private WsChessClient GetPlayerByColor(char color)
+    {
+        if (Player1.Color == color)
+        {
+            return Player1;
+        }
+        else
+        {
+            return Player2;
+        }
     }
 }
