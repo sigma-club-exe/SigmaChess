@@ -9,6 +9,7 @@ public class Pawn : Figure
         int endX = moveEndPosition.Item1;
         int endY = moveEndPosition.Item2;
         IFigure? figure = board[startX][startY];
+        var pieceOnSquare = board[endX][endY];
         if (figure == null || figure.Type != FigureType.Pawn)
         {
             return new MoveResult.Failure(); // Если на начальной позиции нет фигуры или это не пешка
@@ -35,6 +36,8 @@ public class Pawn : Figure
             }
             if ((figure.Color == 'w' && endX == 7) || (figure.Color == 'b' && endX == 0))
             {
+                board[startX][startY] = figure;
+                board[endX][endY] = null;
                 return new MoveResult.PawnTransformation(figure.Color); // Пешка может двигаться на последнюю горизонталь для превращения
             }
 
@@ -59,10 +62,6 @@ public class Pawn : Figure
                 board[startX][startY] = figure;
                 board[endX][endY] = null;
                 return new MoveResult.Failure();
-            }
-            if ((figure.Color == 'w' && endX == 7) || (figure.Color == 'b' && endX == 0))
-            {
-                return new MoveResult.PawnTransformation(figure.Color); // Пешка может взять фигуру на последней горизонтали для превращения
             }
 
             return new MoveResult.Success();
@@ -89,6 +88,8 @@ public class Pawn : Figure
             }
             if ((figure.Color == 'w' && endX == 7) || (figure.Color == 'b' && endX == 0))
             {
+                board[startX][startY] = figure;
+                board[endX][endY] = tempFigure;
                 return new MoveResult.PawnTransformation(figure.Color); // Пешка может взять фигуру на последней горизонтали для превращения
             }
 

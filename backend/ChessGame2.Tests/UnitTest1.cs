@@ -98,4 +98,22 @@ public class GameTests
         
         Assert.NotNull(whitePawn);
     }
+    
+    [Test]
+    public void Pawn_Transformation()
+    {
+        _game.Board[1][3].PossibleMove(ref _game.Board, (1, 3), (3, 3));
+        _game.Board[3][3].PossibleMove(ref _game.Board, (3, 3), (4, 3));
+        _game.Board[4][3].PossibleMove(ref _game.Board, (4, 3), (5, 3));
+        _game.Board[5][3].PossibleMove(ref _game.Board, (5, 3), (6, 4));
+        var pawnTransResult = _game.Board[6][4].PossibleMove(ref _game.Board, (6, 4), (7, 5));
+        
+        var whitePawn = _game.Board[6][4];
+        
+        Assert.NotNull(whitePawn);
+        Assert.AreEqual(FigureType.Pawn, whitePawn.Type);
+        Assert.AreEqual('w', whitePawn.Color);
+        Assert.AreEqual(pawnTransResult, new MoveResult.PawnTransformation('w'));
+    }
+    
 }
