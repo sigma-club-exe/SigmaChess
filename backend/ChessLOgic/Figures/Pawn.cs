@@ -19,11 +19,25 @@ public class Pawn : Figure
         // Ход вперед на одну клетку
         if (endX == startX + direction && endY == startY && board[endX][endY] == null)
         {
-            // Проверяем, является ли это последней горизонталью для превращения
+            var kingPos = FindKing(board, figure.Color);
+            if (SquareIsUnderAttack(ref board, kingPos, figure.Color))
+            {
+                return new MoveResult.Failure();
+            }
+            board[startX][startY] = null;
+            board[endX][endY] = figure;
+           // var kingPos = FindKing(board, figure.Color);
+            if (SquareIsUnderAttack(ref board,kingPos, figure.Color))
+            {
+                board[startX][startY] = figure;
+                board[endX][endY] = null;
+                return new MoveResult.Failure();
+            }
             if ((figure.Color == 'w' && endX == 7) || (figure.Color == 'b' && endX == 0))
             {
                 return new MoveResult.PawnTransformation(figure.Color); // Пешка может двигаться на последнюю горизонталь для превращения
             }
+
             return new MoveResult.Success();
         }
 
@@ -32,6 +46,25 @@ public class Pawn : Figure
         if (isStartingPosition && endX == startX + 2 * direction && (endY == startY) && (board[endX][endY] == null) &&
             (board[startX + direction][startY] == null))
         {
+            var kingPos = FindKing(board, figure.Color);
+            if (SquareIsUnderAttack(ref board, kingPos, figure.Color))
+            {
+                return new MoveResult.Failure();
+            }
+            board[startX][startY] = null;
+            board[endX][endY] = figure;
+           // var kingPos = FindKing(board, figure.Color);
+            if (SquareIsUnderAttack(ref board,kingPos, figure.Color))
+            {
+                board[startX][startY] = figure;
+                board[endX][endY] = null;
+                return new MoveResult.Failure();
+            }
+            if ((figure.Color == 'w' && endX == 7) || (figure.Color == 'b' && endX == 0))
+            {
+                return new MoveResult.PawnTransformation(figure.Color); // Пешка может взять фигуру на последней горизонтали для превращения
+            }
+
             return new MoveResult.Success();
         }
 
@@ -39,17 +72,32 @@ public class Pawn : Figure
         if (endX == startX + direction && (endY == startY - 1 || endY == startY + 1) && board[endX][endY] != null &&
             board[endX][endY].Color != figure.Color)
         {
-            // Проверяем, является ли это последней горизонталью для превращения
+            var kingPos = FindKing(board, figure.Color);
+            if (SquareIsUnderAttack(ref board, kingPos, figure.Color))
+            {
+                return new MoveResult.Failure();
+            }
+            var tempFigure = board[endX][endY];
+            board[startX][startY] = null;
+            board[endX][endY] = figure;
+            // var kingPos = FindKing(board, figure.Color);
+            if (SquareIsUnderAttack(ref board,kingPos, figure.Color))
+            {
+                board[startX][startY] = figure;
+                board[endX][endY] = tempFigure;
+                return new MoveResult.Failure();
+            }
             if ((figure.Color == 'w' && endX == 7) || (figure.Color == 'b' && endX == 0))
             {
                 return new MoveResult.PawnTransformation(figure.Color); // Пешка может взять фигуру на последней горизонтали для превращения
             }
+
             return new MoveResult.Success();
         }
 
         return new MoveResult.Failure(); // Все другие ходы недопустимы для пешки
     }
-
+    
     public void TransformTo(FigureType figureType, ref IFigure?[][] board, (int, int) moveStartPosition,
         (int, int) moveEndPosition)
     {

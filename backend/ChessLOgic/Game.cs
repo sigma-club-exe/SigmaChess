@@ -214,7 +214,8 @@ public class Game
 
                 WhitesTurn = !WhitesTurn;
                 return  new MoveResult.Success();
-            }else if (figure.PossibleMove(ref Board, moveStartCoords, moveEndCoords) is MoveResult.PawnTransformation)
+            }
+            if (figure.PossibleMove(ref Board, moveStartCoords, moveEndCoords) is MoveResult.PawnTransformation)
             {
                 return new MoveResult.PawnTransformation(figure.Color);
             }

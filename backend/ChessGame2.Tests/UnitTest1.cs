@@ -88,4 +88,14 @@ public class GameTests
         Assert.AreEqual(FigureType.Rook, blackRook.Type);
         Assert.AreEqual('b', blackRook.Color);
     }
+
+    [Test]
+    public void Pawn_Move()
+    {
+        _game.Board[1][3].PossibleMove(ref _game.Board, (1, 3), (3, 3));
+        
+        var whitePawn = _game.Board[3][3];
+        
+        Assert.NotNull(whitePawn);
+    }
 }
