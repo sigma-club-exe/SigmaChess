@@ -163,21 +163,19 @@ function sendPromotionChoice(figure) {
 
 // Функция для показа модального окна превращения пешки
 function showPawnPromotionModal(playerColor) {
-    if (playerColor==='w') {
-        const tmp = 'white';
-    } else {
-        const tmp = 'black';
-    }
+    const color = playerColor === 'w' ? 'white' : 'black';
+
     const promotionImages = document.querySelectorAll('.promotion-image');
     promotionImages.forEach((img) => {
         // Меняем изображения в зависимости от цвета игрока
         const piece = img.src.split('/').pop().split('_')[1]; // Определяем тип фигуры (q, r, b, n)
-        img.src = `reqs/${tmp}_${piece}.svg`; // Заменяем цвет фигур на нужный
+        img.src = `reqs/${color}_${piece}.svg`; // Заменяем цвет фигур на нужный
     });
     
     // Показываем модальное окно
     pawnPromotionModal.classList.remove('hidden');
 }
+
 
 
 let previousCheckSquare = null;
