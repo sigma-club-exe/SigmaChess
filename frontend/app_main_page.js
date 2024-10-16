@@ -170,11 +170,22 @@ function showPawnPromotionModal(playerColor) {
         // Меняем изображения в зависимости от цвета игрока
         const piece = img.src.split('/').pop().split('_')[1]; // Определяем тип фигуры (q, r, b, n)
         img.src = `reqs/${color}_${piece}.svg`; // Заменяем цвет фигур на нужный
+
+        // Добавляем обработчик события на выбор фигуры
+        img.addEventListener('click', () => {
+            const selectedFigure = piece;
+            // Отправляем команду с выбранной фигурой
+            sendCommand(`create ${matchId} ${lastMove} ${selectedFigure}`);
+
+            // Скрыть модальное окно после выбора
+            pawnPromotionModal.classList.add('hidden');
+        });
     });
     
     // Показываем модальное окно
     pawnPromotionModal.classList.remove('hidden');
 }
+
 
 
 
