@@ -153,16 +153,15 @@ document.getElementById('promote-rook').addEventListener('click', () => sendProm
 document.getElementById('promote-bishop').addEventListener('click', () => sendPromotionChoice('b'));
 document.getElementById('promote-knight').addEventListener('click', () => sendPromotionChoice('n'));
 
-let secondLastMove = '';
-let lastMove = '';
+let previousLastMove = null; 
 
 function sendPromotionChoice(figure) {
     // Скрыть модальное окно
     pawnPromotionModal.classList.add('hidden');
 
     // Отправляем команду на сервер с выбранной фигурой для превращения
-    sendCommand(`create ${matchId} ${secondLastMove} ${figure}`);
-    displayStatus(`create ${matchId} ${secondLastMove} ${figure}`);
+    sendCommand(`create ${matchId} ${previousLastMove} ${figure}`);
+    displayStatus(`create ${matchId} ${previousLastMove} ${figure}`);
 }
 
 // Функция для показа модального окна превращения пешки
@@ -221,8 +220,11 @@ function createWebSocket() {
             const capturedPieces = parts[2];
             const enemyCapturedPieces = parts[3];
             const checkSquare = parts[4];
-            lastMove = parts[5];
+            const lastMove = parts[5];
             // displayStatus(`${checkSquare} and ${lastMove}`);
+            if (lastMove && lastMove !== "undefined") {
+                previousLastMove = lastMove;
+            }
             createChessboardFromFEN(newFEN, playerColor, checkSquare, lastMove);
             updateCapturedPieces(capturedPieces, enemyCapturedPieces);
             switchTurn(); 
@@ -281,7 +283,6 @@ function createWebSocket() {
             var parts = data.split(':');
             const transromationSquare = parts[1];
             const playerColorMove = parts[2];
-            secondLastMove = lastMove;
             showPawnPromotionModal(playerColorMove);
         }
     };
