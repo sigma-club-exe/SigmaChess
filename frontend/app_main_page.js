@@ -221,7 +221,7 @@ function createWebSocket() {
             const enemyCapturedPieces = parts[3];
             const checkSquare = parts[4];
             const lastMove = parts[5];
-            // displayStatus(`${checkSquare} and ${lastMove}`);
+            displayStatus(`${checkSquare} and ${lastMove}`);
             if (lastMove) {
                 previousLastMove = lastMove;
             }
