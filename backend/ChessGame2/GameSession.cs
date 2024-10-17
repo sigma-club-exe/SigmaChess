@@ -45,25 +45,37 @@ public class GameSession
     public void ApplyPawnTransformation(string move, string figure)
     {
         BoardState.DoPawnTransformation(move, figure);
+        
+        string  checkSquare = string.Empty;
+        if (BoardState.Check != (-1, -1))
+        {
+            checkSquare =
+                $"{BoardState.CoordToChar(BoardState.Check.Item2, true)}{BoardState.CoordToChar(BoardState.Check.Item1, false)}";
+        }
+        else
+        {
+            checkSquare = "--";
+        }
+        
         if (Player1.Color == 'b')
         {
-            Player1.PlayerConnection.Send($"FEN:{GetBoardStateBlack()}:{Player1.Color}");
+            Player1.PlayerConnection.Send($"FEN:{GetBoardStateBlack()}:{Player1.Color}:{GetPlayerCapturedPieces(Player1)}:{GetPlayerCapturedPieces(Player2)}:{checkSquare}:{move}");
         }
 
         else
         {
-            Player1.PlayerConnection.Send($"FEN:{GetBoardStateWhite()}:{Player1.Color}");
+            Player1.PlayerConnection.Send($"FEN:{GetBoardStateWhite()}:{Player1.Color}:{GetPlayerCapturedPieces(Player1)}:{GetPlayerCapturedPieces(Player2)}:{checkSquare}:{move}");
         }
 
         if (!BotGame)
         {
             if (Player2.Color == 'b')
             {
-                Player2.PlayerConnection.Send($"FEN:{GetBoardStateBlack()}:{Player2.Color}");
+                Player2.PlayerConnection.Send($"FEN:{GetBoardStateBlack()}:{Player2.Color}:{GetPlayerCapturedPieces(Player1)}:{GetPlayerCapturedPieces(Player2)}:{checkSquare}:{move}");
             }
             else
             {
-                Player2.PlayerConnection.Send($"FEN:{GetBoardStateWhite()}:{Player2.Color}");
+                Player2.PlayerConnection.Send($"FEN:{GetBoardStateWhite()}:{Player2.Color}:{GetPlayerCapturedPieces(Player1)}:{GetPlayerCapturedPieces(Player2)}:{checkSquare}:{move}");
             }
         }
     }

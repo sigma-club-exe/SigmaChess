@@ -153,6 +153,7 @@ public class Game
         (int, int) moveEndCoords = (CharToCoord(move[3]), CharToCoord(move[2]));
         var pawn = Board[moveStartCoords.Item1][moveStartCoords.Item2] as Pawn;
         pawn.TransformTo(figureSymbol, ref Board, moveStartCoords, moveEndCoords); // cast to pawn
+        WhitesTurn = !WhitesTurn;
 
     }
 
