@@ -154,6 +154,7 @@ document.getElementById('promote-bishop').addEventListener('click', () => sendPr
 document.getElementById('promote-knight').addEventListener('click', () => sendPromotionChoice('n'));
 
 let secondLastMove = '';
+let lastMove = '';
 
 function sendPromotionChoice(figure) {
     // Скрыть модальное окно
@@ -220,7 +221,7 @@ function createWebSocket() {
             const capturedPieces = parts[2];
             const enemyCapturedPieces = parts[3];
             const checkSquare = parts[4];
-            const lastMove = parts[5];
+            lastMove = parts[5];
             // displayStatus(`${checkSquare} and ${lastMove}`);
             createChessboardFromFEN(newFEN, playerColor, checkSquare, lastMove);
             updateCapturedPieces(capturedPieces, enemyCapturedPieces);
