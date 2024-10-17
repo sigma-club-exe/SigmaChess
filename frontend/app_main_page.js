@@ -153,15 +153,15 @@ document.getElementById('promote-rook').addEventListener('click', () => sendProm
 document.getElementById('promote-bishop').addEventListener('click', () => sendPromotionChoice('b'));
 document.getElementById('promote-knight').addEventListener('click', () => sendPromotionChoice('n'));
 
-let lastMove = null; 
+let transromationSquare = null; 
 
 function sendPromotionChoice(figure) {
     // Скрыть модальное окно
     pawnPromotionModal.classList.add('hidden');
 
     // Отправляем команду на сервер с выбранной фигурой для превращения
-    sendCommand(`create ${matchId} ${lastMove} ${figure}`);
-    displayStatus(`create ${matchId} ${lastMove} ${figure}`);
+    sendCommand(`create ${matchId} ${transromationSquare} ${figure}`);
+    displayStatus(`create ${matchId} ${transromationSquare} ${figure}`);
 }
 
 // Функция для показа модального окна превращения пешки
@@ -220,7 +220,7 @@ function createWebSocket() {
             const capturedPieces = parts[2];
             const enemyCapturedPieces = parts[3];
             const checkSquare = parts[4];
-            lastMove = parts[5];
+            const lastMove = parts[5];
             // displayStatus(`${checkSquare} and ${lastMove}`);
             createChessboardFromFEN(newFEN, playerColor, checkSquare, lastMove);
             updateCapturedPieces(capturedPieces, enemyCapturedPieces);
@@ -278,7 +278,7 @@ function createWebSocket() {
             }
         } else if (data.includes("PAWN-TRANSFORMATION")) {
             var parts = data.split(':');
-            const transromationSquare = parts[1];
+            transromationSquare = parts[1];
             const playerColorMove = parts[2];
             showPawnPromotionModal(playerColorMove);
         }
