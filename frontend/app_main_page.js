@@ -166,13 +166,15 @@ function sendPromotionChoice(figure) {
 function showPawnPromotionModal(playerColorMoveUnconverted) {
     const promotionImages = document.querySelectorAll('.promotion-image');
     promotionImages.forEach((img) => {
-        // Меняем изображения в зависимости от цвета игрока
-        const piece = img.src.split('/').pop().split('_')[1]; // Определяем тип фигуры (q, r, b, n)
-        if (playerColorMoveUnconverted==='w') {
-            img.src = `reqs/white_${piece}.svg`;
-        } else {
-            img.src = `reqs/black_${piece}.svg`;
-        }
+        const pieces = ['q', 'r', 'b', 'n'];
+        promotionImages.forEach((img, index) => {
+            const piece = pieces[index];
+            if (playerColorMoveUnconverted === 'w') {
+                img.src = `reqs/white_${piece}.svg`;
+            } else {
+                img.src = `reqs/black_${piece}.svg`;
+            }
+        });
     });
     
     // Показываем модальное окно
