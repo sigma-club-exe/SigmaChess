@@ -153,6 +153,8 @@ document.getElementById('promote-rook').addEventListener('click', () => sendProm
 document.getElementById('promote-bishop').addEventListener('click', () => sendPromotionChoice('b'));
 document.getElementById('promote-knight').addEventListener('click', () => sendPromotionChoice('n'));
 
+let lastMove = '';
+
 function sendPromotionChoice(figure) {
     // Скрыть модальное окно
     pawnPromotionModal.classList.add('hidden');
@@ -183,7 +185,6 @@ function showPawnPromotionModal(playerColorMoveUnconverted) {
 
 let previousCheckSquare = null;
 let previousLastMoveSquares = [];
-let lastMove = '';
 
 let commandQueue = [];
 

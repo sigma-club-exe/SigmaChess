@@ -115,7 +115,7 @@ public class GameSession
             else if (successfulMove is MoveResult.PawnTransformation transformation)
             {
                 var currentPlayer = GetPlayerByColor(transformation.PieceColor);
-                currentPlayer.PlayerConnection.Send($"PAWN-TRANSFORMATION:{move[2]}{move[3]}:{currentPlayer.Color}");
+                currentPlayer.PlayerConnection.Send($"PAWN-TRANSFORMATION:{move}:{currentPlayer.Color}");
             }
         }
     }
