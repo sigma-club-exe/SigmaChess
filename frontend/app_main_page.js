@@ -221,8 +221,8 @@ function createWebSocket() {
             const enemyCapturedPieces = parts[3];
             const checkSquare = parts[4];
             const lastMove = parts[5];
-            displayStatus(`${checkSquare} and ${lastMove}`);
-            if (lastMove) {
+            // displayStatus(`${checkSquare} and ${lastMove}`);
+            if (lastMove && lastMove !== "undefined") {
                 previousLastMove = lastMove;
             }
             createChessboardFromFEN(newFEN, playerColor, checkSquare, lastMove);
@@ -411,7 +411,7 @@ function createChessboardFromFEN(fen, playerColor, checkSquare = null, lastMove 
         
             if (squareId === fromSquare) {
                 // Более тёмный цвет с градиентом
-                square.style.backgroundImage = 'radial-gradient(circle, rgba(181, 182, 114, 0) 0%, rgba(181, 182, 114, 0.8) 70%)';
+                square.style.backgroundImage = 'radial-gradient(circle, rgb(196, 175, 136) 0%, rgba(239, 230, 213, 0.8) 70%)';
             }
         
             if (squareId === toSquare) {
