@@ -159,15 +159,20 @@ function sendPromotionChoice(figure) {
 
     // Отправляем команду на сервер с выбранной фигурой для превращения
     sendCommand(`create ${matchId} ${lastMove} ${figure}`);
+    displayStatus(`create ${matchId} ${lastMove} ${figure}`);
 }
 
 // Функция для показа модального окна превращения пешки
-function showPawnPromotionModal(playerColor) {
+function showPawnPromotionModal(playerColorMoveUnconverted) {
     const promotionImages = document.querySelectorAll('.promotion-image');
     promotionImages.forEach((img) => {
         // Меняем изображения в зависимости от цвета игрока
         const piece = img.src.split('/').pop().split('_')[1]; // Определяем тип фигуры (q, r, b, n)
-        img.src = `reqs/${playerColor}_${piece}.svg`; // Заменяем цвет фигур на нужный
+        if (playerColorMoveUnconverted==='w') {
+            img.src = `reqs/white_${piece}.svg`;
+        } else {
+            img.src = `reqs/black_${piece}.svg`;
+        }
     });
     
     // Показываем модальное окно
