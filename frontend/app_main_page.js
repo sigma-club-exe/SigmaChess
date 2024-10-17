@@ -221,7 +221,6 @@ function createWebSocket() {
             const enemyCapturedPieces = parts[3];
             const checkSquare = parts[4];
             const lastMove = parts[5];
-            secondLastMove = parts[5];
             // displayStatus(`${checkSquare} and ${lastMove}`);
             createChessboardFromFEN(newFEN, playerColor, checkSquare, lastMove);
             updateCapturedPieces(capturedPieces, enemyCapturedPieces);
@@ -281,6 +280,7 @@ function createWebSocket() {
             var parts = data.split(':');
             const transromationSquare = parts[1];
             const playerColorMove = parts[2];
+            secondLastMove = lastMove;
             showPawnPromotionModal(playerColorMove);
         }
     };
