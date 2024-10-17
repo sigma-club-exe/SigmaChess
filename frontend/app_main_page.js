@@ -222,7 +222,7 @@ function createWebSocket() {
             const checkSquare = parts[4];
             const lastMove = parts[5];
             // displayStatus(`${checkSquare} and ${lastMove}`);
-            if (lastMove && lastMove !== "undefined") {
+            if (lastMove) {
                 previousLastMove = lastMove;
             }
             createChessboardFromFEN(newFEN, playerColor, checkSquare, lastMove);
