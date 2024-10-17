@@ -14,10 +14,10 @@ const drawModal = document.getElementById('drawModal');
 const winResignModal = document.getElementById('winResignModal');
 const loseResignModal = document.getElementById('loseResignModal');
 
-function displayStatus(message) {
-    const statusElement = document.getElementById('status');
-    statusElement.innerHTML += `<p>${message}</p>`; 
-}
+// function displayStatus(message) {
+//     const statusElement = document.getElementById('status');
+//     statusElement.innerHTML += `<p>${message}</p>`; 
+// }
 
 surrenderBtn.addEventListener('click', function () {
     // displayStatus('Surrender button clicked');
@@ -161,7 +161,7 @@ function sendPromotionChoice(figure) {
 
     // Отправляем команду на сервер с выбранной фигурой для превращения
     sendCommand(`create ${matchId} ${transromationSquare} ${figure}`);
-    displayStatus(`create ${matchId} ${transromationSquare} ${figure}`);
+    // displayStatus(`create ${matchId} ${transromationSquare} ${figure}`);
 }
 
 // Функция для показа модального окна превращения пешки
