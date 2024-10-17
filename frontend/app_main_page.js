@@ -183,6 +183,7 @@ function showPawnPromotionModal(playerColorMoveUnconverted) {
 
 let previousCheckSquare = null;
 let previousLastMoveSquares = [];
+let lastMove = '';
 
 let commandQueue = [];
 
@@ -218,7 +219,7 @@ function createWebSocket() {
             const capturedPieces = parts[2];
             const enemyCapturedPieces = parts[3];
             const checkSquare = parts[4];
-            const lastMove = parts[5];
+            lastMove = parts[5];
             // displayStatus(`${checkSquare} and ${lastMove}`);
             createChessboardFromFEN(newFEN, playerColor, checkSquare, lastMove);
             updateCapturedPieces(capturedPieces, enemyCapturedPieces);
