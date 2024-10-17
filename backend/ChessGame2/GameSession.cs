@@ -83,29 +83,40 @@ public class GameSession
             var successfulMove = BoardState.DoMove(move);
             if (successfulMove == new MoveResult.Success())
             {
-                string colorMessage = Player1.Color == 'w' ? "белыми" : "черными";
-
-                string turnString = BoardState.WhitesTurn ? "белых" : "черных";
-
+                string  checkSquare = string.Empty;
+                if (BoardState.Check != (-1, -1))
+                {
+                    checkSquare =
+                        $"{BoardState.CoordToChar(BoardState.Check.Item2, true)}{BoardState.CoordToChar(BoardState.Check.Item1, false)}";
+                }
+                else
+                {
+                    checkSquare = "--";
+                }
+                
                 if (Player1.Color == 'b')
                 {
-                    Player1.PlayerConnection.Send($"FEN:{GetBoardStateBlack()}:{Player1.Color}");
+                    Player1.PlayerConnection.Send(
+                        $"FEN:{GetBoardStateBlack()}:{Player1.Color}:{GetPlayerCapturedPieces(Player1)}:{GetPlayerCapturedPieces(Player2)}:{checkSquare}:{move}");
                 }
 
                 else
                 {
-                    Player1.PlayerConnection.Send($"FEN:{GetBoardStateWhite()}:{Player1.Color}");
+                    Player1.PlayerConnection.Send(
+                        $"FEN:{GetBoardStateWhite()}:{Player1.Color}:{GetPlayerCapturedPieces(Player1)}:{GetPlayerCapturedPieces(Player2)}:{checkSquare}:{move}");
                 }
 
                 if (!BotGame)
                 {
                     if (Player2.Color == 'b')
                     {
-                        Player2.PlayerConnection.Send($"FEN:{GetBoardStateBlack()}:{Player2.Color}");
+                        Player2.PlayerConnection.Send(
+                            $"FEN:{GetBoardStateBlack()}:{Player2.Color}:{GetPlayerCapturedPieces(Player2)}:{GetPlayerCapturedPieces(Player1)}:{checkSquare}:{move}");
                     }
                     else
                     {
-                        Player2.PlayerConnection.Send($"FEN:{GetBoardStateWhite()}:{Player2.Color}");
+                        Player2.PlayerConnection.Send(
+                            $"FEN:{GetBoardStateWhite()}:{Player2.Color}:{GetPlayerCapturedPieces(Player2)}:{GetPlayerCapturedPieces(Player1)}:{checkSquare}:{move}");
                     }
                 }
 
@@ -136,6 +147,11 @@ public class GameSession
         }
     }
 
+    public string GetPlayerCapturedPieces(WsChessClient player)
+    {
+        return BoardState.GetCapturedPieces(player.Color);
+    }
+    
     public string GetBoardStateWhite()
     {
         return BoardState.GetBoardAsFEN();
