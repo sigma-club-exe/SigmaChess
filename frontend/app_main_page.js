@@ -14,10 +14,10 @@ const drawModal = document.getElementById('drawModal');
 const winResignModal = document.getElementById('winResignModal');
 const loseResignModal = document.getElementById('loseResignModal');
 
-// function displayStatus(message) {
-//     const statusElement = document.getElementById('status');
-//     statusElement.innerHTML += `<p>${message}</p>`; 
-// }
+function displayStatus(message) {
+    const statusElement = document.getElementById('status');
+    statusElement.innerHTML += `<p>${message}</p>`; 
+}
 
 surrenderBtn.addEventListener('click', function () {
     // displayStatus('Surrender button clicked');
