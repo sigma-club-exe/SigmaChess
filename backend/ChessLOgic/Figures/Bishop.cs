@@ -1,6 +1,6 @@
-﻿using ChessLogger;
+﻿namespace ChessLogic.Figures;
 
-namespace ChessLogic.Figures;
+using Logger;
 
 public class Bishop : Figure
 {
@@ -69,7 +69,7 @@ public class Bishop : Figure
 
     public Bishop(char color) : base(color, FigureType.Bishop)
     {
-        FileLogger.Log("Слон инициализирован");
+        Logger.FileLogger.Log("Слон инициализирован");
         Type = FigureType.Bishop;
     }
 }

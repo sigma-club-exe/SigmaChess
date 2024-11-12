@@ -10,12 +10,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("ChessLOgic")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("Logger")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6a4d216000ac5eb53db6a04a17f396652f7ba196")]
-[assembly: System.Reflection.AssemblyProductAttribute("ChessLOgic")]
-[assembly: System.Reflection.AssemblyTitleAttribute("ChessLOgic")]
+[assembly: System.Reflection.AssemblyProductAttribute("Logger")]
+[assembly: System.Reflection.AssemblyTitleAttribute("Logger")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 
 // Создано классом WriteCodeFragment MSBuild.
