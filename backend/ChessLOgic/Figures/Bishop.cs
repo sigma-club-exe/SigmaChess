@@ -1,9 +1,11 @@
-﻿namespace ChessLogic.Figures;
+﻿using ChessLogger;
+
+namespace ChessLogic.Figures;
 
 public class Bishop : Figure
 {
     private Figure _figureImplementation;
-
+    
     public override MoveResult PossibleMove(ref IFigure?[][] board, (int, int) moveStartPosition, (int, int) moveEndPosition)
     {
         int startX = moveStartPosition.Item1; // Горизонтальная координата (столбец)
@@ -67,6 +69,7 @@ public class Bishop : Figure
 
     public Bishop(char color) : base(color, FigureType.Bishop)
     {
+        FileLogger.Log("Слон инициализирован");
         Type = FigureType.Bishop;
     }
 }
