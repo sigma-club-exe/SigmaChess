@@ -237,22 +237,14 @@ public class Game
             {
                 return (char)('a' + coord); // Преобразуем индексы 0-7 в буквы 'a'-'h'
             }
-            else
-            {
-                throw new ArgumentOutOfRangeException("coord", "Индекс для буквы должен быть в диапазоне от 0 до 7");
-            }
+            throw new ArgumentOutOfRangeException("coord", "Индекс для буквы должен быть в диапазоне от 0 до 7");
         }
-        else
+        
+        if (coord >= 0 && coord <= 7)
         {
-            if (coord >= 0 && coord <= 7)
-            {
-                return (char)('1' + coord); // Преобразуем индексы 0-7 в цифры '1'-'8' (зеркальное отображение)
-            }
-            else
-            {
-                throw new ArgumentOutOfRangeException("coord", "Индекс для цифры должен быть в диапазоне от 0 до 7");
-            }
+            return (char)('1' + coord); // Преобразуем индексы 0-7 в цифры '1'-'8' (зеркальное отображение)
         }
+        throw new ArgumentOutOfRangeException("coord", "Индекс для цифры должен быть в диапазоне от 0 до 7");
     }
 
 
