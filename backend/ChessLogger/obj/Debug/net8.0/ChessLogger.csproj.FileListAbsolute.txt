@@ -1,0 +1,6 @@
+C:\Users\Артём\RiderProjects\SigmaChess\backend\ChessLogger\obj\Debug\net8.0\ChessLogger.csproj.AssemblyReference.cache
+C:\Users\Артём\RiderProjects\SigmaChess\backend\ChessLogger\obj\Debug\net8.0\ChessLogger.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Артём\RiderProjects\SigmaChess\backend\ChessLogger\obj\Debug\net8.0\ChessLogger.AssemblyInfoInputs.cache
+C:\Users\Артём\RiderProjects\SigmaChess\backend\ChessLogger\obj\Debug\net8.0\ChessLogger.AssemblyInfo.cs
+C:\Users\Артём\RiderProjects\SigmaChess\backend\ChessLogger\obj\Debug\net8.0\ChessLogger.csproj.CoreCompileInputs.cache
+C:\Users\Артём\RiderProjects\SigmaChess\backend\ChessLogger\obj\Debug\net8.0\ChessLogger.sourcelink.json
