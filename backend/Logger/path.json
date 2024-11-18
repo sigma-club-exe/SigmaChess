@@ -1,0 +1,5 @@
+﻿{
+  "Logging": {
+    "LogFilePath": "LogFiles/Logs.txt"
+  }
+}
