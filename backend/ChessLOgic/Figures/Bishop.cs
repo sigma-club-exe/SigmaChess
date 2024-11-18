@@ -69,7 +69,6 @@ public class Bishop : Figure
 
     public Bishop(char color) : base(color, FigureType.Bishop)
     {
-        Logger.FileLogger.Log("Слон инициализирован");
         Type = FigureType.Bishop;
     }
 }
