@@ -1,7 +1,5 @@
 ﻿namespace ChessLogic.Figures;
 
-using Logger;
-
 public class Bishop : Figure
 {
     private Figure _figureImplementation;
