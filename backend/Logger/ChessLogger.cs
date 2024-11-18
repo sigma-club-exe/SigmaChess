@@ -1,52 +1,58 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System;
+using System.IO;
 
-namespace Logger
+public static class Logger
 {
-    public static class FileLogger
+    private static string _filePath = "C:\\Users\\fyodo.DESKTOP-9A67S1J\\RiderProjects\\SigmaChess\\backend\\Logger\\LogFiles\\Logs.txt";
+
+    /// <summary>
+    /// Устанавливает путь к файлу для логирования.
+    /// </summary>
+    /// <param name="filePath">Путь к файлу для сохранения логов.</param>
+    public static void SetFilePath(string filePath)
     {
-        private static readonly string _logFilePath;
+        _filePath = filePath;
 
-        static FileLogger()
+        // Создаем файл, если он не существует
+        if (!File.Exists(_filePath))
         {
-            // Создание конфигурации
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                .AddJsonFile("path.json", optional: false, reloadOnChange: true);
-
-            IConfiguration configuration = builder.Build();
-
-            // Чтение пути к файлу логов из конфигурации
-            _logFilePath = configuration["Logging:LogFilePath"];
-
-            // Проверка и создание директории, если она не существует
-            var logDirectory = Path.GetDirectoryName(_logFilePath);
-            if (!Path.IsPathRooted(logDirectory))
-            {
-                logDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, logDirectory);
-            }
-            if (!Directory.Exists(logDirectory))
-            {
-                Directory.CreateDirectory(logDirectory);
-            }
-
-            // Если путь относительный, преобразуем его в абсолютный
-            if (!Path.IsPathRooted(_logFilePath))
-            {
-                _logFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _logFilePath);
-            }
+            File.WriteAllText(_filePath, "=== Лог создан: " + DateTime.Now + " ===\n");
         }
+    }
 
-        public static void Log(string message)
+    /// <summary>
+    /// Добавляет текст в файл лога.
+    /// </summary>
+    /// <param name="message">Текст сообщения для добавления в лог.</param>
+    public static void Log(string message)
+    {
+        try
         {
-            try
-            {
-                string logMessage = $"{DateTime.Now} - {message}";
-                File.AppendAllText(_logFilePath, logMessage + Environment.NewLine);
-            }
-            catch (Exception ex)
-            {
-                // Обработка исключений при логировании
-            }
+            // Добавляем сообщение в файл с меткой времени
+            string logEntry = $"{DateTime.Now}: {message}";
+            File.AppendAllText(_filePath, logEntry + Environment.NewLine);
+            Console.WriteLine("Сообщение успешно добавлено в лог.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Ошибка записи в лог: {ex.Message}");
+        }
+    }
+
+    /// <summary>
+    /// Читает и возвращает содержимое лога.
+    /// </summary>
+    /// <returns>Содержимое лога.</returns>
+    public static string ReadLog()
+    {
+        try
+        {
+            return File.ReadAllText(_filePath);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Ошибка чтения лога: {ex.Message}");
+            return string.Empty;
         }
     }
 }

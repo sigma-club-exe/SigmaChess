@@ -1,6 +1,4 @@
-﻿using Logger;
-
-namespace ChessLogic.Figures;
+﻿namespace ChessLogic.Figures;
 
 public class Pawn : Figure
 {
@@ -65,7 +63,8 @@ public class Pawn : Figure
                 board[endX][endY] = null;
                 return new MoveResult.Failure();
             }
-            FileLogger.Log("пешка походила");
+            
+            Logger.Log("пешка походила");
             return new MoveResult.Success();
         }
 
