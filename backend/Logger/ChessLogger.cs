@@ -3,7 +3,7 @@ using System.IO;
 
 public static class Logger
 {
-    private static string _filePath = "C:\\Users\\fyodo.DESKTOP-9A67S1J\\RiderProjects\\SigmaChess\\backend\\Logger\\LogFiles\\Logs.txt";
+    private static string _filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "LogFiles", "Logs.txt");
 
     /// <summary>
     /// Устанавливает путь к файлу для логирования.
