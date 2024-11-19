@@ -62,6 +62,22 @@ services:
     networks:
       - chess_network
 
+  chess_postgres:
+    image: postgres:16.4
+    environment:
+      POSTGRES_USER: ted
+      POSTGRES_PASSWORD: ted
+      POSTGRES_DB: SigmaChess
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - chess_network
+
 networks:
   chess_network:
     driver: bridge
+
+volumes:
+  postgres_data:
