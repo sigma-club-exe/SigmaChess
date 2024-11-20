@@ -1,0 +1,15 @@
+C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\DataAccess\bin\Debug\net8.0\DataAccess.deps.json
+C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\DataAccess\bin\Debug\net8.0\DataAccess.runtimeconfig.json
+C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\DataAccess\bin\Debug\net8.0\DataAccess.dll
+C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\DataAccess\bin\Debug\net8.0\DataAccess.pdb
+C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\DataAccess\obj\Debug\net8.0\DataAccess.csproj.AssemblyReference.cache
+C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\DataAccess\obj\Debug\net8.0\DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\DataAccess\obj\Debug\net8.0\DataAccess.AssemblyInfoInputs.cache
+C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\DataAccess\obj\Debug\net8.0\DataAccess.AssemblyInfo.cs
+C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\DataAccess\obj\Debug\net8.0\DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\DataAccess\obj\Debug\net8.0\DataAccess.sourcelink.json
+C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\DataAccess\obj\Debug\net8.0\DataAccess.dll
+C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\DataAccess\obj\Debug\net8.0\refint\DataAccess.dll
+C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\DataAccess\obj\Debug\net8.0\DataAccess.pdb
+C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\DataAccess\obj\Debug\net8.0\DataAccess.genruntimeconfig.cache
+C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\DataAccess\obj\Debug\net8.0\ref\DataAccess.dll

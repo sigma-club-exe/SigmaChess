@@ -1,0 +1,16 @@
+C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\Logger\bin\Debug\net8.0\Logger.deps.json
+C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\Logger\bin\Debug\net8.0\Logger.dll
+C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\Logger\bin\Debug\net8.0\Logger.pdb
+C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\Logger\bin\Debug\net8.0\DataAccess.dll
+C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\Logger\bin\Debug\net8.0\DataAccess.pdb
+C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\Logger\obj\Debug\net8.0\Logger.csproj.AssemblyReference.cache
+C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\Logger\obj\Debug\net8.0\Logger.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\Logger\obj\Debug\net8.0\Logger.AssemblyInfoInputs.cache
+C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\Logger\obj\Debug\net8.0\Logger.AssemblyInfo.cs
+C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\Logger\obj\Debug\net8.0\Logger.csproj.CoreCompileInputs.cache
+C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\Logger\obj\Debug\net8.0\Logger.sourcelink.json
+C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\Logger\obj\Debug\net8.0\Logger.csproj.Up2Date
+C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\Logger\obj\Debug\net8.0\Logger.dll
+C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\Logger\obj\Debug\net8.0\refint\Logger.dll
+C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\Logger\obj\Debug\net8.0\Logger.pdb
+C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\Logger\obj\Debug\net8.0\ref\Logger.dll

@@ -128,7 +128,7 @@ server.Start(ws =>
             if (games.ContainsKey(gameId))
             {
                 var currentSession = games[gameId];
-
+    
                 var currentSessionWhitesTurn = currentSession.BoardState.WhitesTurn;
 
                 if (ws == currentSession.Player1.PlayerConnection &&
