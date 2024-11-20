@@ -64,7 +64,6 @@ public class Pawn : Figure
                 return new MoveResult.Failure();
             }
             
-            Logger.Log("пешка походила");
             return new MoveResult.Success();
         }
 

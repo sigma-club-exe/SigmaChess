@@ -2,6 +2,11 @@ using System.Collections.Immutable;
 using ChessGame2;
 using Fleck;
 using ChessLogic;
+using DataAccess;
+using DataAccess.Repository;
+
+var context = new AppDbContext();
+ChessLoggerService.Initialize(new LogRepository(context));
 
 var server = new WebSocketServer("ws://0.0.0.0:8181");
 
@@ -119,6 +124,7 @@ server.Start(ws =>
             var parts = message.Split(':');
             var gameId = parts[0];
             var currentMove = parts[1];
+            ChessLoggerService.Log("MOVE", currentMove);
             if (games.ContainsKey(gameId))
             {
                 var currentSession = games[gameId];

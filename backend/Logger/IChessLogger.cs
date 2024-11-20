@@ -1,6 +1,4 @@
-﻿namespace Logger;
-
-public interface IChessLogger
+﻿public interface IChessLogger
 {
     Task Log(string tag, string message);
 }

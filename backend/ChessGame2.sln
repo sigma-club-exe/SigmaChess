@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessGame2.Tests", "ChessGa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logger", "Logger\Logger.csproj", "{56F5E45A-A3BB-49F3-973F-764BE4B8E866}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{B68B59E8-B8FF-4860-8F5E-545076D10474}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{56F5E45A-A3BB-49F3-973F-764BE4B8E866}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56F5E45A-A3BB-49F3-973F-764BE4B8E866}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56F5E45A-A3BB-49F3-973F-764BE4B8E866}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B68B59E8-B8FF-4860-8F5E-545076D10474}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B68B59E8-B8FF-4860-8F5E-545076D10474}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B68B59E8-B8FF-4860-8F5E-545076D10474}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B68B59E8-B8FF-4860-8F5E-545076D10474}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
