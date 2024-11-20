@@ -6,7 +6,7 @@ using DataAccess;
 using DataAccess.Repository;
 
 var context = new AppDbContext();
-ChessLoggerService.Initialize(new LogRepository(context));
+var logRepo = new LogRepository(context);
 
 var server = new WebSocketServer("ws://0.0.0.0:8181");
 
@@ -29,6 +29,7 @@ server.Start(ws =>
             var parts = message.Split(" ");
             var gameId = parts[1];
             var username = parts[2];
+            await logRepo.AddLog("challenge", $"id: {gameId} username: {username}");
             usernames[ws] = username;
 
             if (!wsConnectionsQueue.ContainsKey(gameId)) // no session with such ID yet
