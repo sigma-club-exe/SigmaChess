@@ -7,6 +7,7 @@ using DataAccess.Repository;
 
 var context = new AppDbContext();
 var logRepo = new LogRepository(context);
+await logRepo.AddLog("INIT", "Initializing");
 
 var server = new WebSocketServer("ws://0.0.0.0:8181");
 
