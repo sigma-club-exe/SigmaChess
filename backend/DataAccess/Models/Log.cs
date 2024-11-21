@@ -4,10 +4,10 @@ public class Log
 {
     public Log(string tag, string message)
     {
+        Id = Guid.NewGuid();
+        Timestamp = DateTime.UtcNow;
         Tag = tag;
         Message = message;
-        Timestamp = DateTime.Now;
-        Id = Guid.NewGuid();
     }
 
     public Log()

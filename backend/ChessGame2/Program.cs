@@ -11,8 +11,8 @@ class Program
     static async Task Main(string[] args)
     {
         var context = new AppDbContext();
-        // var logRepo = new LogRepository(context);
-        // await logRepo.AddLog("INIT", "Initializing");
+        var logRepo = new LogRepository(context);
+        await logRepo.AddLog("REPO", "Repository testing");
         var log = new Log
         {
             Id = Guid.NewGuid(),
@@ -20,7 +20,7 @@ class Program
             Tag = "INIT",
             Message = "Initializing"
         };
-        
+
         await context.Logs.AddAsync(log);
         await context.SaveChangesAsync();
 
@@ -45,7 +45,7 @@ class Program
                     var parts = message.Split(" ");
                     var gameId = parts[1];
                     var username = parts[2];
-                    // await logRepo.AddLog("challenge", $"id: {gameId} username: {username}");
+                    await logRepo.AddLog("challenge", $"id: {gameId} username: {username}");
                     usernames[ws] = username;
 
                     if (!wsConnectionsQueue.ContainsKey(gameId)) // no session with such ID yet
