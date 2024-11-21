@@ -12,17 +12,7 @@ class Program
     {
         var context = new AppDbContext();
         var logRepo = new LogRepository(context);
-        await logRepo.AddLog("REPO", "Repository testing");
-        var log = new Log
-        {
-            Id = Guid.NewGuid(),
-            Timestamp = DateTime.UtcNow,
-            Tag = "INIT",
-            Message = "Initializing"
-        };
-
-        await context.Logs.AddAsync(log);
-        await context.SaveChangesAsync();
+        ChessLoggerService.Initialize(logRepo);
 
         var server = new WebSocketServer("ws://0.0.0.0:8181");
 
@@ -45,7 +35,7 @@ class Program
                     var parts = message.Split(" ");
                     var gameId = parts[1];
                     var username = parts[2];
-                    await logRepo.AddLog("challenge", $"id: {gameId} username: {username}");
+                    ChessLoggerService.Log("GAMEINIT", $"id: {gameId} username: {username}");
                     usernames[ws] = username;
 
                     if (!wsConnectionsQueue.ContainsKey(gameId)) // no session with such ID yet
@@ -142,7 +132,7 @@ class Program
                     var parts = message.Split(':');
                     var gameId = parts[0];
                     var currentMove = parts[1];
-                    ChessLoggerService.Log("MOVE", currentMove);
+                    await ChessLoggerService.Log("MOVE", currentMove);
                     if (games.ContainsKey(gameId))
                     {
                         var currentSession = games[gameId];
