@@ -10,10 +10,19 @@ class Program
 {
     static async Task Main(string[] args)
     {
-        var context = new AppDbContext();
+        var configuration = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+            .AddUserSecrets<Program>(optional: true)
+            .Build();
+        
+        var connectionString = configuration.GetConnectionString("DefaultConnection");
+        
+        using var context = new AppDbContext(connectionString);
         var logRepo = new LogRepository(context);
         ChessLoggerService.Initialize(logRepo);
 
+        await ChessLoggerService.Log("WEBSOCKET RUN", $"0.0.0.0:8181 listening");
         var server = new WebSocketServer("ws://0.0.0.0:8181");
 
         var wsConnections = new List<IWebSocketConnection>();

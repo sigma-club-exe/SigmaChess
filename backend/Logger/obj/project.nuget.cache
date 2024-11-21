@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "FISTjPjEL/U=",
+  "dgSpecHash": "7Q5Quw/U7WA=",
   "success": true,
   "projectFilePath": "C:\\Users\\fyodo.DESKTOP-9A67S1J\\RiderProjects\\SigmaChess\\backend\\Logger\\Logger.csproj",
   "expectedPackageFiles": [
@@ -14,6 +14,7 @@
     "C:\\Users\\fyodo.DESKTOP-9A67S1J\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\9.0.0\\microsoft.extensions.configuration.abstractions.9.0.0.nupkg.sha512",
     "C:\\Users\\fyodo.DESKTOP-9A67S1J\\.nuget\\packages\\microsoft.extensions.configuration.fileextensions\\9.0.0\\microsoft.extensions.configuration.fileextensions.9.0.0.nupkg.sha512",
     "C:\\Users\\fyodo.DESKTOP-9A67S1J\\.nuget\\packages\\microsoft.extensions.configuration.json\\9.0.0\\microsoft.extensions.configuration.json.9.0.0.nupkg.sha512",
+    "C:\\Users\\fyodo.DESKTOP-9A67S1J\\.nuget\\packages\\microsoft.extensions.configuration.usersecrets\\9.0.0\\microsoft.extensions.configuration.usersecrets.9.0.0.nupkg.sha512",
     "C:\\Users\\fyodo.DESKTOP-9A67S1J\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\9.0.0\\microsoft.extensions.dependencyinjection.9.0.0.nupkg.sha512",
     "C:\\Users\\fyodo.DESKTOP-9A67S1J\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\9.0.0\\microsoft.extensions.dependencyinjection.abstractions.9.0.0.nupkg.sha512",
     "C:\\Users\\fyodo.DESKTOP-9A67S1J\\.nuget\\packages\\microsoft.extensions.fileproviders.abstractions\\9.0.0\\microsoft.extensions.fileproviders.abstractions.9.0.0.nupkg.sha512",
