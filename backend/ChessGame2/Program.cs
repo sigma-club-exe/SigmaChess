@@ -5,6 +5,7 @@ using ChessLogic;
 using DataAccess;
 using DataAccess.Models;
 using DataAccess.Repository;
+using Logger;
 
 class Program
 {
@@ -160,6 +161,7 @@ class Program
                                 currentSession.ApplyMove(currentMove, currentSession.Player1);
                                 if (currentSession.BoardState.Checkmate == currentSession.Player2.Color)
                                 {
+                                    ChessLoggerService.Log("CHECKMATE",$"{currentSession.Player1.Color} won" );
                                     currentSession.Player2.PlayerConnection.Send("CHECKMATE:L");
                                     currentSession.Player1.PlayerConnection.Send("CHECKMATE:W");
                                 }
@@ -173,6 +175,7 @@ class Program
                             currentSession.ApplyMove(currentMove, currentSession.Player2);
                             if (currentSession.BoardState.Checkmate == currentSession.Player1.Color)
                             {
+                                ChessLoggerService.Log("CHECKMATE",$"{currentSession.Player2.Color} won" );
                                 currentSession.Player2.PlayerConnection.Send("CHECKMATE:W");
                                 currentSession.Player1.PlayerConnection.Send("CHECKMATE:L");
                                 games.Remove(gameId);

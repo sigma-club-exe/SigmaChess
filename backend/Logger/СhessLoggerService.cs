@@ -17,4 +17,28 @@ public static class ChessLoggerService
     {
         await _logRepository.AddLog(tag, message);
     }
+
+    public static string CoordToString((int,int) coords)
+    {
+        return $"{CoordToChar(coords.Item1, true)}{CoordToChar(coords.Item2, false)}";
+    }
+    private static char CoordToChar(int coord, bool isLetter)
+    {
+        if (isLetter)
+        {
+            if (coord >= 0 && coord <= 7)
+            {
+                return (char)('a' + coord); 
+            }
+        }
+        else
+        {
+            if (coord >= 0 && coord <= 7)
+            {
+                return (char)('1' + coord);
+            }
+        }
+
+        return '?';
+    }
 }
