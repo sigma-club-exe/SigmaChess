@@ -10,7 +10,11 @@ public class Log
         Id = Guid.NewGuid();
     }
 
-   
+    public Log()
+    {
+    }
+
+
     public Guid Id { get; set; }
     public DateTime Timestamp { get; set; }
    

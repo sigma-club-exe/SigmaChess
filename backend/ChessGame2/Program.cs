@@ -3,6 +3,7 @@ using ChessGame2;
 using Fleck;
 using ChessLogic;
 using DataAccess;
+using DataAccess.Models;
 using DataAccess.Repository;
 
 class Program
@@ -10,8 +11,18 @@ class Program
     static async Task Main(string[] args)
     {
         var context = new AppDbContext();
-        var logRepo = new LogRepository(context);
-        await logRepo.AddLog("INIT", "Initializing");
+        // var logRepo = new LogRepository(context);
+        // await logRepo.AddLog("INIT", "Initializing");
+        var log = new Log
+        {
+            Id = Guid.NewGuid(),
+            Timestamp = DateTime.UtcNow,
+            Tag = "INIT",
+            Message = "Initializing"
+        };
+        
+        await context.Logs.AddAsync(log);
+        await context.SaveChangesAsync();
 
         var server = new WebSocketServer("ws://0.0.0.0:8181");
 
@@ -34,7 +45,7 @@ class Program
                     var parts = message.Split(" ");
                     var gameId = parts[1];
                     var username = parts[2];
-                    await logRepo.AddLog("challenge", $"id: {gameId} username: {username}");
+                    // await logRepo.AddLog("challenge", $"id: {gameId} username: {username}");
                     usernames[ws] = username;
 
                     if (!wsConnectionsQueue.ContainsKey(gameId)) // no session with such ID yet
