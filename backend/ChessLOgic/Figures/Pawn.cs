@@ -40,7 +40,7 @@ public class Pawn : Figure
                 board[endX][endY] = null;
                 return new MoveResult.PawnTransformation(figure.Color); // Пешка может двигаться на последнюю горизонталь для превращения
             }
-            ChessLoggerService.Log("PAWN MOVE 1sq", $"color: {figure.Color} from {ChessLoggerService.CoordToString((startX,startY))} to {ChessLoggerService.CoordToString((endX,endY))}");
+            ChessLoggerService.Log("PAWN MOVE 1sq", $"color: {figure.Color} from {ChessLoggerService.CoordToString((startY,startX))} to {ChessLoggerService.CoordToString((endY,endX))}");
             return new MoveResult.Success();
         }
 
@@ -63,7 +63,7 @@ public class Pawn : Figure
                 board[endX][endY] = null;
                 return new MoveResult.Failure();
             }
-            ChessLoggerService.Log("PAWN MOVE 2sq", $"color: {figure.Color} from {ChessLoggerService.CoordToString((startX,startY))} to {ChessLoggerService.CoordToString((endX,endY))}");
+            ChessLoggerService.Log("PAWN MOVE 2sq", $"color: {figure.Color} from {ChessLoggerService.CoordToString((startY,startX))} to {ChessLoggerService.CoordToString((endY,endX))}");
             return new MoveResult.Success();
         }
 
@@ -92,7 +92,7 @@ public class Pawn : Figure
                 board[endX][endY] = tempFigure;
                 return new MoveResult.PawnTransformation(figure.Color); // Пешка может взять фигуру на последней горизонтали для превращения
             }
-            ChessLoggerService.Log("PAWN EATS 1sq", $"color: {figure.Color} from {ChessLoggerService.CoordToString((startX,startY))} to {ChessLoggerService.CoordToString((endX,endY))}");
+            ChessLoggerService.Log("PAWN EATS 1sq", $"color: {figure.Color} from {ChessLoggerService.CoordToString((startY,startX))} to {ChessLoggerService.CoordToString((endY,endX))}");
             return new MoveResult.Success();
         }
 

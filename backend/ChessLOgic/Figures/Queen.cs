@@ -54,7 +54,7 @@ public class Queen : Figure
                     return new MoveResult.Failure();
                 }
 
-                ChessLoggerService.Log("QUEEN moves", $"color: {figure.Color} from {ChessLoggerService.CoordToString((startX,startY))} to {ChessLoggerService.CoordToString((endX,endY))}");
+                ChessLoggerService.Log("QUEEN moves", $"color: {figure.Color} from {ChessLoggerService.CoordToString((startY,startX))} to {ChessLoggerService.CoordToString((endY,endX))}");
                 return new MoveResult.Success();
             }
         }
@@ -100,7 +100,7 @@ public class Queen : Figure
                     return new MoveResult.Failure();
                 }
 
-                ChessLoggerService.Log("QUEEN moves", $"color: {figure.Color} from {ChessLoggerService.CoordToString((startX,startY))} to {ChessLoggerService.CoordToString((endX,endY))}");
+                ChessLoggerService.Log("QUEEN moves", $"color: {figure.Color} from {ChessLoggerService.CoordToString((startY,startX))} to {ChessLoggerService.CoordToString((endY,endX))}");
                 return new MoveResult.Success();
             }
         }

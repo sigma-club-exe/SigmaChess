@@ -79,6 +79,7 @@ class Program
                 {
                     var gameId = message[7..];
                     var currentGame = games[gameId];
+                    ChessLoggerService.Log("GAMEMOVES", currentGame.GetGameMoves());
                     wsConnectionsQueue.Remove(gameId);
 
                     if (ws == currentGame.Player1.PlayerConnection)
@@ -98,6 +99,7 @@ class Program
                 {
                     var gameId = message[14..];
                     var currentGame = games[gameId];
+                    ChessLoggerService.Log("GAMEMOVES", currentGame.GetGameMoves());
                     currentGame.Player1.PlayerConnection.Send("DRAW-ACCEPTED");
                     currentGame.Player2.PlayerConnection.Send("DRAW-ACCEPTED");
                     wsConnectionsQueue.Remove(gameId);
@@ -161,7 +163,8 @@ class Program
                                 currentSession.ApplyMove(currentMove, currentSession.Player1);
                                 if (currentSession.BoardState.Checkmate == currentSession.Player2.Color)
                                 {
-                                    ChessLoggerService.Log("CHECKMATE",$"{currentSession.Player1.Color} won" );
+                                    ChessLoggerService.Log("CHECKMATE", $"{currentSession.Player1.Color} won");
+                                    ChessLoggerService.Log("GAMEMOVES", currentSession.GetGameMoves());
                                     currentSession.Player2.PlayerConnection.Send("CHECKMATE:L");
                                     currentSession.Player1.PlayerConnection.Send("CHECKMATE:W");
                                 }
@@ -175,7 +178,8 @@ class Program
                             currentSession.ApplyMove(currentMove, currentSession.Player2);
                             if (currentSession.BoardState.Checkmate == currentSession.Player1.Color)
                             {
-                                ChessLoggerService.Log("CHECKMATE",$"{currentSession.Player2.Color} won" );
+                                ChessLoggerService.Log("CHECKMATE", $"{currentSession.Player2.Color} won");
+                                ChessLoggerService.Log("GAMEMOVES", currentSession.GetGameMoves());
                                 currentSession.Player2.PlayerConnection.Send("CHECKMATE:W");
                                 currentSession.Player1.PlayerConnection.Send("CHECKMATE:L");
                                 games.Remove(gameId);

@@ -1,4 +1,5 @@
-﻿using Fleck;
+﻿using System.Text;
+using Fleck;
 using ChessLogic;
 
 namespace ChessGame2;
@@ -23,6 +24,8 @@ public class GameSession
             Player1.Color = 'b'; // Black for Player1
             Player2.Color = 'w'; // White for Player2
         }
+
+        _gameMoves = new StringBuilder();
     }
 
     public GameSession(WsChessClient player1, Game boardState, bool botGame)
@@ -39,8 +42,9 @@ public class GameSession
     public WsChessClient Player1 { get; set; }
     public WsChessClient Player2 { get; set; }
     public Game BoardState { get; set; }
-
     public bool BotGame { get; set; }
+    
+    private readonly StringBuilder _gameMoves;
 
     public void ApplyPawnTransformation(string move, string figure)
     {
@@ -95,6 +99,7 @@ public class GameSession
             var successfulMove = BoardState.DoMove(move);
             if (successfulMove == new MoveResult.Success())
             {
+                _gameMoves.Append($"{move} ");
                 string  checkSquare = string.Empty;
                 if (BoardState.Check != (-1, -1))
                 {
@@ -184,6 +189,11 @@ public class GameSession
         {
             return Player2;
         }
+    }
+
+    public string GetGameMoves()
+    {
+        return _gameMoves.ToString();
     }
 }
 

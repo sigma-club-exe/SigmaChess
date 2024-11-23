@@ -64,14 +64,11 @@ public class Game
     public IFigure?[][] Board;
 
     public bool WhitesTurn { get; set; }
-
     public bool White_O_O { get; set; }
     public bool White_O_O_O { get; set; }
     public bool Black_O_O { get; set; }
     public bool Black_O_O_O { get; set; }
-
     public char Checkmate { get; set; }
-
     public (int, int) Check { get; set; }
 
     public string GetCapturedPieces(char color)
@@ -154,7 +151,6 @@ public class Game
         var pawn = Board[moveStartCoords.Item1][moveStartCoords.Item2] as Pawn;
         pawn.TransformTo(figureSymbol, ref Board, moveStartCoords, moveEndCoords); // cast to pawn
         WhitesTurn = !WhitesTurn;
-
     }
 
     public MoveResult DoMove(string move)
@@ -180,7 +176,7 @@ public class Game
                 if (Board[moveEndCoords.Item1][moveEndCoords.Item2]
                     .IsCheckmate(ref Board, attackedKingColor))
                 {
-                    Checkmate = attackedKingColor; 
+                    Checkmate = attackedKingColor;
                 }
                 else if (Board[moveEndCoords.Item1][moveEndCoords.Item2]
                              .IsCheck(ref Board) != (-1, -1))
@@ -190,7 +186,7 @@ public class Game
                 }
                 else
                 {
-                    Check = (-1, -1); 
+                    Check = (-1, -1);
                 }
 
 
@@ -214,8 +210,9 @@ public class Game
 
 
                 WhitesTurn = !WhitesTurn;
-                return  new MoveResult.Success();
+                return new MoveResult.Success();
             }
+
             if (figure.PossibleMove(ref Board, moveStartCoords, moveEndCoords) is MoveResult.PawnTransformation)
             {
                 return new MoveResult.PawnTransformation(figure.Color);
@@ -223,12 +220,12 @@ public class Game
         }
         catch (Exception ex)
         {
-            return  new MoveResult.Failure(); // Возвращаем false при любой ошибке
+            return new MoveResult.Failure(); // Возвращаем false при любой ошибке
         }
 
-        return  new MoveResult.Failure();
+        return new MoveResult.Failure();
     }
-    
+
     public char CoordToChar(int coord, bool isLetter)
     {
         if (isLetter)
@@ -271,6 +268,11 @@ public class Game
         }
 
         throw new ArgumentException("Некорректный символ для шахматных координат");
+    }
+
+    public IFigure? GetPieceBySquare(string square)
+    {
+        return Board[CharToCoord(square[0])][CharToCoord(square[1])];
     }
 
     public string GetBoardAsFEN()
@@ -425,7 +427,7 @@ public class Game
 
         return sb.ToString();
     }
-    
+
     public FigureType GetFigureTypeFromSymbol(string figureSymbol)
     {
         char symbol = figureSymbol[0];
