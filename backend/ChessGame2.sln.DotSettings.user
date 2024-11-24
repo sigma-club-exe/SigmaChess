@@ -1,36 +1,21 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=0ba28133_002D9a3b_002D4a3c_002Da400_002D2d902a4a0119/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Pawn_Move" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=4cfbb513_002D546b_002D454e_002D882b_002D5d4bbd765291/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="PawnTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::BEDFA1D6-2F5C-41F6-AB0A-8C64BB3E2A17::net8.0::ChessGame2.Tests.GameTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::BEDFA1D6-2F5C-41F6-AB0A-8C64BB3E2A17::net8.0::ChessGame2.Tests.PawnTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::BEDFA1D6-2F5C-41F6-AB0A-8C64BB3E2A17::net8.0::ChessGame2.Tests.KnightTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::BEDFA1D6-2F5C-41F6-AB0A-8C64BB3E2A17::net8.0::ChessGame2.Tests.BishopTest.Test_WhiteBishopMove_Success&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::BEDFA1D6-2F5C-41F6-AB0A-8C64BB3E2A17::net8.0::ChessGame2.Tests.BishopTest.Test_WhiteBishopInvalidMove_Failure&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::BEDFA1D6-2F5C-41F6-AB0A-8C64BB3E2A17::net8.0::ChessGame2.Tests.BishopTest.Test_BlackBishopMove_Success&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::BEDFA1D6-2F5C-41F6-AB0A-8C64BB3E2A17::net8.0::ChessGame2.Tests.BishopTest.Test_BlackBishopInvalidMove_Failure&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::BEDFA1D6-2F5C-41F6-AB0A-8C64BB3E2A17::net8.0::ChessGame2.Tests.BishopTest.Test_BishopCapture_Success&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::BEDFA1D6-2F5C-41F6-AB0A-8C64BB3E2A17::net8.0::ChessGame2.Tests.BishopTest.Test_BishopCannotMoveToOccupiedSquare_Failure&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::BEDFA1D6-2F5C-41F6-AB0A-8C64BB3E2A17::net8.0::ChessGame2.Tests.BishopTest.Test_BishopBlockedByPiece_Failure&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::BEDFA1D6-2F5C-41F6-AB0A-8C64BB3E2A17::net8.0::ChessGame2.Tests.BishopTest&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=1d99c244_002D5854_002D45c0_002D9048_002Da51e04bbabea/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Сastling_O_O" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=b5a151dd_002Df2be_002D4b36_002Db60e_002D1a7f287a17ee/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Test_WhitePawn2SquareMove_Success" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::BEDFA1D6-2F5C-41F6-AB0A-8C64BB3E2A17::net8.0::ChessGame2.Tests.GameTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::BEDFA1D6-2F5C-41F6-AB0A-8C64BB3E2A17::net8.0::ChessGame2.Tests.PawnTest.Test_WhitePawn2SquareMove_Success&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=4d2e9702_002D2179_002D49f6_002D8561_002D43bbc450f29a/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Test_ApplyGameToBoard_Success" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::BEDFA1D6-2F5C-41F6-AB0A-8C64BB3E2A17::net8.0::ChessGame2.Tests.GameTests.Test_ApplyGameToBoard_Success&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=8e0b7a1b_002De12b_002D4258_002D9d02_002D513246822b20/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Сastling_O_O #3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::BEDFA1D6-2F5C-41F6-AB0A-8C64BB3E2A17::net8.0::ChessGame2.Tests.GameTests.Сastling_O_O&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=cd38c250_002D99b6_002D427c_002D8130_002Dcb9831024194/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Pawn_Move #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::BEDFA1D6-2F5C-41F6-AB0A-8C64BB3E2A17::net8.0::ChessGame2.Tests.GameTests.Pawn_Move&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=d9cb7cae_002D288c_002D4299_002D9673_002D11eb1428e59a/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Сastling_O_O #4" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::BEDFA1D6-2F5C-41F6-AB0A-8C64BB3E2A17::net8.0::ChessGame2.Tests.GameTests&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=e7decd70_002D2c6b_002D4709_002Db0e4_002D7b68c3898f66/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Сastling_O_O #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::BEDFA1D6-2F5C-41F6-AB0A-8C64BB3E2A17::net8.0::ChessGame2.Tests.GameTests.Сastling_O_O&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
+	</wpf:ResourceDictionary>

@@ -8,7 +8,9 @@ public abstract record MoveResult
 
     public sealed record Success : MoveResult;
     
-    public sealed record Failure : MoveResult;
+    public sealed record Failure() : MoveResult;
+
+    public sealed record MoveFailed(string move) : MoveResult;
     
     public sealed record PawnTransformation(char PieceColor) : MoveResult;
 }

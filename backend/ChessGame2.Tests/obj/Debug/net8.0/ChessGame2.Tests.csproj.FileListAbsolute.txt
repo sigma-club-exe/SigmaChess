@@ -389,3 +389,7 @@ C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\ChessGame2.Tests
 C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\ChessGame2.Tests\bin\Debug\net8.0\Logger.dll
 C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\ChessGame2.Tests\bin\Debug\net8.0\DataAccess.pdb
 C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\ChessGame2.Tests\bin\Debug\net8.0\Logger.pdb
+C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\ChessGame2.Tests\bin\Debug\net8.0\xunit.abstractions.dll
+C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\ChessGame2.Tests\bin\Debug\net8.0\xunit.assert.dll
+C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\ChessGame2.Tests\bin\Debug\net8.0\xunit.core.dll
+C:\Users\fyodo.DESKTOP-9A67S1J\RiderProjects\SigmaChess\backend\ChessGame2.Tests\bin\Debug\net8.0\xunit.execution.dotnet.dll

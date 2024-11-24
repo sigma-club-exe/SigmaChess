@@ -165,7 +165,7 @@ public class Game
             var figure = Board[moveStartCoords.Item1][moveStartCoords.Item2];
             if (figure == null)
             {
-                return new MoveResult.Failure();
+                return new MoveResult.MoveFailed(move);
             }
 
             // Выполняем ход
@@ -220,10 +220,10 @@ public class Game
         }
         catch (Exception ex)
         {
-            return new MoveResult.Failure(); // Возвращаем false при любой ошибке
+            return new MoveResult.MoveFailed(move);
         }
 
-        return new MoveResult.Failure();
+        return new MoveResult.MoveFailed(move);
     }
 
     public char CoordToChar(int coord, bool isLetter)
@@ -272,7 +272,7 @@ public class Game
 
     public IFigure? GetPieceBySquare(string square)
     {
-        return Board[CharToCoord(square[0])][CharToCoord(square[1])];
+        return Board[CharToCoord(square[1])][CharToCoord(square[0])];
     }
 
     public string GetBoardAsFEN()

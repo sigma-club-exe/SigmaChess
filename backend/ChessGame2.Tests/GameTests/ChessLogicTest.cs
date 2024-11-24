@@ -112,7 +112,7 @@ public class GameTests
     }
 
     [Test]
-    public void Pawn_Transformation()
+    public void Pawn_TransformationResult()
     {
         _game.Board[1][3].PossibleMove(ref _game.Board, (1, 3), (3, 3));
         _game.Board[3][3].PossibleMove(ref _game.Board, (3, 3), (4, 3));
@@ -129,13 +129,26 @@ public class GameTests
     }
 
     [Test]
-    public void Test_ApplyGameToBoard_Success()
+    public void Test_KidsCheckmate_Success()
     {
         RunThroughGame(
-            "e2e4 e7e5 d2d4 e5d4 d1d4 b8c6 d4a4 d8e7 b1c3 b7b5 a4b5 c6d4 b5c4 d4c2 e1d1 c2a1 g1f3 c7c6 e4e5 f7f6 c1d3 c8b7 h1e1 e8c8 a8d8 e5f6 e7f6 f3g5 c6c5 c4c5 b7c5 g5e4 c5e4 d3e4 g7g6");
+            "e2e4 e7e5 f1c4 b8c6 d1h5 g8f6 h5f7");
 
-        Assert.That(null == GetPieceBySquare("e4"));
-        // Assert.That(FigureType.Bishop, Is.EqualTo(GetPieceBySquare("e4").Type));
-        // Assert.That('w', Is.EqualTo(GetPieceBySquare("e4").Color));
+        var f7WhiteQueen = GetPieceBySquare("f7");
+        var e8BlackKing = GetPieceBySquare("e8");
+        
+        Assert.NotNull(f7WhiteQueen);
+        Assert.That(FigureType.Queen, Is.EqualTo(f7WhiteQueen.Type));
+        Assert.That('w', Is.EqualTo(f7WhiteQueen.Color));
+        
+        Assert.NotNull(null != e8BlackKing);
+        Assert.That(FigureType.King, Is.EqualTo(e8BlackKing.Type));
+        Assert.That('b', Is.EqualTo(e8BlackKing.Color));
+    }
+
+    [Test]
+    public void Test_DoubleCheck_Failure()
+    {
+        RunThroughGame("e2e4 e7e5 e1e2 e8e7 e2e3 e7e6 g1f3 g8f6 f3g5 f6g4");
     }
 }
