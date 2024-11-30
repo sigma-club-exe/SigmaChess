@@ -11,11 +11,17 @@
     &lt;TestId&gt;xUnit::BEDFA1D6-2F5C-41F6-AB0A-8C64BB3E2A17::net8.0::ChessGame2.Tests.BishopTest.Test_BishopCannotMoveToOccupiedSquare_Failure&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::BEDFA1D6-2F5C-41F6-AB0A-8C64BB3E2A17::net8.0::ChessGame2.Tests.BishopTest.Test_BishopBlockedByPiece_Failure&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::BEDFA1D6-2F5C-41F6-AB0A-8C64BB3E2A17::net8.0::ChessGame2.Tests.BishopTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::BEDFA1D6-2F5C-41F6-AB0A-8C64BB3E2A17::net8.0::ChessGame2.Tests.RookTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::BEDFA1D6-2F5C-41F6-AB0A-8C64BB3E2A17::net8.0::ChessGame2.Tests.QueenTest.Test_WhiteQueenMove_Success&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::BEDFA1D6-2F5C-41F6-AB0A-8C64BB3E2A17::net8.0::ChessGame2.Tests.QueenTest.Test_BlackQueenMove_Success&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::BEDFA1D6-2F5C-41F6-AB0A-8C64BB3E2A17::net8.0::ChessGame2.Tests.QueenTest&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=b5a151dd_002Df2be_002D4b36_002Db60e_002D1a7f287a17ee/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Test_WhitePawn2SquareMove_Success" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::BEDFA1D6-2F5C-41F6-AB0A-8C64BB3E2A17::net8.0::ChessGame2.Tests.PawnTest.Test_WhitePawn2SquareMove_Success&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::BEDFA1D6-2F5C-41F6-AB0A-8C64BB3E2A17::net8.0::ChessGame2.Tests.RookTest.Test_WhiteRookMove_Success&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::BEDFA1D6-2F5C-41F6-AB0A-8C64BB3E2A17::net8.0::ChessGame2.Tests.RookTest.Test_WhiteRookInvalidMove_Failure&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	</wpf:ResourceDictionary>
