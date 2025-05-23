@@ -16,3 +16,7 @@
 4. Когда ваш противник зайдёт, игра автоматически начнётся!
 
 Приятной игры!
+
+
+
+<img width="468" alt="image" src="https://github.com/user-attachments/assets/7faea1f0-4658-44bc-8152-29fd66031136" />
